@@ -54,7 +54,9 @@ export function Login() {
           text: 'Usuário autenticado com sucesso',
           open: 'true',
         })
-        usersService.saveUser(res.data.item)
+        usersService.saveUser(res.data?.item)
+        if (res.data?.item?.occupation === 'student') router.push('/student')
+        if (res.data?.item?.occupation === 'teacher') router.push('/teacher')
         router.push('/')
       })
       .catch((err) => {

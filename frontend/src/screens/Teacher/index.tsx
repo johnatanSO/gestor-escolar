@@ -5,7 +5,7 @@ import style from './Teacher.module.scss'
 export function Teacher() {
   return (
     <>
-      <div className={style.teacherAvatarContainer}>
+      <div className={style.avatarContainer}>
         <FontAwesomeIcon className={style.icon} icon={faUser} />
         <h3>nome</h3>
       </div>

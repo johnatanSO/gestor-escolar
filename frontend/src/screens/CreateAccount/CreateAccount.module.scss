@@ -8,8 +8,9 @@
   flex-direction: column;
   text-align: center;
 
-  box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.42);
-  background: $gray-color-400;
+  box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.62);
+  background: $white-color;
+
   border-radius: 15px;
   padding: 30px;
   animation: appear 0.2s;
@@ -27,17 +28,63 @@
     gap: 15px;
 
     .input {
-      background: $gray-color-600;
-      color: $gray-color-200;
+      background: $gray-color-100;
+      color: $gray-color-400;
+      font-weight: 500;
 
       border-radius: 8px;
     }
 
-    button {
+    .selectOccupationContainer {
+      display: flex;
+      gap: 10px;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex: 1;
+
+        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.32);
+        color: $white-color;
+
+        line-height: 1;
+        font-weight: 500;
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: none;
+
+        cursor: pointer;
+        transition: filter 0.2s, opacity 0.2s;
+
+        .icon {
+          height: 1rem;
+        }
+
+        &.studentButton {
+          background: $blue-color-500;
+        }
+        &.teacherButton {
+          background: $green-color-500;
+        }
+        &:disabled {
+          opacity: 0.4;
+          box-shadow: none;
+
+          &:hover {
+            filter: brightness(0.8);
+          }
+        }
+      }
+    }
+
+    button[type="submit"] {
       font-size: 0.875rem;
       font-weight: 500;
 
-      background-color: $primary-color;
+      background: $primary-color;
+      box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.32);
       color: white;
 
       border: none;

@@ -30,6 +30,7 @@
     .input {
       background: $gray-color-100;
       color: $gray-color-400;
+      font-weight: 500;
 
       border-radius: 8px;
     }
@@ -38,7 +39,7 @@
       font-size: 0.875rem;
       font-weight: 500;
 
-      background-color: $primary-color;
+      background: $primary-color;
       color: white;
 
       border: none;

@@ -6,11 +6,14 @@ import { useRouter } from 'next/router'
 import { AlertContext } from '../../../src/contexts/alertContext'
 import { CustomTextField } from '../../components/CustomTextField'
 import { Loading } from '../../components/Loading'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 export interface NewUser {
   name: string
   email: string
   password: string
+  occupation: 'student' | 'teacher' | string
 }
 
 export function CreateAccount() {
@@ -19,6 +22,7 @@ export function CreateAccount() {
     name: '',
     email: '',
     password: '',
+    occupation: 'student',
   }
   const [newUser, setNewUser] = useState<NewUser>(defaultValuesNewUser)
   const [loading, setLoading] = useState<boolean>(false)
@@ -118,6 +122,36 @@ export function CreateAccount() {
           type="password"
           placeholder="Digite uma senha"
         />
+        <div className={style.selectOccupationContainer}>
+          <button
+            type="button"
+            disabled={newUser.occupation === 'teacher'}
+            className={style.studentButton}
+            onClick={() => {
+              setNewUser({
+                ...newUser,
+                occupation: 'student',
+              })
+            }}
+          >
+            <FontAwesomeIcon className={style.icon} icon={faUser} />
+            Estudante
+          </button>
+          <button
+            disabled={newUser.occupation === 'student'}
+            className={style.teacherButton}
+            type="button"
+            onClick={() => {
+              setNewUser({
+                ...newUser,
+                occupation: 'teacher',
+              })
+            }}
+          >
+            <FontAwesomeIcon className={style.icon} icon={faUser} />
+            Professor
+          </button>
+        </div>
         <button disabled={loading} type="submit">
           {loading ? <Loading /> : 'Cadastrar'}
         </button>

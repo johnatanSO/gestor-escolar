@@ -1,0 +1,84 @@
+@import "../../../styles/colors.scss";
+
+.createAccountContainer {
+  width: 80%;
+  max-width: 400px;
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.42);
+  background: $gray-color-400;
+  border-radius: 15px;
+  padding: 30px;
+  animation: appear 0.2s;
+
+  h2 {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .input {
+      background: $gray-color-600;
+      color: $gray-color-200;
+
+      border-radius: 8px;
+    }
+
+    button {
+      font-size: 0.875rem;
+      font-weight: 500;
+
+      background-color: $primary-color;
+      color: white;
+
+      border: none;
+      border-radius: 8px;
+      padding: 1.2rem 0px;
+      margin-top: 5px;
+      line-height: 1;
+
+      cursor: pointer;
+      transition: filter 0.2s;
+
+      &:hover {
+        filter: brightness(0.8);
+      }
+
+      &:disabled {
+        filter: brightness(0.6);
+        pointer-events: none;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  a {
+    text-align: center;
+    margin-top: 25px;
+    text-decoration: underline;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

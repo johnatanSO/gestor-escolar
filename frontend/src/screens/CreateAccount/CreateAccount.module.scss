@@ -46,7 +46,8 @@
         gap: 10px;
         flex: 1;
 
-        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.32);
+        box-shadow: none;
+
         color: $white-color;
 
         line-height: 1;
@@ -54,9 +55,16 @@
         padding: 0.8rem;
         border-radius: 8px;
         border: none;
+        opacity: 0.4;
 
         cursor: pointer;
-        transition: filter 0.2s, opacity 0.2s;
+        transition:
+          filter 0.2s,
+          opacity 0.2s;
+
+        &:not(:disabled):hover {
+          filter: brightness(0.8);
+        }
 
         .icon {
           height: 1rem;
@@ -69,12 +77,8 @@
           background: $green-color-500;
         }
         &:disabled {
-          opacity: 0.4;
-          box-shadow: none;
-
-          &:hover {
-            filter: brightness(0.8);
-          }
+          opacity: 1;
+          box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.32);
         }
       }
     }

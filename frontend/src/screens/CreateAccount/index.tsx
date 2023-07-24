@@ -76,6 +76,8 @@ export function CreateAccount() {
       })
   }
 
+  console.log('NEW USER DATA, ', newUser)
+
   return (
     <div className={style.createAccountContainer}>
       <h2>Criar uma nova conta</h2>
@@ -125,7 +127,7 @@ export function CreateAccount() {
         <div className={style.selectOccupationContainer}>
           <button
             type="button"
-            disabled={newUser.occupation === 'teacher'}
+            disabled={newUser.occupation === 'student'}
             className={style.studentButton}
             onClick={() => {
               setNewUser({
@@ -138,7 +140,7 @@ export function CreateAccount() {
             Estudante
           </button>
           <button
-            disabled={newUser.occupation === 'student'}
+            disabled={newUser.occupation === 'teacher'}
             className={style.teacherButton}
             type="button"
             onClick={() => {

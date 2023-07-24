@@ -71,6 +71,7 @@ export const usersService = {
     globalThis?.localStorage?.removeItem(USER_INFO)
     globalThis?.localStorage?.removeItem(ACCESS_TOKEN_KEY)
     destroyCookie(null, ACCESS_TOKEN_KEY)
+    destroyCookie(null, USER_INFO)
   },
 
   getUserInfo() {

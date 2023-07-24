@@ -11,9 +11,10 @@ export default function TeacherPage({ setTitle }: PageProps) {
   )
 }
 
-export async function getServerSideProps() {
-  const userInfo = await usersService.getUserInfo()
+export function getServerSideProps(context: any) {
+  const userInfo = usersService.getUserInfoByCookie(context)
   const hasPermition = userInfo.occupation === 'teacher'
+
   if (!hasPermition) {
     return {
       redirect: {
@@ -21,5 +22,8 @@ export async function getServerSideProps() {
         destination: '/404',
       },
     }
+  }
+  return {
+    props: {},
   }
 }

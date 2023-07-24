@@ -2,9 +2,9 @@ import { NextRequest } from 'next/server'
 import http from '../api/http'
 import { NewUser } from '../screens/CreateAccount'
 import { LoginUserData } from '../screens/Login'
-import { setCookie, destroyCookie } from 'nookies'
+import nookies, { setCookie, destroyCookie } from 'nookies'
 
-const USER_INFO = 'userInfo'
+const USER_INFO = 'userInfo:gestor-escolar'
 const ACCESS_TOKEN_KEY = ':gestor-escolar[v1]:'
 
 interface LoginParams {
@@ -61,6 +61,10 @@ export const usersService = {
       maxAge: 60 * 60 * 24 * 30,
       path: '/',
     })
+    setCookie(undefined, USER_INFO, JSON.stringify(userData), {
+      maxAge: 60 * 60 * 24 * 30,
+      path: '/',
+    })
   },
 
   async deleteToken() {
@@ -71,5 +75,9 @@ export const usersService = {
 
   getUserInfo() {
     return JSON.parse(globalThis?.localStorage?.getItem(USER_INFO) || '{}')
+  },
+  getUserInfoByCookie(context = null) {
+    const cookies = nookies.get(context)
+    return cookies ? JSON.parse(cookies[USER_INFO]) : null
   },
 }

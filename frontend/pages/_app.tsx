@@ -27,7 +27,12 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
       <main className={restrictLayout ? 'screensContainer' : 'loginContainer'}>
         {restrictLayout && (
-          <h2 className="titlePage">{title || 'Gestor escolar'}</h2>
+          <header>
+            <h2 className="titlePage">{title || 'Gestor escolar'}</h2>
+            <button className="logoutButton" type="button">
+              Sair
+            </button>
+          </header>
         )}
         <Component setTitle={setTitle} {...pageProps} />
       </main>

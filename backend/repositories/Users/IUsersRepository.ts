@@ -1,13 +1,13 @@
-import { Types } from 'mongoose'
+// import { Types } from 'mongoose'
 
 export interface NewUser {
   name: string
   email: string
   password: string
+  occupation: string
 }
 
 export interface User {
-  _id?: Types.ObjectId
   email: string
   password: string
 }

@@ -9,7 +9,12 @@ export class CreateNewUserService {
     this.usersRepository = productsRepository
   }
 
-  async execute({ name, email, password }: NewUser): Promise<NewUser> {
+  async execute({
+    name,
+    email,
+    password,
+    occupation,
+  }: NewUser): Promise<NewUser> {
     const alreadExistUser = await this.usersRepository.findByEmail(name)
 
     if (alreadExistUser) {
@@ -20,6 +25,7 @@ export class CreateNewUserService {
       name,
       email,
       password,
+      occupation,
     })
 
     return newProduct

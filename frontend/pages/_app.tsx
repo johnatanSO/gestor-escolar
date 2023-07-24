@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { AlertContextComponent } from '../src/contexts/alertContext'
 import { useState } from 'react'
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 config.autoAddCss = false
 
@@ -27,9 +29,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
       <main className={restrictLayout ? 'screensContainer' : 'loginContainer'}>
         {restrictLayout && (
-          <header>
-            <h2 className="titlePage">{title || 'Gestor escolar'}</h2>
-            <button className="logoutButton" type="button">
+          <header className="headerPage">
+            <h2>{title || 'Gestor escolar'}</h2>
+            <button type="button">
+              <FontAwesomeIcon className="icon" icon={faRightFromBracket} />
               Sair
             </button>
           </header>

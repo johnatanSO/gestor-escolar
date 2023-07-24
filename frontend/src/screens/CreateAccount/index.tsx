@@ -66,7 +66,10 @@ export function CreateAccount() {
       .register({ newUser })
       .then((res) => {
         usersService.saveUser(res.data.item)
-        router.push('/')
+        if (res.data?.item?.occupation === 'student')
+          return router.push('/student')
+        if (res.data?.item?.occupation === 'teacher')
+          return router.push('/teacher')
       })
       .catch((err) => {
         console.log('ERRO AO TENTAR CADASTRAR USUÁRIO, ', err)
@@ -75,8 +78,6 @@ export function CreateAccount() {
         setLoading(false)
       })
   }
-
-  console.log('NEW USER DATA, ', newUser)
 
   return (
     <div className={style.createAccountContainer}>

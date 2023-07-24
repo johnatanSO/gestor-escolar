@@ -55,9 +55,10 @@ export function Login() {
           open: 'true',
         })
         usersService.saveUser(res.data?.item)
-        if (res.data?.item?.occupation === 'student') router.push('/student')
-        if (res.data?.item?.occupation === 'teacher') router.push('/teacher')
-        router.push('/')
+        if (res.data?.item?.occupation === 'student')
+          return router.push('/student')
+        if (res.data?.item?.occupation === 'teacher')
+          return router.push('/teacher')
       })
       .catch((err) => {
         console.log('ERRO AO TENTAR REALIZAR LOGIN,', err)

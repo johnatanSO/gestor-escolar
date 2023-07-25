@@ -1,3 +1,4 @@
+import { IStudentsRepository } from '../repositories/Students/IStudentsRepository'
 import {
   IUsersRepository,
   NewUser,
@@ -5,8 +6,13 @@ import {
 
 export class CreateNewUserService {
   usersRepository: IUsersRepository
-  constructor(productsRepository: IUsersRepository) {
-    this.usersRepository = productsRepository
+  studentsRepository: IStudentsRepository
+  constructor(
+    usersRepository: IUsersRepository,
+    studentsRepository: IStudentsRepository,
+  ) {
+    this.usersRepository = usersRepository
+    this.studentsRepository = studentsRepository
   }
 
   async execute({
@@ -21,13 +27,17 @@ export class CreateNewUserService {
       throw new Error('Já existe um usuário cadastrado com este e-mail!')
     }
 
-    const newProduct = this.usersRepository.create({
+    const newUser = this.usersRepository.create({
       name,
       email,
       password,
       occupation,
     })
 
-    return newProduct
+    if (occupation === 'student') {
+      this.studentsRepository.create(name)
+    }
+
+    return newUser
   }
 }

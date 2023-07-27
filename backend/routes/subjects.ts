@@ -12,12 +12,12 @@ subjectsRoutes.get('/', async (req: Request, res: Response) => {
 
     res.status(200).json({
       items: subjects,
-      message: 'Usuário autenticado',
+      message: 'Busca concluída com sucesso',
     })
   } catch (err) {
     res
       .status(400)
-      .json({ error: err, message: 'Usuário não autenticado', token: null })
+      .json({ error: err, message: 'Erro ao tentar realizar busca' })
   }
 })
 

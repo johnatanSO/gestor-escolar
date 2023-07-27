@@ -14,7 +14,10 @@ export class CreateNewSubjectService {
       throw new Error('O nome da disciplina não foi informado.')
     }
 
-    const newSubject = this.subjectsRepository.create({ name })
+    const entries = await this.subjectsRepository.getEntries()
+    const code = (entries + 1).toString()
+
+    const newSubject = this.subjectsRepository.create({ code, name })
     return newSubject
   }
 }

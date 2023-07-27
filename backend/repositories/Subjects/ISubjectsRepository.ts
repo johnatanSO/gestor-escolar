@@ -2,6 +2,7 @@ import { Types } from 'mongoose'
 
 export interface NewSubject {
   name: string
+  code: string
 }
 
 export interface Subject {
@@ -18,4 +19,5 @@ export interface ISubjectsRepository {
   list: () => Promise<Subject[]>
   create: (newSubjectData: NewSubject) => Promise<NewSubject>
   insertStudent: (insertStudentParams: InsertStudentParams) => void
+  getEntries: () => Promise<number>
 }

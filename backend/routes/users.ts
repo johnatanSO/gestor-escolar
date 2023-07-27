@@ -2,9 +2,11 @@ import express, { Request, Response } from 'express'
 import { CreateNewUserService } from '../services/CreateNewUserService.service'
 import { UsersRepository } from '../repositories/Users/UsersRepository'
 import { AuthenticateUserService } from '../services/AuthenticateUserService.service'
+import { StudentsRepository } from '../repositories/Students/StudentsRepository'
 const usersRoutes = express.Router()
 
 const usersRepository = new UsersRepository()
+const studentsRepository = new StudentsRepository()
 
 usersRoutes.get('/session', async (req: Request, res: Response) => {
   try {
@@ -23,7 +25,10 @@ usersRoutes.get('/session', async (req: Request, res: Response) => {
 usersRoutes.post('/register', async (req: Request, res: Response) => {
   const { name, email, password, occupation } = req.body
   try {
-    const createNewUserService = new CreateNewUserService(usersRepository)
+    const createNewUserService = new CreateNewUserService(
+      usersRepository,
+      studentsRepository,
+    )
     const newProduct = await createNewUserService.execute({
       name,
       email,

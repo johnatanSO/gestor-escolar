@@ -11,8 +11,8 @@ export class SubjectsRepository implements ISubjectsRepository {
     return subjects
   }
 
-  async create({ name }: NewSubject): Promise<any> {
-    const newSubject = new SubjectModel({ name })
+  async create({ code, name }: NewSubject): Promise<any> {
+    const newSubject = new SubjectModel({ code, name })
     await newSubject.save()
 
     return newSubject
@@ -23,5 +23,9 @@ export class SubjectsRepository implements ISubjectsRepository {
       { _id: subjectId },
       { $push: { students: studentsIds } },
     )
+  }
+
+  async getEntries() {
+    return SubjectModel.countDocuments()
   }
 }

@@ -36,32 +36,5 @@
   margin-bottom: 3rem;
   list-style-type: none;
 
-  li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-
-    transition: filter .2s;
-    cursor: pointer;
-
-    .imageContainer {
-      background-color: $gray-color-100;
-      border: 8px solid $gray-color-200;
-
-      border-radius: 50%;
-
-      width: 150px;
-      height: 150px;
-      padding: 1.3rem;
-
-      .image {
-        margin: 0px;
-      }
-    }
-
-    &:hover{
-      filter: brightness(0.9);
-    }
-  }
+  
 }

@@ -11,12 +11,12 @@
 
   width: 100%;
 
-  background: $gray-color-500;
+  background: $gray-color-200;
   color: $gray-color-300;
   box-shadow: 1px 4px 7px rgba(0, 0, 0, 0.334);
 
   border-radius: 15px;
-  padding: 45px 10px;
+  padding: 45px 10px !important;
   margin-top: 20px;
 
   h2 {

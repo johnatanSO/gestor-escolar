@@ -8,8 +8,8 @@ import {
 export const CustomTextField = styled(TextField)({
   [`& .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]: {
     borderRadius: '10px',
-    borderColor: '#c4c4cc',
-    color: '#c4c4cc',
+    borderColor: '#323238',
+    color: '#323238',
     fontWeight: '500',
   },
   [`& .Mui-error .${outlinedInputClasses.notchedOutline}`]: {
@@ -20,7 +20,7 @@ export const CustomTextField = styled(TextField)({
   [`&:hover .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]:
     {
       // Style da borda com hover
-      borderColor: '#aaaaaa',
+      borderColor: '#5b5b63',
     },
   [`&:hover .Mui-error .${outlinedInputClasses.notchedOutline}`]: {
     // Style da borda com hover
@@ -37,7 +37,7 @@ export const CustomTextField = styled(TextField)({
   },
   [`&:hover .${outlinedInputClasses.input}`]: {
     // Style do valor com hover.
-    color: '#7c7c8a',
+    color: '#5b5b63',
   },
   [`& .${outlinedInputClasses.root}.${outlinedInputClasses.focused} .${outlinedInputClasses.input}`]:
     {

@@ -8,11 +8,11 @@ import { Loading } from '../Loading'
 interface Props {
   title: string
   open: boolean
-  submitButtonText: string
-  handleClose: () => void
+  submitButtonText?: string
   children: ReactNode
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void
-  loading: boolean
+  handleClose: () => void
+  onSubmit?: (event: FormEvent<HTMLFormElement>) => void
+  loading?: boolean
   customStyle?: any
 }
 export function ModalLayout({
@@ -45,11 +45,13 @@ export function ModalLayout({
         <Box className={style.mainContent} component="main">
           {children}
         </Box>
-        <Box className={style.footer} component="footer">
-          <button disabled={loading} type="submit">
-            {loading ? <Loading /> : submitButtonText || 'Confirmar'}
-          </button>
-        </Box>
+        {onSubmit && (
+          <Box className={style.footer} component="footer">
+            <button disabled={loading} type="submit">
+              {loading ? <Loading /> : submitButtonText || 'Confirmar'}
+            </button>
+          </Box>
+        )}
       </Box>
     </Modal>
   )

@@ -6,13 +6,15 @@
   justify-content: center;
 
   .container {
-    background: $gray-color-400;
-    box-shadow: 1px 7px 10px rgb(0 0 0 / 1);
+    background: $gray-color-100;
+    box-shadow: 1px 7px 15px rgb(0 0 0 / 0.3);
+    outline: none;
 
     border-radius: 10px;
     padding: 20px;
 
     max-width: 80%;
+    min-width: 40%;
 
     display: flex;
     flex-direction: column;
@@ -25,7 +27,7 @@
       gap: 30px;
 
       .closeButton {
-        height: 1.3rem;
+        height: 1.6rem;
         color: $red-color-500;
 
         cursor: pointer;
@@ -38,7 +40,7 @@
     }
 
     .mainContent {
-      background: $gray-color-500;
+      background: $gray-color-200;
       border-radius: 10px;
       padding: 15px;
     }
@@ -53,7 +55,7 @@
         font-size: 0.8rem;
 
         border: none;
-        box-shadow: 1px 3px 5px rgb(0 0 0 / 0.5);
+        box-shadow: 1px 3px 5px rgb(0 0 0 / 0.2);
         background: $primary-color;
         color: $white-color;
 

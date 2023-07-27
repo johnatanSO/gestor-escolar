@@ -1,0 +1,120 @@
+import { subjectsService } from '../../services/subjectsService'
+import { HeaderPage } from '../../components/HeaderPage'
+import { useContext, useEffect, useState } from 'react'
+import { ModalCreateNewSubject } from './ModalCreateNewSubject'
+import { TableComponent } from '../../../src/components/TableComponent'
+import { Column } from '../../../src/models/columns'
+import { useColumns } from './hooks/useColumns'
+import { EmptyItems } from '../../../src/components/EmptyItems'
+import { useRouter } from 'next/router'
+import { AlertContext } from '../../../src/contexts/alertContext'
+
+export interface Subject {
+  _id: string
+  name: string
+  students: string[]
+}
+
+export function Subjects() {
+  const {
+    alertDialogConfirmConfigs,
+    setAlertDialogConfirmConfigs,
+    alertNotifyConfigs,
+    setAlertNotifyConfigs,
+  } = useContext(AlertContext)
+  const [subjects, setSubjects] = useState<Subject[]>([])
+  const [loadingSubjects, setLoadingSubjects] = useState<boolean>(true)
+  const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
+  const router = useRouter()
+
+  console.log('subjects, ', subjects)
+
+  function getSubjects() {
+    setLoadingSubjects(true)
+    subjectsService
+      .getAll()
+      .then((res) => {
+        setSubjects(res.data.items)
+      })
+      .catch((err) => {
+        console.log('ERRO AO BUSCAR DISCIPLINAS, ', err)
+      })
+      .finally(() => {
+        setLoadingSubjects(false)
+      })
+  }
+
+  useEffect(() => {
+    getSubjects()
+  }, [])
+
+  function handleDeleteSubject(subject: Subject) {
+    setAlertDialogConfirmConfigs({
+      ...alertDialogConfirmConfigs,
+      open: true,
+      title: 'Alerta de confirmação',
+      text: 'Deseja realmente excluir esta disciplina?',
+      onClickAgree: () => {
+        subjectsService
+          .delete({ idSubject: subject?._id })
+          .then(() => {
+            setAlertNotifyConfigs({
+              ...alertNotifyConfigs,
+              open: true,
+              type: 'success',
+              text: 'Disciplina excluída com sucesso',
+            })
+            router.push({
+              pathname: router.route,
+              query: router.query,
+            })
+          })
+          .catch((err) => {
+            setAlertNotifyConfigs({
+              ...alertNotifyConfigs,
+              open: true,
+              type: 'error',
+              text: `Erro ao tentar excluir disciplina (${err.response.data.error})`,
+            })
+          })
+      },
+    })
+  }
+
+  const columns: Column[] = useColumns({
+    handleDeleteSubject,
+  })
+
+  return (
+    <>
+      <HeaderPage
+        onClickFunction={() => {
+          setFormModalOpened(true)
+        }}
+        buttonText="Nova disciplina"
+      />
+
+      {subjects?.length > 0 && (
+        <TableComponent
+          loading={loadingSubjects}
+          columns={columns}
+          rows={subjects}
+        />
+      )}
+
+      {subjects?.length === 0 && !loadingSubjects && (
+        <EmptyItems text="Nenhuma disciplina foi encontrada" />
+      )}
+
+      {formModalOpened && (
+        <ModalCreateNewSubject
+          subjectDataToEdit={undefined as any}
+          open={formModalOpened}
+          handleClose={() => {
+            setFormModalOpened(false)
+          }}
+        />
+      )}
+    </>
+  )
+}

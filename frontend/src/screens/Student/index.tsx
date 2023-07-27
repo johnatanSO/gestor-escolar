@@ -4,8 +4,10 @@ import studentImage from '../../../public/assets/student.png'
 import notesImage from '../../../public/assets/notepad.png'
 import warningImage from '../../../public/assets/warning.png'
 import timetableImage from '../../../public/assets/timetable.png'
+import { usersService } from '../../services/usersService'
 
 export function Student() {
+  const studentData = usersService.getUserInfo()
   return (
     <>
       <div className={style.avatarContainer}>
@@ -16,7 +18,7 @@ export function Student() {
             className={style.image}
           />
         </div>
-        <h3>nome</h3>
+        <h3>{studentData?.name || '--'}</h3>
       </div>
 
       <ul className={style.buttonsContainer}>

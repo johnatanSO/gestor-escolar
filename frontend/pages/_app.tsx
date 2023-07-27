@@ -7,6 +7,7 @@ import { AlertContextComponent } from '../src/contexts/alertContext'
 import { useState } from 'react'
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { usersService } from '../src/services/usersService'
 
 config.autoAddCss = false
 
@@ -20,6 +21,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const restrictLayout =
     router.route !== '/login' && router.route !== '/createAccount'
 
+  function logout() {
+    usersService.deleteToken()
+    router.push('/login')
+  }
+
   return (
     <AlertContextComponent>
       <Head>
@@ -31,7 +37,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         {restrictLayout && (
           <header className="headerPage">
             <h2>{title || 'Gestor escolar'}</h2>
-            <button type="button">
+            <button onClick={logout} type="button">
               <FontAwesomeIcon className="icon" icon={faRightFromBracket} />
               Sair
             </button>

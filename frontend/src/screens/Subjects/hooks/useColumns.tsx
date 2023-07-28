@@ -23,15 +23,18 @@ export function useColumns({
     {
       headerName: 'Código',
       field: 'code',
-      valueFormatter: (params: CellFunctionParams) => {
-        console.log('params', params.value)
-        return params.value
-      },
+      valueFormatter: (params: CellFunctionParams) => params.value || '--',
     },
     {
       headerName: 'Nome da disciplina',
       field: 'name',
       valueFormatter: (params: CellFunctionParams) => params.value || '--',
+    },
+    {
+      headerName: 'Quantidade de alunos',
+      field: 'students',
+      valueFormatter: (params: CellFunctionParams) =>
+        params?.value?.length || 0,
     },
     {
       headerName: '',

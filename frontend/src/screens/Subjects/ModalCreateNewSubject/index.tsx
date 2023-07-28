@@ -52,7 +52,10 @@ export function ModalCreateNewSubject({
     subjectsService
       .create({ newSubjectData })
       .then(() => {
-        router.push(router.route)
+        router.push({
+          pathname: router.route,
+          query: router.query,
+        })
         console.log('AAAAA')
         setNewSubjectData(defaultNewSubjectValues)
         handleClose()

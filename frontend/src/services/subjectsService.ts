@@ -1,10 +1,24 @@
 import http from '../api/http'
+import { NewSubjectData } from '../screens/Subjects/ModalCreateNewSubject'
+
+interface CreateParams {
+  newSubjectData: NewSubjectData
+}
+
+interface UpdateParams {
+  subjectData: NewSubjectData
+}
+
+interface DeleteParams {
+  idSubject: string
+}
 
 export const subjectsService = {
-  getAll() {
-    return http.get('/subjects/')
+  async getAll() {
+    return await http.get('/subjects/')
   },
-  async create({ newSubjectData }: any) {
+
+  async create({ newSubjectData }: CreateParams) {
     const body = {
       ...newSubjectData,
     }
@@ -12,10 +26,14 @@ export const subjectsService = {
       ...body,
     })
   },
-  update({ subjectData }: any) {
+
+  update({ subjectData }: UpdateParams) {
     return http.put('/subjects/')
   },
-  delete({ idSubject }: any) {
-    return http.delete('/subjects/')
+
+  async delete({ idSubject }: DeleteParams) {
+    return await http.delete('/subjects/', {
+      params: { idSubject },
+    })
   },
 }

@@ -46,7 +46,7 @@ export function Subjects() {
 
   useEffect(() => {
     getSubjects()
-  }, [])
+  }, [router.query])
 
   function handleDeleteSubject(subject: Subject) {
     setAlertDialogConfirmConfigs({

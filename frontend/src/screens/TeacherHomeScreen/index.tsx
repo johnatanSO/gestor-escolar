@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import style from './Teacher.module.scss'
+import style from './TeacherHomeScreen.module.scss'
 import Image from 'next/image'
 import teacherImage from '../../../public/assets/teacher.png'
 import notesImage from '../../../public/assets/notepad.png'
@@ -10,23 +10,26 @@ import { usersService } from '../../services/usersService'
 import { ButtonComponent } from '../../components/ButtonComponent'
 import { useRouter } from 'next/router'
 
-export function Teacher() {
+export function TeacherHomeScreen() {
   const router = useRouter()
   const [teacherData, setTeacherData] = useState<any>(undefined)
   const buttonsList: any[] = [
     {
       image: notesImage,
       alt: 'Botão de notas',
-      title: 'Alunos',
+      title: 'Notas',
+      onClickCallback: () => {
+        router.push('/teacher/subjectsGrades')
+      },
     },
     { image: warningImage, alt: 'Botão de dvertências', title: 'Advertências' },
     { image: timetableImage, alt: 'Botão de faltas', title: 'Faltas' },
     {
       image: registerImage,
       alt: 'Botão de registro',
-      title: 'Disciplinas',
+      title: 'Cadastrar alunos',
       onClickCallback: () => {
-        router.push('/subjects')
+        router.push('/teacher/insertStudents')
       },
     },
   ]

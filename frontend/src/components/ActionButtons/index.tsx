@@ -1,8 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import style from './ActionButtons.module.scss'
 
+interface Action {
+  icon: any
+  title: string
+  color?: string
+  onClickFunction: (data?: any) => void
+}
+
 type Props = {
-  actions: any[]
+  actions: Action[]
   params: any
 }
 
@@ -15,6 +22,7 @@ export function ActionButtons({ actions, params }: Props) {
             style={{ color: action?.color || '' }}
             key={key}
             type="button"
+            title={action?.title}
             disabled={params?.data?.status === 'canceled'}
             onClick={() => {
               action?.onClickFunction?.(params.data)

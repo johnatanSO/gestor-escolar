@@ -1,5 +1,5 @@
 import http from '../api/http'
-import { NewSubjectData } from '../screens/Subjects/ModalCreateNewSubject'
+import { NewSubjectData } from '../screens/InsertStudents/ModalCreateNewSubject'
 
 interface CreateParams {
   newSubjectData: NewSubjectData
@@ -16,6 +16,10 @@ interface DeleteParams {
 export const studentsService = {
   async getAll() {
     return await http.get('/students/')
+  },
+
+  async getBySubject(idSubject: string) {
+    return await http.get('/students/getBySubject/' + idSubject)
   },
 
   async create({ newSubjectData }: CreateParams) {

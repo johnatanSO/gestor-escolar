@@ -5,26 +5,21 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { AlertContextComponent } from '../src/contexts/alertContext'
 import { useState } from 'react'
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { usersService } from '../src/services/usersService'
+import { HeaderMenu } from '../src/layout/HeaderMenu'
 
 config.autoAddCss = false
 
 export interface PageProps {
   setTitle: (title: string) => void
+  setShowBackButton: (show: boolean) => void
 }
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
-  const [title, setTitle] = useState('Gestor escolar')
+  const [title, setTitle] = useState<string>('Gestor escolar')
+  const [showBackButton, setShowBackButton] = useState<boolean>(false)
   const restrictLayout =
     router.route !== '/login' && router.route !== '/createAccount'
-
-  function logout() {
-    usersService.deleteToken()
-    router.push('/login')
-  }
 
   return (
     <AlertContextComponent>
@@ -35,15 +30,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
       <main className={restrictLayout ? 'screensContainer' : 'loginContainer'}>
         {restrictLayout && (
-          <header className="headerPage">
-            <h2>{title || 'Gestor escolar'}</h2>
-            <button onClick={logout} type="button">
-              <FontAwesomeIcon className="icon" icon={faRightFromBracket} />
-              Sair
-            </button>
-          </header>
+          <HeaderMenu showBackButton={showBackButton} title={title} />
         )}
-        <Component setTitle={setTitle} {...pageProps} />
+        <Component
+          setTitle={setTitle}
+          setShowBackButton={setShowBackButton}
+          {...pageProps}
+        />
       </main>
     </AlertContextComponent>
   )

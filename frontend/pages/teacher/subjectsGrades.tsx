@@ -1,12 +1,12 @@
-import { Subjects } from '../src/screens/Subjects'
-import { usersService } from '../src/services/usersService'
-import { PageProps } from './_app'
+import { SubjectsGrades } from '../../src/screens/SubjectsGrades'
+import { usersService } from '../../src/services/usersService'
+import { PageProps } from './../_app'
 
-export default function NewSubjectPage({ setTitle }: PageProps) {
-  setTitle('Professor')
+export default function SubjectsGradesPage({ setShowBackButton }: PageProps) {
+  setShowBackButton(true)
   return (
     <>
-      <Subjects />
+      <SubjectsGrades />
     </>
   )
 }

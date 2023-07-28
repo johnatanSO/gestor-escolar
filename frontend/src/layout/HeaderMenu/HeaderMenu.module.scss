@@ -1,0 +1,61 @@
+@import "../../../styles/colors.scss";
+
+.headerPage {
+  margin: 0.8rem 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logoutButton {
+    background: $red-color-500;
+    color: white;
+
+    border: none;
+    padding: 0.5rem 0.8rem;
+    line-height: 1;
+    border-radius: 8px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: filter 0.2s;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .icon {
+      height: 1rem;
+    }
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+
+  .backButton {
+    background: $gray-color-200;
+    color: $gray-color-400;
+    font-weight: 600;
+
+    border: none;
+    padding: 0.5rem 0.8rem;
+    line-height: 1;
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: filter 0.2s;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .icon {
+      height: 1rem;
+    }
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+}

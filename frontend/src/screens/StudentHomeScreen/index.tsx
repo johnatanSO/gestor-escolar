@@ -1,4 +1,4 @@
-import style from './Student.module.scss'
+import style from './StudentHomeScreen.module.scss'
 import Image from 'next/image'
 import studentImage from '../../../public/assets/student.png'
 import notesImage from '../../../public/assets/notepad.png'
@@ -6,7 +6,7 @@ import warningImage from '../../../public/assets/warning.png'
 import timetableImage from '../../../public/assets/timetable.png'
 import { usersService } from '../../services/usersService'
 
-export function Student() {
+export function StudentHomeScreen() {
   const studentData = usersService.getUserInfo()
   return (
     <>

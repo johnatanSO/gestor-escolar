@@ -16,7 +16,7 @@ export interface Subject {
   students: string[]
 }
 
-export function Subjects() {
+export function InsertStudents() {
   const {
     alertDialogConfirmConfigs,
     setAlertDialogConfirmConfigs,
@@ -101,6 +101,7 @@ export function Subjects() {
           setFormModalOpened(true)
         }}
         buttonText="Nova disciplina"
+        InputFilter={<h3>Disciplinas</h3>}
       />
 
       {subjects?.length > 0 && (

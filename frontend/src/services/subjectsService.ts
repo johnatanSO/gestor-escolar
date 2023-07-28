@@ -47,7 +47,7 @@ export const subjectsService = {
     subjectId,
   }: InsertStudentsParams) {
     const body = {
-      ...selectedStudentsIds,
+      studentsIds: selectedStudentsIds,
       subjectId,
     }
     return http.put('/subjects/insertStudents', {

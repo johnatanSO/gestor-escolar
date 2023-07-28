@@ -1,12 +1,16 @@
-import { Teacher } from '../src/screens/Teacher'
-import { usersService } from '../src/services/usersService'
-import { PageProps } from './_app'
+import { TeacherHomeScreen } from '../../src/screens/TeacherHomeScreen'
+import { usersService } from '../../src/services/usersService'
+import { PageProps } from '../_app'
 
-export default function TeacherPage({ setTitle }: PageProps) {
+export default function TeacherPage({
+  setTitle,
+  setShowBackButton,
+}: PageProps) {
   setTitle('Professor')
+  setShowBackButton(false)
   return (
     <>
-      <Teacher />
+      <TeacherHomeScreen />
     </>
   )
 }

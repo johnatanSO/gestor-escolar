@@ -2,12 +2,14 @@ import { Types } from 'mongoose'
 
 export interface NewSubject {
   name: string
-  code: string
+  code?: string
 }
 
 export interface Subject {
+  _id?: Types.ObjectId
+  code?: string
   name: string
-  students: Types.ObjectId
+  students?: string[]
 }
 
 export interface InsertStudentParams {
@@ -17,7 +19,9 @@ export interface InsertStudentParams {
 
 export interface ISubjectsRepository {
   list: () => Promise<Subject[]>
-  create: (newSubjectData: NewSubject) => Promise<NewSubject>
+  create: (newSubjectData: NewSubject) => Promise<any>
+  findById: (idSubject: string | Types.ObjectId) => Promise<Subject | null>
+  delete: (idSubject: string) => void
   insertStudent: (insertStudentParams: InsertStudentParams) => void
   getEntries: () => Promise<number>
 }

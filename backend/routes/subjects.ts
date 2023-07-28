@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import { SubjectsRepository } from '../repositories/Subjects/SubjectsRepository'
 import { CreateNewSubjectService } from '../services/CreateNewSubjectService.service'
+import { DeleteSubjectService } from '../services/DeleteSubjectService.service'
 import { InsertStudentInSubjectService } from '../services/InsertStudentInSubjectService.service'
 const subjectsRoutes = express.Router()
 
@@ -39,6 +40,22 @@ subjectsRoutes.post('/', async (req: Request, res: Response) => {
     res
       .status(400)
       .json({ error: err, message: 'Erro ao tentar cadastrar disciplina' })
+  }
+})
+
+subjectsRoutes.delete('/', async (req: Request, res: Response) => {
+  try {
+    const { idSubject } = req.query as any
+    const deleteSubjectService = new DeleteSubjectService(subjectsRepository)
+    await deleteSubjectService.execute(idSubject)
+
+    res.status(202).json({
+      message: 'Disciplina excluída com sucesso',
+    })
+  } catch (err) {
+    res
+      .status(400)
+      .json({ error: err, message: 'Erro ao tentar excluír disciplina' })
   }
 })
 

@@ -3,16 +3,24 @@ import {
   ISubjectsRepository,
   InsertStudentParams,
   NewSubject,
+  Subject,
 } from './ISubjectsRepository'
 
 export class SubjectsRepository implements ISubjectsRepository {
-  async list(): Promise<any[]> {
-    const subjects = await SubjectModel.find()
-    return subjects
+  async list(): Promise<Subject[]> {
+    return await SubjectModel.find()
   }
 
-  async create({ code, name }: NewSubject): Promise<any> {
-    const newSubject = new SubjectModel({ code, name })
+  async findById(subjectId: string): Promise<Subject | null> {
+    return await SubjectModel.findOne({ _id: subjectId })
+  }
+
+  async delete(idSubject: string) {
+    await SubjectModel.deleteOne({ _id: idSubject })
+  }
+
+  async create(SubjectData: NewSubject): Promise<any> {
+    const newSubject = new SubjectModel(SubjectData)
     await newSubject.save()
 
     return newSubject

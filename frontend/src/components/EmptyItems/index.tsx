@@ -5,11 +5,12 @@ import { faSquareXmark } from '@fortawesome/free-solid-svg-icons'
 interface EmpytItems {
   text: string
   icon?: any
+  customStyle?: any
 }
 
-export function EmptyItems({ text, icon }: EmpytItems) {
+export function EmptyItems({ text, icon, customStyle }: EmpytItems) {
   return (
-    <div className={style.emptyItemsContainer}>
+    <div style={customStyle} className={style.emptyItemsContainer}>
       <h2>{text}</h2>
       <FontAwesomeIcon
         style={{ height: '4.5rem' }}

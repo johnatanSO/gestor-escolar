@@ -24,19 +24,13 @@ export function useColumns({ handleShowStudents }: Params): Column[] {
       valueFormatter: (params: CellFunctionParams) => params.value || '--',
     },
     {
-      headerName: 'Nome do aluno',
+      headerName: 'Nome da disciplina',
       field: 'name',
       valueFormatter: (params: CellFunctionParams) => params.value || '--',
     },
     {
-      headerName: 'Quantidade de faltas',
-      field: 'absences',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.length || 0,
-    },
-    {
-      headerName: 'Quantidade de advertências',
-      field: 'warnings',
+      headerName: 'Quantidade de alunos',
+      field: 'students',
       valueFormatter: (params: CellFunctionParams) =>
         params?.value?.length || 0,
     },

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import style from './ModalStudents.module.scss'
 import { Subject } from '..'
 import { studentsService } from '../../../services/studentsService'
+import { EmptyItems } from '../../../components/EmptyItems'
 
 interface Props {
   subjectData: Subject
@@ -64,32 +65,40 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
       title="Notas"
       loading={loadingGetStudents}
     >
-      {students.length === 0 && loadingGetStudents && 'CARREGANDO...'}
-      {students.length > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th>Disciplina</th>
-              <th>Nota 1</th>
-              <th>Nota 2</th>
-              <th>Nota final</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students?.map((student) => {
-              return (
-                <tr key={student._id}>
-                  <td>{student?.name || '--'}</td>
+      <div className={style.fieldsContainer}>
+        {students?.length === 0 && loadingGetStudents && 'CARREGANDO...'}
+        {students?.length > 0 && (
+          <table>
+            <thead>
+              <tr>
+                <th>Aluno</th>
+                <th>Nota 1</th>
+                <th>Nota 2</th>
+                <th>Nota final</th>
+              </tr>
+            </thead>
+            <tbody>
+              {students?.map((student) => {
+                return (
+                  <tr key={student._id}>
+                    <td>{student?.name || '--'}</td>
 
-                  <td>{student?.grades?.firstGrade || '--'}</td>
-                  <td>{student?.grades?.secondGrade || '--'}</td>
-                  <td>{student?.grades?.totalGrade || '--'}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      )}
+                    <td>{student?.grades?.firstGrade || '--'}</td>
+                    <td>{student?.grades?.secondGrade || '--'}</td>
+                    <td>{student?.grades?.totalGrade || '--'}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        )}
+        {students?.length === 0 && !loadingGetStudents && (
+          <EmptyItems
+            customStyle={{ boxShadow: 'none' }}
+            text="Nenhum estudante cadastrado nesta disciplina"
+          />
+        )}
+      </div>
       <table className={style.fieldsContainer}></table>
     </ModalLayout>
   )

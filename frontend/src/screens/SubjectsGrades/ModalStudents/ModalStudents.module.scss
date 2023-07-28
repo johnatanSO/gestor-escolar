@@ -1,17 +1,38 @@
-@import '../../../../styles/colors.scss';
+@import "../../../../styles/colors.scss";
 
-.fieldsContainer{
+.fieldsContainer {
   display: flex;
   flex-direction: column;
+
   gap: 7px;
 
   list-style-type: none;
 
-  li{
-    background: $gray-color-100;
-    box-shadow: 1px 3px 5px rgb(0 0 0 / 0.1);
+  table {
+    border-collapse: collapse;
 
-    border-radius: 10px;
-    padding: 0.4rem 0.7rem;
+    thead {
+      tr {
+        th {
+          padding: 0rem 0.6rem;
+          white-space: nowrap;
+          text-align: left;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        background: $gray-color-100;
+        box-shadow: 1px 3px 7px rgb(0 0 0 / 0.2);
+
+        border-radius: 10px;
+
+        td {
+          padding: 0.4rem 0.6rem;
+          white-space: nowrap;
+        }
+      }
+    }
   }
 }

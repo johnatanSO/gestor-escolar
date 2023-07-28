@@ -6,7 +6,13 @@ export interface Student {
   subjects: string[]
 }
 
+export interface NewStudent {
+  name: string
+  code: string
+}
+
 export interface IStudentsRepository {
   list: () => Promise<Student[]>
-  create: (name: string) => void
+  create: (newStudentData: NewStudent) => void
+  getEntries: () => Promise<number>
 }

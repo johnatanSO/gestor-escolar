@@ -1,5 +1,5 @@
 import { StudentModel } from '../../models/student'
-import { IStudentsRepository } from './IStudentsRepository'
+import { IStudentsRepository, NewStudent } from './IStudentsRepository'
 
 export class StudentsRepository implements IStudentsRepository {
   async list(): Promise<any[]> {
@@ -7,8 +7,12 @@ export class StudentsRepository implements IStudentsRepository {
     return students
   }
 
-  async create(name: string) {
-    const newStudent = new StudentModel({ name })
+  async getEntries(): Promise<number> {
+    return await StudentModel.countDocuments()
+  }
+
+  async create(newStudentData: NewStudent) {
+    const newStudent = new StudentModel(newStudentData)
     await newStudent.save()
   }
 }

@@ -19,4 +19,24 @@ studentsRoutes.get('/', async (req: Request, res: Response) => {
   }
 })
 
+studentsRoutes.get(
+  '/getBySubject/:idSubject',
+  async (req: Request, res: Response) => {
+    try {
+      const { idSubject } = req.params
+      console.log('ID SUBJECT', idSubject)
+      const students = await studentsRepository.list()
+
+      res.status(200).json({
+        items: students,
+        message: 'Busca concluída com sucesso.',
+      })
+    } catch (err) {
+      res
+        .status(400)
+        .json({ error: err, message: 'Erro ao tentar buscar alunos.' })
+    }
+  },
+)
+
 export { studentsRoutes }

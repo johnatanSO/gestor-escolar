@@ -27,7 +27,7 @@ export class SubjectsRepository implements ISubjectsRepository {
   }
 
   async insertStudent({ studentsIds, subjectId }: InsertStudentParams) {
-    SubjectModel.updateOne(
+    await SubjectModel.updateOne(
       { _id: subjectId },
       { $set: { students: studentsIds } },
     )

@@ -35,7 +35,10 @@ export class CreateNewUserService {
     })
 
     if (occupation === 'student') {
-      this.studentsRepository.create(name)
+      const entries = await this.studentsRepository.getEntries()
+      const code = (entries + 1).toString()
+
+      this.studentsRepository.create({ name, code })
     }
 
     return newUser

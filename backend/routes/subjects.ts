@@ -70,7 +70,7 @@ subjectsRoutes.put('/insertStudents', async (req: Request, res: Response) => {
       subjectId,
     })
 
-    res.status(201).json({
+    res.status(202).json({
       message: 'Estudante(s) foram inseridos na disciplina com sucesso.',
     })
   } catch (err) {

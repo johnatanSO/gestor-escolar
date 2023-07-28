@@ -59,7 +59,7 @@ subjectsRoutes.delete('/', async (req: Request, res: Response) => {
   }
 })
 
-subjectsRoutes.put('/insertStudent', async (req: Request, res: Response) => {
+subjectsRoutes.put('/insertStudents', async (req: Request, res: Response) => {
   try {
     const { studentsIds, subjectId } = req.body as any
     const insertStudentInSubjectService = new InsertStudentInSubjectService(

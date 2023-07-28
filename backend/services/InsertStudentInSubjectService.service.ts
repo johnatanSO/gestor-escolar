@@ -10,8 +10,8 @@ export class InsertStudentInSubjectService {
   }
 
   async execute({ studentsIds, subjectId }: InsertStudentParams) {
-    if (studentsIds.length === 0) {
-      throw new Error('Nenhum aluno selecionado')
+    if (!subjectId) {
+      throw new Error('Nenhuma disciplina selecionada.')
     }
 
     this.subjectsRepository.insertStudent({

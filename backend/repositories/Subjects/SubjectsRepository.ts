@@ -29,7 +29,7 @@ export class SubjectsRepository implements ISubjectsRepository {
   async insertStudent({ studentsIds, subjectId }: InsertStudentParams) {
     SubjectModel.updateOne(
       { _id: subjectId },
-      { $push: { students: studentsIds } },
+      { $set: { students: studentsIds } },
     )
   }
 

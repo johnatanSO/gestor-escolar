@@ -13,14 +13,9 @@ interface DeleteParams {
   idSubject: string
 }
 
-interface InsertStudentsParams {
-  selectedStudentsIds: string[]
-  subjectId: string
-}
-
-export const subjectsService = {
+export const studentsService = {
   async getAll() {
-    return await http.get('/subjects/')
+    return await http.get('/students/')
   },
 
   async create({ newSubjectData }: CreateParams) {
@@ -32,26 +27,13 @@ export const subjectsService = {
     })
   },
 
-  async update({ subjectData }: UpdateParams) {
+  update({ subjectData }: UpdateParams) {
     return http.put('/subjects/')
   },
 
   async delete({ idSubject }: DeleteParams) {
     return await http.delete('/subjects/', {
       params: { idSubject },
-    })
-  },
-
-  async insertStudents({
-    selectedStudentsIds,
-    subjectId,
-  }: InsertStudentsParams) {
-    const body = {
-      ...selectedStudentsIds,
-      subjectId,
-    }
-    return http.put('/subjects/insertStudents', {
-      ...body,
     })
   },
 }

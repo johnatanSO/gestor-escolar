@@ -8,6 +8,7 @@ import { useColumns } from './hooks/useColumns'
 import { EmptyItems } from '../../../src/components/EmptyItems'
 import { useRouter } from 'next/router'
 import { AlertContext } from '../../../src/contexts/alertContext'
+import { ModalAddStudents } from './ModalAddStudents'
 
 export interface Subject {
   _id: string
@@ -23,11 +24,14 @@ export function Subjects() {
     setAlertNotifyConfigs,
   } = useContext(AlertContext)
   const [subjects, setSubjects] = useState<Subject[]>([])
+  const [selectedSubject, setSelectedSubject] = useState<Subject | undefined>(
+    undefined,
+  )
+  const [modalAddStudentsOpened, setModalAddStudentsOpened] =
+    useState<boolean>(true)
   const [loadingSubjects, setLoadingSubjects] = useState<boolean>(true)
   const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
   const router = useRouter()
-
-  console.log('subjects, ', subjects)
 
   function getSubjects() {
     setLoadingSubjects(true)
@@ -80,9 +84,14 @@ export function Subjects() {
       },
     })
   }
+  function handleAddStudents(subject: Subject) {
+    setModalAddStudentsOpened(true)
+    setSelectedSubject(subject)
+  }
 
   const columns: Column[] = useColumns({
     handleDeleteSubject,
+    handleAddStudents,
   })
 
   return (
@@ -112,6 +121,17 @@ export function Subjects() {
           open={formModalOpened}
           handleClose={() => {
             setFormModalOpened(false)
+          }}
+        />
+      )}
+
+      {modalAddStudentsOpened && selectedSubject && (
+        <ModalAddStudents
+          subjectData={selectedSubject}
+          open={modalAddStudentsOpened}
+          handleClose={() => {
+            setModalAddStudentsOpened(false)
+            setSelectedSubject(undefined)
           }}
         />
       )}

@@ -1,16 +1,24 @@
 import { Column, CellFunctionParams } from '../../../../src/models/columns'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faGraduationCap, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ActionButtons } from '../../../../src/components/ActionButtons'
 import { Subject } from '..'
 
 interface UseColumnsParams {
   handleDeleteSubject: (subject: Subject) => void
+  handleAddStudents: (subject: Subject) => void
 }
 
 export function useColumns({
   handleDeleteSubject,
+  handleAddStudents,
 }: UseColumnsParams): Column[] {
   const actions = [
+    {
+      icon: faGraduationCap,
+      title: 'Adicionar alunos',
+      color: '#31a2ff',
+      onClickFunction: handleAddStudents,
+    },
     {
       icon: faTrash,
       title: 'Excluir',

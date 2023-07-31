@@ -18,15 +18,17 @@ interface Props {
   handleClose: () => void
 }
 
+interface Grade {
+  _id: string
+  firstGrade: number
+  secondGrade: number
+  totalGrade: number
+}
+
 export interface Student {
   _id: string
   name: string
-  grades: {
-    _id: string
-    firstGrade: number
-    secondGrade: number
-    totalGrade: number
-  }[]
+  grades: Grade | Grade[]
 }
 
 export function ModalStudents({ open, handleClose, subjectData }: Props) {

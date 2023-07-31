@@ -1,5 +1,5 @@
 import { ModalLayout } from '../../../components/ModalLayout'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import style from './ModalStudents.module.scss'
 import { Subject } from '..'
 import { studentsService } from '../../../services/studentsService'
@@ -31,7 +31,7 @@ export interface Student {
 export function ModalStudents({ open, handleClose, subjectData }: Props) {
   const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
   const [students, setStudents] = useState<Student[]>([])
-  const [gradesToEdit, setGradesToEdit] = useState<any>(undefined)
+  const [studentToEdit, setStudentToEdit] = useState<any>(undefined)
   const [editMode, setEditMode] = useState<boolean>(false)
 
   function getStudentsBySubject() {
@@ -44,8 +44,8 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
             subjectData.students.includes(student._id),
           )
           .map((student: any) => {
-            const grades = student.grades.find(
-              (grade: any) => grade?.idSubject === subjectData?._id,
+            const grades = student?.grades?.find(
+              (grade: any) => grade?._id === subjectData?._id,
             )
             return {
               name: student?.name,
@@ -62,14 +62,21 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
       })
   }
 
-  function onEditGrades() {}
+  function onEditGrades(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    studentsService
+      .updateGrades({
+        studentId: studentToEdit?._id,
+        subjectId: subjectData?._id,
+        grades: studentToEdit?.grades,
+      })
+      .then(() => {})
+      .catch(() => {})
+  }
 
   function handleEditGrades(student: Student) {
     setEditMode(true)
-    const subjectGradesSelected = student?.grades?.find(
-      (grades) => grades?._id === subjectData?._id,
-    )
-    setGradesToEdit(subjectGradesSelected)
+    setStudentToEdit(student)
   }
 
   const columns = [
@@ -124,7 +131,7 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
     <ModalLayout
       open={open}
       handleClose={handleClose}
-      onSubmit={editMode ? onEditGrades : () => {}}
+      onSubmit={editMode ? onEditGrades : undefined}
       submitButtonText={editMode ? 'Confirmar edição' : ''}
       title="Notas"
       loading={loadingGetStudents}
@@ -148,14 +155,14 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
           />
         )}
 
-        {editMode && gradesToEdit && (
+        {editMode && studentToEdit && (
           <FormEdit
             handleBack={() => {
               setEditMode(false)
               getStudentsBySubject()
             }}
-            gradesToEdit={gradesToEdit}
-            setGradesToEdit={setGradesToEdit}
+            studentToEdit={studentToEdit}
+            setStudentToEdit={setStudentToEdit}
           />
         )}
       </div>

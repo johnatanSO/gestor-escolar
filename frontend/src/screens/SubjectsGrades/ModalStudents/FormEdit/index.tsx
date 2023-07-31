@@ -6,19 +6,23 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { ChangeEvent } from 'react'
 
 type Props = {
-  gradesToEdit: any
-  setGradesToEdit: (studentData: Student) => void
+  studentToEdit: any
+  setStudentToEdit: (studentData: Student) => void
   handleBack: () => void
 }
 
-export function FormEdit({ gradesToEdit, setGradesToEdit, handleBack }: Props) {
+export function FormEdit({
+  studentToEdit,
+  setStudentToEdit,
+  handleBack,
+}: Props) {
   function handleChangeGrade(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
 
-    const copyGradesToEdit: any = { ...gradesToEdit }
-    console.log('copyGradesToEdit', copyGradesToEdit)
-    copyGradesToEdit[name] = value
-    setGradesToEdit(copyGradesToEdit)
+    const copyStudentToEdit: any = { ...studentToEdit }
+
+    copyStudentToEdit.grades[name] = value
+    setStudentToEdit(copyStudentToEdit)
   }
 
   return (
@@ -29,13 +33,13 @@ export function FormEdit({ gradesToEdit, setGradesToEdit, handleBack }: Props) {
       </button>
       <CustomTextField
         onChange={handleChangeGrade}
-        value={gradesToEdit?.firstGrade || 0}
+        value={studentToEdit?.grades?.firstGrade || 0}
         name="firstGrade"
         label="Nota 1"
       />
       <CustomTextField
         onChange={handleChangeGrade}
-        value={gradesToEdit?.secondGrade || 0}
+        value={studentToEdit?.grades?.secondGrade || 0}
         name="secondGrade"
         label="Nota 2"
       />

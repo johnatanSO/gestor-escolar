@@ -1,16 +1,9 @@
 import http from '../api/http'
-import { NewSubjectData } from '../screens/InsertStudents/ModalCreateNewSubject'
-
-interface CreateParams {
-  newSubjectData: NewSubjectData
-}
 
 interface UpdateParams {
-  subjectData: NewSubjectData
-}
-
-interface DeleteParams {
-  idSubject: string
+  studentId: string
+  subjectId: string
+  grades: any
 }
 
 export const studentsService = {
@@ -22,22 +15,7 @@ export const studentsService = {
     return await http.get('/students/getBySubject/' + idSubject)
   },
 
-  async create({ newSubjectData }: CreateParams) {
-    const body = {
-      ...newSubjectData,
-    }
-    return await http.post('/subjects/', {
-      ...body,
-    })
-  },
-
-  update({ subjectData }: UpdateParams) {
-    return http.put('/subjects/')
-  },
-
-  async delete({ idSubject }: DeleteParams) {
-    return await http.delete('/subjects/', {
-      params: { idSubject },
-    })
+  async updateGrades({ studentId, subjectId, grades }: UpdateParams) {
+    return http.put('/student/updateGrades')
   },
 }

@@ -30,7 +30,7 @@ export function ModalLayout({
       <Box
         style={customStyle ?? customStyle}
         className={style.container}
-        onSubmit={onSubmit}
+        onSubmit={onSubmit || (() => {})}
         component="form"
       >
         <Box className={style.header} component="header">

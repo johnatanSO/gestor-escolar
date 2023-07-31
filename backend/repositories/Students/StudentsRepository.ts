@@ -21,8 +21,8 @@ export class StudentsRepository implements IStudentsRepository {
   }
 
   async updateGrades({ studentsIds, subjectId, grades }: UpdateGradesParams) {
-    studentsIds.forEach((studentId) => {
-      StudentModel.updateMany(
+    const promisesToUpdate = studentsIds.map((studentId) => {
+      return StudentModel.updateMany(
         { _id: studentId, grades: { $elemMatch: { _id: subjectId } } },
         {
           $set: {
@@ -33,5 +33,7 @@ export class StudentsRepository implements IStudentsRepository {
         },
       )
     })
+
+    return Promise.all(promisesToUpdate)
   }
 }

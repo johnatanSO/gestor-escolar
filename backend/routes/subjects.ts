@@ -3,9 +3,11 @@ import { SubjectsRepository } from '../repositories/Subjects/SubjectsRepository'
 import { CreateNewSubjectService } from '../services/CreateNewSubjectService.service'
 import { DeleteSubjectService } from '../services/DeleteSubjectService.service'
 import { InsertStudentInSubjectService } from '../services/InsertStudentInSubjectService.service'
+import { StudentsRepository } from '../repositories/Students/StudentsRepository'
 const subjectsRoutes = express.Router()
 
 const subjectsRepository = new SubjectsRepository()
+const studentsRepository = new StudentsRepository()
 
 subjectsRoutes.get('/', async (req: Request, res: Response) => {
   try {
@@ -64,6 +66,7 @@ subjectsRoutes.put('/insertStudents', async (req: Request, res: Response) => {
     const { studentsIds, subjectId } = req.body as any
     const insertStudentInSubjectService = new InsertStudentInSubjectService(
       subjectsRepository,
+      studentsRepository,
     )
     await insertStudentInSubjectService.execute({
       studentsIds,

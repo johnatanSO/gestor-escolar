@@ -1,3 +1,4 @@
+import { IStudentsRepository } from '../repositories/Students/IStudentsRepository'
 import {
   ISubjectsRepository,
   InsertStudentParams,
@@ -5,8 +6,13 @@ import {
 
 export class InsertStudentInSubjectService {
   subjectsRepository: ISubjectsRepository
-  constructor(subjectsRepository: ISubjectsRepository) {
+  studentsRepository: IStudentsRepository
+  constructor(
+    subjectsRepository: ISubjectsRepository,
+    studentsRepository: IStudentsRepository,
+  ) {
     this.subjectsRepository = subjectsRepository
+    this.studentsRepository = studentsRepository
   }
 
   async execute({ studentsIds, subjectId }: InsertStudentParams) {
@@ -17,6 +23,14 @@ export class InsertStudentInSubjectService {
     this.subjectsRepository.insertStudent({
       studentsIds,
       subjectId,
+    })
+    this.studentsRepository.updateGrades({
+      studentsIds,
+      subjectId,
+      grades: {
+        firstGrade: 0,
+        secondGrade: 0,
+      },
     })
   }
 }

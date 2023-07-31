@@ -1,5 +1,5 @@
 import { ModalLayout } from '../../../components/ModalLayout'
-import { useState, useEffect, FormEvent } from 'react'
+import { useState, useEffect, useContext, FormEvent } from 'react'
 import style from './ModalStudents.module.scss'
 import { Subject } from '..'
 import { studentsService } from '../../../services/studentsService'
@@ -10,6 +10,7 @@ import { TableComponent } from '../../../components/TableComponent'
 import { CellFunctionParams } from '../../../models/columns'
 import { Loading } from '../../../components/Loading'
 import { FormEdit } from './FormEdit'
+import { AlertContext } from '../../../contexts/alertContext'
 
 interface Props {
   subjectData: Subject
@@ -29,6 +30,7 @@ export interface Student {
 }
 
 export function ModalStudents({ open, handleClose, subjectData }: Props) {
+  const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
   const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
   const [students, setStudents] = useState<Student[]>([])
   const [studentToEdit, setStudentToEdit] = useState<any>(undefined)
@@ -70,8 +72,24 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
         subjectId: subjectData?._id,
         grades: studentToEdit?.grades,
       })
-      .then(() => {})
-      .catch(() => {})
+      .then((res) => {
+        setAlertNotifyConfigs({
+          ...alertNotifyConfigs,
+          open: true,
+          text: 'Notas atualizadas com sucesso ',
+          type: 'success',
+        })
+        getStudentsBySubject()
+      })
+      .catch((err) => {
+        setAlertNotifyConfigs({
+          ...alertNotifyConfigs,
+          open: true,
+          text: 'Erro ao tentar editar as notas. ' + err.response.data.message,
+          type: 'error',
+        })
+        console.log('Erro ao tentar editar notas. ', err.response.data.message)
+      })
   }
 
   function handleEditGrades(student: Student) {
@@ -159,7 +177,6 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
           <FormEdit
             handleBack={() => {
               setEditMode(false)
-              getStudentsBySubject()
             }}
             studentToEdit={studentToEdit}
             setStudentToEdit={setStudentToEdit}

@@ -21,19 +21,44 @@ export class StudentsRepository implements IStudentsRepository {
   }
 
   async updateGrades({ studentsIds, subjectId, grades }: UpdateGradesParams) {
-    const promisesToUpdate = studentsIds.map((studentId) => {
+    const { firstGrade, secondGrade } = grades
+    const promisesToUpdate = studentsIds.map(async (studentId) => {
+      const gradesToUpdate = {
+        _id: subjectId,
+        firstGrade,
+        secondGrade,
+        totalGrades: firstGrade + secondGrade / 2,
+      }
+
+      const student = await StudentModel.findOne({ _id: studentId })
+
+      const gradeAreadyExist = student?.grades?.find(
+        (grade) => grade?._id === subjectId,
+      )
+
+      if (gradeAreadyExist) {
+        return StudentModel.updateMany(
+          { _id: studentId, grades: { $elemMatch: { _id: subjectId } } },
+          {
+            $set: {
+              'grades.$': gradesToUpdate,
+            },
+          },
+        )
+      }
+
       return StudentModel.updateMany(
-        { _id: studentId, grades: { $elemMatch: { _id: subjectId } } },
+        { _id: studentId },
         {
-          $set: {
-            'grades.$.firstGrade': grades?.firstGrade,
-            'grades.$.secondGrade': grades?.secondGrade,
-            'grades.$.totalGrade': grades?.firstGrade + grades?.secondGrade,
+          $push: {
+            grades: gradesToUpdate,
           },
         },
       )
     })
 
-    return Promise.all(promisesToUpdate)
+    console.log('promisesToUpdate', promisesToUpdate)
+    const result = await Promise.all(promisesToUpdate)
+    console.log('result', result)
   }
 }

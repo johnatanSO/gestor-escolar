@@ -36,12 +36,18 @@ export function FormEdit({
         value={studentToEdit?.grades?.firstGrade || 0}
         name="firstGrade"
         label="Nota 1"
+        placeholder="Digite a primeira nota"
+        size="small"
+        className={style.input}
       />
       <CustomTextField
         onChange={handleChangeGrade}
         value={studentToEdit?.grades?.secondGrade || 0}
         name="secondGrade"
         label="Nota 2"
+        placeholder="Digite a segunda nota"
+        size="small"
+        className={style.input}
       />
     </>
   )

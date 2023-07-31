@@ -5,9 +5,11 @@ import { Subject } from '..'
 import { studentsService } from '../../../services/studentsService'
 import { EmptyItems } from '../../../components/EmptyItems'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft, faPen } from '@fortawesome/free-solid-svg-icons'
+import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { TableComponent } from '../../../components/TableComponent'
 import { CellFunctionParams } from '../../../models/columns'
+import { Loading } from '../../../components/Loading'
+import { FormEdit } from './FormEdit'
 
 interface Props {
   subjectData: Subject
@@ -15,7 +17,7 @@ interface Props {
   handleClose: () => void
 }
 
-interface Student {
+export interface Student {
   _id: string
   name: string
   grades: {
@@ -23,12 +25,13 @@ interface Student {
     firstGrade: number
     secondGrade: number
     totalGrade: number
-  }
+  }[]
 }
 
 export function ModalStudents({ open, handleClose, subjectData }: Props) {
   const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
   const [students, setStudents] = useState<Student[]>([])
+  const [gradesToEdit, setGradesToEdit] = useState<any>(undefined)
   const [editMode, setEditMode] = useState<boolean>(false)
 
   function getStudentsBySubject() {
@@ -61,6 +64,14 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
 
   function onEditGrades() {}
 
+  function handleEditGrades(student: Student) {
+    setEditMode(true)
+    const subjectGradesSelected = student?.grades?.find(
+      (grades) => grades?._id === subjectData?._id,
+    )
+    setGradesToEdit(subjectGradesSelected)
+  }
+
   const columns = [
     {
       field: 'code',
@@ -76,19 +87,19 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
       field: 'grades',
       headerName: 'Nota 1',
       valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.firstNote || '--',
+        params?.value?.firstNote || 0,
     },
     {
       field: 'grades',
       headerName: 'Nota 2',
       valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.secondNote || '--',
+        params?.value?.secondNote || 0,
     },
     {
       field: 'grades',
       headerName: 'Final',
       valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.totalNote || '--',
+        params?.value?.totalNote || 0,
     },
     {
       field: 'acoes',
@@ -96,7 +107,7 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
       valueFormatter: (params: CellFunctionParams) => (
         <FontAwesomeIcon
           onClick={() => {
-            setEditMode(true)
+            handleEditGrades(params?.data)
           }}
           icon={faPen}
           className={style.iconEdit}
@@ -122,7 +133,9 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
       }}
     >
       <div className={style.fieldsContainer}>
-        {students?.length === 0 && loadingGetStudents && 'CARREGANDO...'}
+        {students?.length === 0 && loadingGetStudents && (
+          <Loading color="#cd1414" />
+        )}
 
         {students?.length > 0 && !editMode && (
           <TableComponent rows={students} columns={columns} loading={false} />
@@ -135,17 +148,15 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
           />
         )}
 
-        {editMode && (
-          <button
-            onClick={() => {
+        {editMode && gradesToEdit && (
+          <FormEdit
+            handleBack={() => {
               setEditMode(false)
+              getStudentsBySubject()
             }}
-            className={style.backButton}
-            type="button"
-          >
-            <FontAwesomeIcon className={style.icon} icon={faAngleLeft} />
-            Voltar
-          </button>
+            gradesToEdit={gradesToEdit}
+            setGradesToEdit={setGradesToEdit}
+          />
         )}
       </div>
     </ModalLayout>

@@ -7,32 +7,53 @@
   gap: 7px;
 
   list-style-type: none;
+  
+  tbody {
+    tr {
+      background: $gray-color-100;
+      box-shadow: 1px 3px 7px rgb(0 0 0 / 0.2);
+      td {
+        display: flex;
+      }
 
-  table {
-    border-collapse: collapse;
+      .iconEdit {
+        color: $blue-color-500;
+        height: 1.4rem;
 
-    thead {
-      tr {
-        th {
-          padding: 0rem 0.6rem;
-          white-space: nowrap;
-          text-align: left;
+        cursor: pointer;
+        transition: filter 0.2s;
+
+        &:hover {
+          filter: brightness(0.8);
         }
       }
     }
+  }
+}
 
-    tbody {
-      tr {
-        background: $gray-color-100;
-        box-shadow: 1px 3px 7px rgb(0 0 0 / 0.2);
+.backButton {
+  align-self: self-start;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 
-        border-radius: 10px;
+  line-height: 1;
+  font-size: 1.2rem;
 
-        td {
-          padding: 0.4rem 0.6rem;
-          white-space: nowrap;
-        }
-      }
-    }
+  padding: 0.5rem 0.6rem;
+  border-radius: 7px;
+  border: none;
+
+  background: $gray-color-200;
+
+  cursor: pointer;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  .icon {
+    height: 1rem;
   }
 }

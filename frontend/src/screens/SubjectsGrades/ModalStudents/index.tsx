@@ -4,6 +4,10 @@ import style from './ModalStudents.module.scss'
 import { Subject } from '..'
 import { studentsService } from '../../../services/studentsService'
 import { EmptyItems } from '../../../components/EmptyItems'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft, faPen } from '@fortawesome/free-solid-svg-icons'
+import { TableComponent } from '../../../components/TableComponent'
+import { CellFunctionParams } from '../../../models/columns'
 
 interface Props {
   subjectData: Subject
@@ -25,6 +29,7 @@ interface Student {
 export function ModalStudents({ open, handleClose, subjectData }: Props) {
   const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
   const [students, setStudents] = useState<Student[]>([])
+  const [editMode, setEditMode] = useState<boolean>(false)
 
   function getStudentsBySubject() {
     setLoadingGetStudents(true)
@@ -54,6 +59,52 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
       })
   }
 
+  function onEditGrades() {}
+
+  const columns = [
+    {
+      field: 'code',
+      headerName: 'Código',
+      valueFormatter: (params: CellFunctionParams) => params?.value || '--',
+    },
+    {
+      field: 'name',
+      headerName: 'Aluno',
+      valueFormatter: (params: CellFunctionParams) => params?.value || '--',
+    },
+    {
+      field: 'grades',
+      headerName: 'Nota 1',
+      valueFormatter: (params: CellFunctionParams) =>
+        params?.value?.firstNote || '--',
+    },
+    {
+      field: 'grades',
+      headerName: 'Nota 2',
+      valueFormatter: (params: CellFunctionParams) =>
+        params?.value?.secondNote || '--',
+    },
+    {
+      field: 'grades',
+      headerName: 'Final',
+      valueFormatter: (params: CellFunctionParams) =>
+        params?.value?.totalNote || '--',
+    },
+    {
+      field: 'acoes',
+      headerName: 'Ações',
+      valueFormatter: (params: CellFunctionParams) => (
+        <FontAwesomeIcon
+          onClick={() => {
+            setEditMode(true)
+          }}
+          icon={faPen}
+          className={style.iconEdit}
+        />
+      ),
+    },
+  ]
+
   useEffect(() => {
     getStudentsBySubject()
   }, [])
@@ -62,44 +113,41 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
     <ModalLayout
       open={open}
       handleClose={handleClose}
+      onSubmit={editMode ? onEditGrades : () => {}}
+      submitButtonText={editMode ? 'Confirmar edição' : ''}
       title="Notas"
       loading={loadingGetStudents}
+      customStyle={{
+        minWidth: '55%',
+      }}
     >
       <div className={style.fieldsContainer}>
         {students?.length === 0 && loadingGetStudents && 'CARREGANDO...'}
-        {students?.length > 0 && (
-          <table>
-            <thead>
-              <tr>
-                <th>Aluno</th>
-                <th>Nota 1</th>
-                <th>Nota 2</th>
-                <th>Nota final</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students?.map((student) => {
-                return (
-                  <tr key={student._id}>
-                    <td>{student?.name || '--'}</td>
 
-                    <td>{student?.grades?.firstGrade || '--'}</td>
-                    <td>{student?.grades?.secondGrade || '--'}</td>
-                    <td>{student?.grades?.totalGrade || '--'}</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+        {students?.length > 0 && !editMode && (
+          <TableComponent rows={students} columns={columns} loading={false} />
         )}
+
         {students?.length === 0 && !loadingGetStudents && (
           <EmptyItems
             customStyle={{ boxShadow: 'none' }}
             text="Nenhum estudante cadastrado nesta disciplina"
           />
         )}
+
+        {editMode && (
+          <button
+            onClick={() => {
+              setEditMode(false)
+            }}
+            className={style.backButton}
+            type="button"
+          >
+            <FontAwesomeIcon className={style.icon} icon={faAngleLeft} />
+            Voltar
+          </button>
+        )}
       </div>
-      <table className={style.fieldsContainer}></table>
     </ModalLayout>
   )
 }

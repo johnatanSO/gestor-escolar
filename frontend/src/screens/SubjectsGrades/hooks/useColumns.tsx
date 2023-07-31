@@ -1,22 +1,14 @@
 import { Column, CellFunctionParams } from '../../../../src/models/columns'
-import { ActionButtons } from '../../../../src/components/ActionButtons'
+import style from '../SubjectsGrades.module.scss'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { Subject } from '..'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface Params {
   handleShowStudents: (subject: Subject) => void
 }
 
 export function useColumns({ handleShowStudents }: Params): Column[] {
-  const actions = [
-    {
-      title: 'Ver alunos',
-      icon: faGraduationCap,
-      color: '#cd1414',
-      onClickFunction: handleShowStudents,
-    },
-  ]
-
   return [
     {
       headerName: 'Código',
@@ -38,7 +30,18 @@ export function useColumns({ handleShowStudents }: Params): Column[] {
       headerName: '',
       field: 'acoes',
       cellRenderer: (params: CellFunctionParams) => {
-        return <ActionButtons actions={actions} params={params} />
+        return (
+          <button
+            onClick={() => {
+              handleShowStudents(params.data)
+            }}
+            type="button"
+            className={style.showStudentsButton}
+          >
+            <FontAwesomeIcon icon={faGraduationCap} className={style.icon} />
+            Ver alunos
+          </button>
+        )
       },
     },
   ]

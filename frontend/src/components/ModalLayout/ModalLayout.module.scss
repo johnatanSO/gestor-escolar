@@ -14,7 +14,7 @@
     padding: 20px;
 
     max-width: 80%;
-    min-width: 40%;
+    min-width: 45%;
 
     display: flex;
     flex-direction: column;
@@ -70,6 +70,16 @@
           opacity: 0.4;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 980px) {
+  .overlay {
+    .container {
+      width: 90%;
+      min-width: 90%;
+      max-width: 90%;
     }
   }
 }

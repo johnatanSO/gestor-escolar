@@ -21,8 +21,6 @@ export function FormEdit({
 
     const copyStudentToEdit: any = { ...studentToEdit }
 
-    console.log('VALUE', value)
-
     copyStudentToEdit.grades[name] = value
     setStudentToEdit(copyStudentToEdit)
   }

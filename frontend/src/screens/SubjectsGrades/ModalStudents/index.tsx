@@ -4,13 +4,11 @@ import style from './ModalStudents.module.scss'
 import { Subject } from '..'
 import { studentsService } from '../../../services/studentsService'
 import { EmptyItems } from '../../../components/EmptyItems'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { TableComponent } from '../../../components/TableComponent'
-import { CellFunctionParams } from '../../../models/columns'
 import { Loading } from '../../../components/Loading'
 import { FormEdit } from './FormEdit'
 import { AlertContext } from '../../../contexts/alertContext'
+import { useColumns } from './hooks/useColumns'
 
 interface Props {
   subjectData: Subject
@@ -41,23 +39,9 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
   async function getStudentsBySubject() {
     setLoadingGetStudents(true)
     studentsService
-      .getAll()
+      .getBySubject(subjectData?._id)
       .then((res) => {
-        const studentsIncludesInSubject = res.data.items
-          .filter((student: Student) =>
-            subjectData.students.includes(student._id),
-          )
-          .map((student: any) => {
-            const grades = student?.grades?.find(
-              (grade: any) => grade?._id === subjectData?._id,
-            )
-            return {
-              name: student?.name,
-              grades,
-              _id: student?._id,
-            }
-          })
-        setStudents(studentsIncludesInSubject)
+        setStudents(res.data.items)
       })
       .catch((err) => {
         console.log('Erro ao buscar alunos, ' + err.response.data.message)
@@ -106,50 +90,7 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
     setStudentToEdit(student)
   }
 
-  const columns = [
-    {
-      field: 'code',
-      headerName: 'Código',
-      valueFormatter: (params: CellFunctionParams) => params?.value || '--',
-    },
-    {
-      field: 'name',
-      headerName: 'Aluno',
-      valueFormatter: (params: CellFunctionParams) => params?.value || '--',
-    },
-    {
-      field: 'grades',
-      headerName: 'Nota 1',
-      valueFormatter: (params: CellFunctionParams) => {
-        return params?.value?.firstGrade.toFixed(2) || 0
-      },
-    },
-    {
-      field: 'grades',
-      headerName: 'Nota 2',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.secondGrade.toFixed(2) || 0,
-    },
-    {
-      field: 'grades',
-      headerName: 'Final',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.totalGrades.toFixed(2) || 0,
-    },
-    {
-      field: 'acoes',
-      headerName: 'Ações',
-      valueFormatter: (params: CellFunctionParams) => (
-        <FontAwesomeIcon
-          onClick={() => {
-            handleEditGrades(params?.data)
-          }}
-          icon={faPen}
-          className={style.iconEdit}
-        />
-      ),
-    },
-  ]
+  const columns = useColumns({ handleEditGrades })
 
   useEffect(() => {
     getStudentsBySubject()
@@ -169,11 +110,23 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
     >
       <div className={style.fieldsContainer}>
         {students?.length === 0 && loadingGetStudents && (
-          <Loading color="#cd1414" />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Loading color="#cd1414" />
+          </div>
         )}
 
         {students?.length > 0 && !editMode && (
-          <TableComponent rows={students} columns={columns} loading={false} />
+          <TableComponent
+            rows={students}
+            columns={columns}
+            loading={loadingGetStudents}
+          />
         )}
 
         {students?.length === 0 && !loadingGetStudents && (

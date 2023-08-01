@@ -16,7 +16,6 @@ export const studentsService = {
   },
 
   async updateGrades({ studentId, subjectId, grades }: UpdateParams) {
-    console.log('data,', { studentId, subjectId, grades })
     const body = {
       studentId,
       subjectId,

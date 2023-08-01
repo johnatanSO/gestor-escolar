@@ -1,5 +1,5 @@
 import http from '../api/http'
-import { NewSubjectData } from '../screens/Subjects/ModalCreateNewSubject'
+import { NewSubjectData } from '../screens/InsertStudents/ModalCreateNewSubject'
 
 interface CreateParams {
   newSubjectData: NewSubjectData

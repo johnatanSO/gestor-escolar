@@ -13,7 +13,7 @@ export function TableComponent({ columns, rows, loading }: Props) {
         <tr>
           {columns?.map((column) => {
             return (
-              <th style={{ border: '1px solid red' }} key={column.field}>
+              <th key={column.field}>
                 <p>{column?.headerName || ''}</p>
               </th>
             )
@@ -31,7 +31,6 @@ export function TableComponent({ columns, rows, loading }: Props) {
                       value: row[column.field],
                       data: row,
                     })}
-                    style={{ border: '1px solid blue' }}
                     key={column.field}
                   >
                     {column?.valueFormatter?.({

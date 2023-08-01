@@ -16,6 +16,15 @@ export const studentsService = {
   },
 
   async updateGrades({ studentId, subjectId, grades }: UpdateParams) {
-    return http.put('/student/updateGrades')
+    console.log('data,', { studentId, subjectId, grades })
+    const body = {
+      studentId,
+      subjectId,
+      grades,
+    }
+
+    return http.put('/students/updateGrades', {
+      ...body,
+    })
   },
 }

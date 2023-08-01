@@ -38,7 +38,7 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
   const [studentToEdit, setStudentToEdit] = useState<any>(undefined)
   const [editMode, setEditMode] = useState<boolean>(false)
 
-  function getStudentsBySubject() {
+  async function getStudentsBySubject() {
     setLoadingGetStudents(true)
     studentsService
       .getAll()
@@ -54,6 +54,7 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
             return {
               name: student?.name,
               grades,
+              _id: student?._id,
             }
           })
         setStudents(studentsIncludesInSubject)
@@ -74,7 +75,7 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
         subjectId: subjectData?._id,
         grades: studentToEdit?.grades,
       })
-      .then((res) => {
+      .then(async (res) => {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
@@ -82,15 +83,21 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
           type: 'success',
         })
         getStudentsBySubject()
+        setStudentToEdit(undefined)
+        setEditMode(false)
       })
       .catch((err) => {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
-          text: 'Erro ao tentar editar as notas. ' + err.response.data.message,
+          text:
+            'Erro ao tentar editar as notas. ' + err?.response?.data?.message,
           type: 'error',
         })
-        console.log('Erro ao tentar editar notas. ', err.response.data.message)
+        console.log(
+          'Erro ao tentar editar notas. ',
+          err?.response?.data?.message,
+        )
       })
   }
 
@@ -113,20 +120,21 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
     {
       field: 'grades',
       headerName: 'Nota 1',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.firstNote || 0,
+      valueFormatter: (params: CellFunctionParams) => {
+        return params?.value?.firstGrade.toFixed(2) || 0
+      },
     },
     {
       field: 'grades',
       headerName: 'Nota 2',
       valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.secondNote || 0,
+        params?.value?.secondGrade.toFixed(2) || 0,
     },
     {
       field: 'grades',
       headerName: 'Final',
       valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.totalNote || 0,
+        params?.value?.totalGrades.toFixed(2) || 0,
     },
     {
       field: 'acoes',

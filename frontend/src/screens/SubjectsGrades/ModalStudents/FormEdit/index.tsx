@@ -21,6 +21,8 @@ export function FormEdit({
 
     const copyStudentToEdit: any = { ...studentToEdit }
 
+    console.log('VALUE', value)
+
     copyStudentToEdit.grades[name] = value
     setStudentToEdit(copyStudentToEdit)
   }
@@ -33,20 +35,22 @@ export function FormEdit({
       </button>
       <CustomTextField
         onChange={handleChangeGrade}
-        value={studentToEdit?.grades?.firstGrade || 0}
+        value={studentToEdit?.grades?.firstGrade}
         name="firstGrade"
         label="Nota 1"
         placeholder="Digite a primeira nota"
         size="small"
+        type="text"
         className={style.input}
       />
       <CustomTextField
         onChange={handleChangeGrade}
-        value={studentToEdit?.grades?.secondGrade || 0}
+        value={studentToEdit?.grades?.secondGrade}
         name="secondGrade"
         label="Nota 2"
         placeholder="Digite a segunda nota"
         size="small"
+        type="text"
         className={style.input}
       />
     </>

@@ -23,9 +23,8 @@ export function useColumns({ handleEditGrades }: Params): Column[] {
     {
       field: 'grades',
       headerName: 'Nota 1',
-      valueFormatter: (params: CellFunctionParams) => {
-        return params?.value?.firstGrade.toFixed(2) || 0
-      },
+      valueFormatter: (params: CellFunctionParams) =>
+        params?.value?.firstGrade.toFixed(2) || 0,
     },
     {
       field: 'grades',

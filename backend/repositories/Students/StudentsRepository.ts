@@ -22,12 +22,13 @@ export class StudentsRepository implements IStudentsRepository {
 
   async updateGrades({ studentsIds, subjectId, grades }: UpdateGradesParams) {
     const { firstGrade, secondGrade } = grades
+
     const promisesToUpdate = studentsIds.map(async (studentId) => {
       const gradesToUpdate = {
         _id: subjectId,
         firstGrade,
         secondGrade,
-        totalGrades: firstGrade + secondGrade / 2,
+        totalGrades: (firstGrade + secondGrade) / 2,
       }
 
       const student = await StudentModel.findOne({ _id: studentId })
@@ -57,7 +58,6 @@ export class StudentsRepository implements IStudentsRepository {
       )
     })
 
-    console.log('promisesToUpdate', promisesToUpdate)
     const result = await Promise.all(promisesToUpdate)
     console.log('result', result)
   }

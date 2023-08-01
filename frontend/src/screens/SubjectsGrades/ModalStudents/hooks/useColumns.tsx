@@ -1,6 +1,6 @@
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { Column, CellFunctionParams } from '../../../../../src/models/columns'
-import style from '../SubjectsGrades.module.scss'
+import style from '../../SubjectsGrades.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Student } from '..'
 

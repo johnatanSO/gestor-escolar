@@ -29,10 +29,9 @@ studentsRoutes.get(
       const { idSubject } = req.params
 
       const subject = await subjectsRepository.findById(idSubject)
-      const studentsIdsFilter = subject.students
 
       const students = await studentsRepository.list({
-        _id: { $in: studentsIdsFilter },
+        _id: { $in: subject.students },
       })
       const studentsFormated = students.map((student: any) => {
         const grades = student?.grades?.find(

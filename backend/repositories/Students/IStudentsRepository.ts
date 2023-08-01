@@ -21,7 +21,7 @@ export interface UpdateGradesParams {
 }
 
 export interface IStudentsRepository {
-  list: () => Promise<Student[]>
+  list: (queryList: any) => Promise<Student[]>
   create: (newStudentData: NewStudent) => void
   getEntries: () => Promise<number>
   updateGrades: (updateGradesParams: UpdateGradesParams) => Promise<any>

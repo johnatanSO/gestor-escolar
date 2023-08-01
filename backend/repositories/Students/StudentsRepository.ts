@@ -6,8 +6,8 @@ import {
 } from './IStudentsRepository'
 
 export class StudentsRepository implements IStudentsRepository {
-  async list(): Promise<any[]> {
-    const students = await StudentModel.find()
+  async list(queryList?: any): Promise<any[]> {
+    const students = await StudentModel.find(queryList || {})
     return students
   }
 

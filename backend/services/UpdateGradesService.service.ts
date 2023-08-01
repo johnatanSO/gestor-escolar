@@ -13,7 +13,7 @@ export class UpdateGradesService {
     if (!subjectId) {
       throw new Error('Nenhuma disciplina selecionada.')
     }
-    if (!studentsIds) {
+    if (!studentsIds || studentsIds?.length === 0) {
       throw new Error('Nenhuma aluno selecionado.')
     }
 

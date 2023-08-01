@@ -56,7 +56,6 @@ export function ModalCreateNewSubject({
           pathname: router.route,
           query: router.query,
         })
-        console.log('AAAAA')
         setNewSubjectData(defaultNewSubjectValues)
         handleClose()
         setAlertNotifyConfigs({

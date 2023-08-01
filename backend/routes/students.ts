@@ -27,18 +27,19 @@ studentsRoutes.get(
   async (req: Request, res: Response) => {
     try {
       const { idSubject } = req.params
-
       const subject = await subjectsRepository.findById(idSubject)
+      const queryList = {
+        _id: { $in: subject?.students },
+      }
 
-      const students = await studentsRepository.list({
-        _id: { $in: subject.students },
-      })
+      const students = await studentsRepository.list(queryList)
       const studentsFormated = students.map((student: any) => {
         const grades = student?.grades?.find(
           (grade: any) => grade?._id === idSubject,
         )
         return {
-          ...student,
+          _id: student?._id,
+          name: student?.name,
           grades,
         }
       })
@@ -66,7 +67,7 @@ studentsRoutes.put('/updateGrades', async (req: Request, res: Response) => {
       grades,
     })
 
-    res.status(202).json({
+    res.status(204).json({
       message: 'Notas atualizadas com sucesso.',
     })
   } catch (err) {

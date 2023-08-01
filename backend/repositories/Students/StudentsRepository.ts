@@ -59,6 +59,6 @@ export class StudentsRepository implements IStudentsRepository {
     })
 
     const result = await Promise.all(promisesToUpdate)
-    console.log('result', result)
+    console.log('result update grades', result)
   }
 }

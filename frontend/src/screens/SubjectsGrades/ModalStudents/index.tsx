@@ -35,6 +35,7 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
   const [students, setStudents] = useState<Student[]>([])
   const [studentToEdit, setStudentToEdit] = useState<any>(undefined)
   const [editMode, setEditMode] = useState<boolean>(false)
+  console.log('students', students)
 
   async function getStudentsBySubject() {
     setLoadingGetStudents(true)

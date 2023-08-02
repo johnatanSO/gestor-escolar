@@ -12,7 +12,7 @@ export const studentsService = {
   },
 
   async getBySubject(idSubject: string) {
-    return await http.get('/students/getBySubject/' + idSubject)
+    return await http.get('/students/getGrades/' + idSubject)
   },
 
   async updateGrades({ studentId, subjectId, grades }: UpdateParams) {

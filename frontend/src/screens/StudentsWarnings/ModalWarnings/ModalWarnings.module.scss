@@ -1,5 +1,4 @@
-@import '../../../../styles/colors.scss';
-
+@import "../../../../styles/colors.scss";
 
 .buttonNewWarning {
   width: 100%;
@@ -26,14 +25,14 @@
   }
 }
 
-.fieldsContainer{
+.fieldsContainer {
   display: flex;
   flex-direction: column;
   gap: 7px;
 
   list-style-type: none;
 
-  li{
+  li {
     background: $gray-color-100;
     box-shadow: 1px 3px 5px rgb(0 0 0 / 0.1);
 

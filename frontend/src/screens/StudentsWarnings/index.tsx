@@ -67,6 +67,7 @@ export function StudentsWarnings() {
       {modalWarningsOpened && selectedStudent && (
         <ModalWarnings
           studentData={selectedStudent}
+          setStudentData={setSelectedStudent}
           open={modalWarningsOpened}
           handleClose={() => {
             setModalWarningsOpened(false)

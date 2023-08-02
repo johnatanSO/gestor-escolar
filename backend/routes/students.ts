@@ -23,7 +23,7 @@ studentsRoutes.get('/', async (req: Request, res: Response) => {
 })
 
 studentsRoutes.get(
-  '/getBySubject/:idSubject',
+  '/getGrades/:idSubject',
   async (req: Request, res: Response) => {
     try {
       const { idSubject } = req.params

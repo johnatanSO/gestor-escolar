@@ -13,7 +13,7 @@ export function useColumns({ handleEditGrades }: Params): Column[] {
     {
       field: 'code',
       headerName: 'Código',
-      valueFormatter: (params: CellFunctionParams) => params?.value || '--',
+      valueFormatter: (params: CellFunctionParams) => params.value || '--',
     },
     {
       field: 'name',

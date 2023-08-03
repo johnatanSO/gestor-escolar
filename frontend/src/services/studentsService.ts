@@ -16,10 +16,14 @@ export const studentsService = {
   },
 
   async updateGrades({ studentId, subjectId, grades }: UpdateParams) {
+    const formatedGrades = {
+      firstGrade: Number(grades?.firstGrades),
+      secondGrade: Number(grades?.secondGrade),
+    }
     const body = {
       studentId,
       subjectId,
-      grades,
+      grades: formatedGrades,
     }
 
     return http.put('/students/updateGrades', {

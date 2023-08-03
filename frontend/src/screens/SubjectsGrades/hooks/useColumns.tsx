@@ -13,7 +13,7 @@ export function useColumns({ handleShowStudents }: Params): Column[] {
     {
       headerName: 'Código',
       field: 'code',
-      valueFormatter: (params: CellFunctionParams) => params.value || '--',
+      valueFormatter: (params: CellFunctionParams) => params.value,
     },
     {
       headerName: 'Nome da disciplina',

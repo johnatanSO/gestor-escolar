@@ -17,11 +17,15 @@ interface RegisterParams {
 
 export const usersService = {
   async getSession(request: NextRequest) {
-    const token = await this.getToken(request)
+    const token: string | undefined = await this.getToken(request)
 
-    if (token) {
-      return await this.verifyToken(token)
-    }
+    if (!token) return false
+
+    return await this.verifyToken(token)
+  },
+
+  async verifyToken(token: String) {
+    return token
   },
 
   async login({ userData }: LoginParams) {
@@ -41,17 +45,9 @@ export const usersService = {
   },
 
   async getToken(request: NextRequest) {
-    const token = request.cookies.get(ACCESS_TOKEN_KEY)
+    const token: string | undefined = request.cookies.get(ACCESS_TOKEN_KEY)
 
     return token || undefined
-  },
-
-  async verifyToken(token: string) {
-    /* TODO: Criar requisição para verificar o token no back-end. */
-    /* const tokenIsValid = await http.post('/users/verify_token/', { token })
-    if (tokenIsValid) return true
-    return false */
-    return true
   },
 
   async saveUser(userData: any) {
@@ -77,6 +73,7 @@ export const usersService = {
   getUserInfo() {
     return JSON.parse(globalThis?.localStorage?.getItem(USER_INFO) || '{}')
   },
+
   getUserInfoByCookie(context = null) {
     const cookies = nookies.get(context)
     return cookies ? JSON.parse(cookies[USER_INFO]) : null

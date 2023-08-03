@@ -3,7 +3,6 @@ import { CustomTextField } from '../../../../components/CustomTextField'
 import { Student } from '..'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import { ChangeEvent } from 'react'
 
 type Props = {
   studentToEdit: any

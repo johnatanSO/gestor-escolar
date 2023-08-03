@@ -7,12 +7,14 @@ export class UsersRepository implements IUsersRepository {
     password,
     email,
     occupation,
+    token,
   }: NewUser): Promise<NewUser> {
     const newUser = new UserModel({
       name,
       password,
       email,
       occupation,
+      token,
     })
     await newUser.save()
     return newUser
@@ -24,5 +26,9 @@ export class UsersRepository implements IUsersRepository {
 
   async authenticate({ email, password }): Promise<any> {
     return await UserModel.findOne({ email, password })
+  }
+
+  async checkToken(token: string): Promise<any> {
+    return await UserModel.findOne({ token })
   }
 }

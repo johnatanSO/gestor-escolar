@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, default: null },
   password: { type: String, default: null },
   occupation: { type: String, default: null },
+  token: { type: String, default: null },
 })
 
 export const UserModel = mongoose.model('User', userSchema)

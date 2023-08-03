@@ -32,6 +32,7 @@ export class CreateNewUserService {
       email,
       password,
       occupation,
+      token: (Math.random() * 8975487548749877).toString(),
     })
 
     if (occupation === 'student') {

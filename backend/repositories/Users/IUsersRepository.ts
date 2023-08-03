@@ -5,6 +5,7 @@ export interface NewUser {
   email: string
   password: string
   occupation: string
+  token?: string
 }
 
 export interface User {
@@ -16,4 +17,5 @@ export interface IUsersRepository {
   create: (newUserData: NewUser) => Promise<NewUser>
   findByEmail: (email: string) => Promise<NewUser>
   authenticate: (userDataLogin: User) => Promise<User>
+  checkToken: (token: string) => Promise<any>
 }

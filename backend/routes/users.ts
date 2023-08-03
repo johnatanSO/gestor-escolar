@@ -8,17 +8,31 @@ const usersRoutes = express.Router()
 const usersRepository = new UsersRepository()
 const studentsRepository = new StudentsRepository()
 
-usersRoutes.get('/session', async (req: Request, res: Response) => {
+usersRoutes.get('/verify_token/:token', async (req: Request, res: Response) => {
   try {
-    const token = ''
+    const { token } = req.params
+    const user = await usersRepository.checkToken(token)
+    const isAuthenticated = !!user
+    console.log('token', token)
+
+    if (!isAuthenticated) {
+      console.log('Não autenticado')
+      return res.status(200).json({
+        token: null,
+        message: 'Usuário não autenticado',
+      })
+    }
+
     res.status(200).json({
       token,
       message: 'Usuário autenticado',
     })
   } catch (err) {
-    res
-      .status(400)
-      .json({ error: err, message: 'Usuário não autenticado', token: null })
+    res.status(400).json({
+      error: err,
+      message: 'Erro ao verificar o token de usuário',
+      token: null,
+    })
   }
 })
 

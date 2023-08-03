@@ -41,6 +41,7 @@ studentsRoutes.get(
         return {
           _id: student?._id,
           name: student?.name,
+          code: student?.code,
           grades,
         }
       })

@@ -61,4 +61,11 @@ export class StudentsRepository implements IStudentsRepository {
     const result = await Promise.all(promisesToUpdate)
     console.log('result update grades', result)
   }
+
+  async updateWarningsAmount(idStudent: string) {
+    return StudentModel.updateOne(
+      { _id: idStudent },
+      { $inc: { warningsAmount: 1 } },
+    )
+  }
 }

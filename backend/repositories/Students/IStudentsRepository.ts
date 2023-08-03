@@ -25,4 +25,5 @@ export interface IStudentsRepository {
   create: (newStudentData: NewStudent) => void
   getEntries: () => Promise<number>
   updateGrades: (updateGradesParams: UpdateGradesParams) => Promise<any>
+  updateWarningsAmount: (idStudent: string) => void
 }

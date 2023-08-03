@@ -4,7 +4,7 @@ export interface NewWarning {
   code?: string
   title: string
   description: string
-  studentId: string
+  idStudent: string
 }
 
 export interface Warning {
@@ -12,13 +12,13 @@ export interface Warning {
   uniqueId: string
   title: string
   description: string
-  studentId: string
+  idStudent: string
   date: Date
 }
 
 export interface IWarningsRepository {
-  list: () => Promise<Warning[]>
+  list: (idStudent?: string) => Promise<Warning[]>
   create: (newSubjectData: NewWarning) => Promise<any>
   findById: (idSubject: string | Types.ObjectId) => Promise<Warning | null>
-  getEntries: () => Promise<number>
+  getEntries: (idStudent: string) => Promise<number>
 }

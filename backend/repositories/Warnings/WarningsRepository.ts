@@ -2,8 +2,11 @@ import { WarningModel } from '../../models/warning'
 import { IWarningsRepository, NewWarning, Warning } from './IWarningsRepository'
 
 export class WarningsRepository implements IWarningsRepository {
-  async list(): Promise<Warning[]> {
-    return await WarningModel.find()
+  async list(idStudent?: string): Promise<Warning[]> {
+    const query = {
+      ...(idStudent ? { idStudent } : {}),
+    }
+    return await WarningModel.find(query).sort({ date: 1 })
   }
 
   async findById(warningId: string): Promise<Warning | null> {
@@ -17,7 +20,7 @@ export class WarningsRepository implements IWarningsRepository {
     return newWarning
   }
 
-  async getEntries() {
-    return WarningModel.countDocuments()
+  async getEntries(idStudent: string): Promise<number> {
+    return await WarningModel.countDocuments({ idStudent })
   }
 }

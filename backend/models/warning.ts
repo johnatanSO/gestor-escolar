@@ -5,7 +5,7 @@ const warningSchema = new mongoose.Schema({
   uniqueId: { type: String, default: Math.random() * 879865489 },
   title: { type: String, default: null, required: true },
   description: { type: String, default: null },
-  studentId: { type: String, default: null },
+  idStudent: { type: String, default: null },
   date: { type: Date, default: new Date() },
 })
 

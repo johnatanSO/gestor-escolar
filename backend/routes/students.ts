@@ -7,6 +7,7 @@ const studentsRoutes = express.Router()
 const studentsRepository = new StudentsRepository()
 const subjectsRepository = new SubjectsRepository()
 
+// TO-DO: Mover formatação para service de estudantes
 studentsRoutes.get('/', async (req: Request, res: Response) => {
   try {
     const students = await studentsRepository.list()

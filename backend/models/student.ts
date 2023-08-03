@@ -4,8 +4,8 @@ const studentSchema = new mongoose.Schema({
   code: { type: String, default: null },
   name: { type: String, default: null },
   absences: { type: Array, default: null },
-  warnings: { type: Array, default: null },
   grades: { type: Array, default: null },
+  warningsAmount: { type: Number, default: 0 },
 })
 
 export const StudentModel = mongoose.model('Student', studentSchema)

@@ -33,7 +33,7 @@ export class SubjectsRepository implements ISubjectsRepository {
     )
   }
 
-  async getEntries() {
-    return SubjectModel.countDocuments()
+  async getEntries(): Promise<number> {
+    return await SubjectModel.countDocuments()
   }
 }

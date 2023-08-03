@@ -17,8 +17,8 @@ export const studentsService = {
 
   async updateGrades({ studentId, subjectId, grades }: UpdateParams) {
     const formatedGrades = {
-      firstGrade: Number(grades?.firstGrades),
-      secondGrade: Number(grades?.secondGrade),
+      firstGrade: Number(grades?.firstGrade || 0),
+      secondGrade: Number(grades?.secondGrade || 0),
     }
     const body = {
       studentId,

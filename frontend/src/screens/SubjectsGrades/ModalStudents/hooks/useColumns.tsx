@@ -23,20 +23,23 @@ export function useColumns({ handleEditGrades }: Params): Column[] {
     {
       field: 'grades',
       headerName: 'Nota 1',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.firstGrade.toFixed(2) || 0,
+      valueFormatter: (params: CellFunctionParams) => {
+        return (Number(params?.value?.firstGrade) || 0).toFixed(2)
+      },
     },
     {
       field: 'grades',
       headerName: 'Nota 2',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.secondGrade.toFixed(2) || 0,
+      valueFormatter: (params: CellFunctionParams) => {
+        return (Number(params?.value?.secondGrade) || 0).toFixed(2)
+      },
     },
     {
       field: 'grades',
       headerName: 'Final',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.totalGrades.toFixed(2) || 0,
+      valueFormatter: (params: CellFunctionParams) => {
+        return (params?.value?.totalGrades || 0).toFixed(2)
+      },
     },
     {
       field: 'acoes',

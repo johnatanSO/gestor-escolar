@@ -16,15 +16,6 @@ export function FormEdit({
   setStudentToEdit,
   handleBack,
 }: Props) {
-  function handleChangeGrade(event: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target
-
-    const copyStudentToEdit: any = { ...studentToEdit }
-
-    copyStudentToEdit.grades[name] = value
-    setStudentToEdit(copyStudentToEdit)
-  }
-
   return (
     <>
       <button onClick={handleBack} className={style.backButton} type="button">
@@ -32,9 +23,16 @@ export function FormEdit({
         Voltar
       </button>
       <CustomTextField
-        onChange={handleChangeGrade}
+        onChange={(event) => {
+          setStudentToEdit({
+            ...studentToEdit,
+            grades: {
+              ...studentToEdit.grades,
+              firstGrade: event.target.value,
+            },
+          })
+        }}
         value={studentToEdit?.grades?.firstGrade}
-        name="firstGrade"
         label="Nota 1"
         placeholder="Digite a primeira nota"
         size="small"
@@ -42,9 +40,16 @@ export function FormEdit({
         className={style.input}
       />
       <CustomTextField
-        onChange={handleChangeGrade}
+        onChange={(event) => {
+          setStudentToEdit({
+            ...studentToEdit,
+            grades: {
+              ...studentToEdit.grades,
+              secondGrade: event.target.value,
+            },
+          })
+        }}
         value={studentToEdit?.grades?.secondGrade}
-        name="secondGrade"
         label="Nota 2"
         placeholder="Digite a segunda nota"
         size="small"

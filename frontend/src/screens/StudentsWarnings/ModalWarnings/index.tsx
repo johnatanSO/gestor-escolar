@@ -1,14 +1,15 @@
 import { ModalLayout } from '../../../components/ModalLayout'
-import style from './ModalAddStudents.module.scss'
+import style from './ModalWarnings.module.scss'
 import { Student } from '..'
 import { EmptyItems } from '../../../components/EmptyItems'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FormEvent, useContext, useState } from 'react'
+import { FormEvent, useContext, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import { warningsService } from '../../../services/warningsService'
 import { AlertContext } from '../../../contexts/alertContext'
 import { FormNewWarning } from './FormNewWarning'
+import { Loading } from '../../../components/Loading'
 
 interface Props {
   studentData: Student
@@ -19,7 +20,7 @@ interface Props {
 
 export interface Warning {
   uniqueId: string
-  number: string
+  code: string
   title: string
   description: string
   date: string | Date
@@ -37,6 +38,8 @@ export function ModalWarnings({
   setStudentData,
 }: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
+  const [loadingWarnings, setLoadingWarnings] = useState<boolean>(true)
+  const [warnings, setWarnings] = useState<Warning[]>([])
   const [isFormMode, setIsFormMode] = useState<boolean>(false)
   const defaultValuesNewWarning = {
     title: '',
@@ -52,19 +55,15 @@ export function ModalWarnings({
     event.preventDefault()
     setLoadingCrateWarning(true)
     warningsService
-      .create({ studentId: studentData?._id, newWarningData })
+      .create({ idStudent: studentData?._id, newWarningData })
       .then((res) => {
-        const { newWarning } = res.data.item
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
           text: 'Advertências cadastrada com sucesso',
         })
-        setStudentData({
-          ...studentData,
-          warnings: [...studentData.warnings, newWarning],
-        })
+        getWarnings()
         setIsFormMode(false)
         setNewWarningData(defaultValuesNewWarning)
       })
@@ -82,6 +81,26 @@ export function ModalWarnings({
       })
   }
 
+  function getWarnings() {
+    setLoadingWarnings(true)
+    warningsService
+      .getAll(studentData?._id)
+      .then((res) => {
+        setWarnings(res.data.items)
+      })
+      .catch((err) => {
+        console.log('ERRO AO BUSCAR ADVERTÊNCIAS')
+        console.log(err?.response?.data?.message)
+      })
+      .finally(() => {
+        setLoadingWarnings(false)
+      })
+  }
+
+  useEffect(() => {
+    getWarnings()
+  }, [])
+
   return (
     <ModalLayout
       open={open}
@@ -92,16 +111,19 @@ export function ModalWarnings({
       loading={loadingCreateWarning}
     >
       <>
-        <button
-          type="button"
-          className={style.buttonNewWarning}
-          onClick={() => {
-            setIsFormMode(true)
-          }}
-        >
-          <FontAwesomeIcon className={style.icon} icon={faPlus} />
-          Nova advertência
-        </button>
+        {!isFormMode && (
+          <button
+            type="button"
+            className={style.buttonNewWarning}
+            onClick={() => {
+              setIsFormMode(true)
+            }}
+          >
+            <FontAwesomeIcon className={style.icon} icon={faPlus} />
+            Nova advertência
+          </button>
+        )}
+
         {isFormMode ? (
           <FormNewWarning
             newWarningData={newWarningData}
@@ -109,15 +131,23 @@ export function ModalWarnings({
           />
         ) : (
           <ul className={style.fieldsContainer}>
-            {studentData?.warnings?.length === 0 && (
-              <EmptyItems text="Aluno não possui advertências" />
+            {warnings?.length === 0 && !loadingWarnings && (
+              <EmptyItems
+                customStyle={{ boxShadow: 'none' }}
+                text="Este aluno não possui advertências"
+              />
             )}
-            {studentData?.warnings?.map((warning) => {
+
+            {loadingWarnings && <Loading size={25} color="#cd1414" />}
+
+            {warnings?.map((warning) => {
               return (
-                <li key={warning?.uniqueId}>
-                  <span>{warning?.number}</span>
-                  <span>{dayjs(warning?.date).format('DD/MM/YYYY')}</span>
+                <li className={style.warningItem} key={warning?.uniqueId}>
+                  <span>{warning?.code}</span>
                   <span>{warning?.title}</span>
+                  <span style={{ marginLeft: 'auto' }}>
+                    {dayjs(warning?.date).format('DD/MM/YYYY - HH:mm')}
+                  </span>
                 </li>
               )
             })}

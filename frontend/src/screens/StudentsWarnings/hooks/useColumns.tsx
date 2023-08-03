@@ -30,9 +30,8 @@ export function useColumns({ handleOpenWarnings }: UseColumnsParams): Column[] {
     },
     {
       headerName: 'Quantidade de advertências',
-      field: 'warnings',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.length || 0,
+      field: 'warningsAmount',
+      valueFormatter: (params: CellFunctionParams) => params?.value || 0,
     },
     {
       headerName: '',

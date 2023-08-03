@@ -12,6 +12,7 @@ export function FormNewWarning({ newWarningData, setNewWarningData }: Props) {
     <div className={style.inputsContainer}>
       <CustomTextField
         type="text"
+        required
         label="Título"
         value={newWarningData?.title}
         onChange={(event) => {

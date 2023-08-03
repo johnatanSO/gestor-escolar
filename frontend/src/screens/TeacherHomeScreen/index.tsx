@@ -22,7 +22,14 @@ export function TeacherHomeScreen() {
         router.push('/teacher/subjectsGrades')
       },
     },
-    { image: warningImage, alt: 'Botão de dvertências', title: 'Advertências' },
+    {
+      image: warningImage,
+      alt: 'Botão de dvertências',
+      title: 'Advertências',
+      onClickCallback: () => {
+        router.push('/teacher/studentsWarnings')
+      },
+    },
     { image: timetableImage, alt: 'Botão de faltas', title: 'Faltas' },
     {
       image: registerImage,

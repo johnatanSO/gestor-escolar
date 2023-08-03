@@ -43,6 +43,7 @@ export function StudentsWarnings() {
 
   function handleOpenWarnings(student: Student) {
     setModalWarningsOpened(true)
+    console.log('student', student)
     setSelectedStudent(student)
   }
 

@@ -2,18 +2,21 @@ import http from '../api/http'
 import { NewWarning } from '../screens/StudentsWarnings/ModalWarnings'
 
 interface CreateParams {
-  studentId: string
+  idStudent: string
   newWarningData: NewWarning
 }
 
 export const warningsService = {
-  async create({ studentId, newWarningData }: CreateParams) {
+  async create({ idStudent, newWarningData }: CreateParams) {
     const body = {
       ...newWarningData,
-      studentId,
+      idStudent,
     }
     return await http.post('/warnings/', {
       ...body,
     })
+  },
+  async getAll(idStudent: string) {
+    return await http.get('/warnings/' + idStudent)
   },
 }

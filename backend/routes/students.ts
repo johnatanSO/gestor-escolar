@@ -39,9 +39,7 @@ studentsRoutes.get(
           (grade: any) => grade?._id === idSubject,
         )
         return {
-          _id: student?._id,
-          name: student?.name,
-          code: student?.code,
+          ...student._doc,
           grades,
         }
       })

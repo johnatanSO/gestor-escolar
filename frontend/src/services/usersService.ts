@@ -76,6 +76,7 @@ export const usersService = {
 
   getUserInfoByCookie(context = null) {
     const cookies = nookies.get(context)
-    return cookies ? JSON.parse(cookies[USER_INFO]) : null
+    console.log('cokkies', cookies[USER_INFO])
+    return cookies[USER_INFO] ? JSON.parse(cookies[USER_INFO]) : null
   },
 }

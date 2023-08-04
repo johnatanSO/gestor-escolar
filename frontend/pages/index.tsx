@@ -7,14 +7,14 @@ export default function HomePage() {
 
 export function getServerSideProps(context: any) {
   const userInfo = usersService.getUserInfoByCookie(context)
-  const isStudent = userInfo.occupation === 'student'
-  const isTeacher = userInfo.occupation === 'teacher'
+  const isStudent = userInfo?.occupation === 'student'
+  const isTeacher = userInfo?.occupation === 'teacher'
 
   if (!isStudent && !isTeacher) {
     return {
       redirect: {
         permanent: false,
-        destination: '/404',
+        destination: '/login',
       },
     }
   }

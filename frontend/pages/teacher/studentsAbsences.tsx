@@ -1,16 +1,12 @@
-import { TeacherHomeScreen } from '../../src/screens/Teacher/TeacherHomeScreen'
+import { StudentsAbsences } from '../../src/screens/Teacher/StudentsAbsences'
 import { usersService } from '../../src/services/usersService'
-import { PageProps } from '../_app'
+import { PageProps } from './../_app'
 
-export default function TeacherPage({
-  setTitle,
-  setShowBackButton,
-}: PageProps) {
-  setTitle('Professor')
-  setShowBackButton(false)
+export default function StudentsAbsencesPage({ setShowBackButton }: PageProps) {
+  setShowBackButton(true)
   return (
     <>
-      <TeacherHomeScreen />
+      <StudentsAbsences />
     </>
   )
 }

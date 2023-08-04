@@ -6,11 +6,22 @@ type Props = {
   title: string
   alt: string
   onClickCallback: () => void
+  disabled: boolean
 }
 
-export function ButtonComponent({ image, title, alt, onClickCallback }: Props) {
+export function ButtonComponent({
+  image,
+  title,
+  alt,
+  onClickCallback,
+  disabled,
+}: Props) {
   return (
-    <li className={style.button} onClick={onClickCallback}>
+    <li
+      style={disabled ? { opacity: '0.4', cursor: 'not-allowed' } : {}}
+      className={style.button}
+      onClick={disabled ? undefined : onClickCallback}
+    >
       <div className={style.imageContainer}>
         <Image src={image} alt={alt} className={style.image} />
       </div>

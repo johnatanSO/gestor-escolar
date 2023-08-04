@@ -1,4 +1,4 @@
-import { StudentHomeScreen } from '../../src/screens/StudentHomeScreen'
+import { StudentHomeScreen } from '../../src/screens/Student/StudentHomeScreen'
 import { usersService } from '../../src/services/usersService'
 import { PageProps } from '../_app'
 

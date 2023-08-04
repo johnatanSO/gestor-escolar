@@ -1,5 +1,5 @@
 import http from '../api/http'
-import { NewWarning } from '../screens/StudentsWarnings/ModalWarnings'
+import { NewWarning } from '../screens/Teacher/StudentsWarnings/ModalWarnings'
 
 interface CreateParams {
   idStudent: string

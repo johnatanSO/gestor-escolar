@@ -1,5 +1,6 @@
 import { usersService } from '../src/services/usersService'
 
+// Mostrar Homescreens aqui no index ao invés de redirecionar o usuário para outra rota.
 export default function HomePage() {
   return <></>
 }

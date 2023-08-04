@@ -1,0 +1,41 @@
+@import "../../../../styles/colors.scss";
+
+.avatarContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+
+  .imageContainer {
+    background-color: $gray-color-100;
+    border: 8px solid $primary-color;
+
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    padding: 0.3rem;
+
+    .image {
+      border-radius: 50%;
+      margin: 0px;
+    }
+  }
+}
+
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5rem;
+
+  margin-top: auto;
+  margin-bottom: 3rem;
+  list-style-type: none;
+
+  
+}

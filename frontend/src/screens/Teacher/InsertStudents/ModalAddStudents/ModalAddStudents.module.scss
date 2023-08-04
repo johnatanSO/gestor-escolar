@@ -1,0 +1,17 @@
+@import '../../../../../styles/colors.scss';
+
+.fieldsContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  list-style-type: none;
+
+  li{
+    background: $gray-color-100;
+    box-shadow: 1px 3px 5px rgb(0 0 0 / 0.1);
+
+    border-radius: 10px;
+    padding: 0px 0px 0px 0.7rem;
+  }
+}

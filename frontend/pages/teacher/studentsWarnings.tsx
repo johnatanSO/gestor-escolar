@@ -1,4 +1,4 @@
-import { StudentsWarnings } from '../../src/screens/StudentsWarnings'
+import { StudentsWarnings } from '../../src/screens/Teacher/StudentsWarnings'
 import { usersService } from '../../src/services/usersService'
 import { PageProps } from './../_app'
 

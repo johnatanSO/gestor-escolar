@@ -1,4 +1,4 @@
-import { InsertStudents } from '../../src/screens/InsertStudents'
+import { InsertStudents } from '../../src/screens/Teacher/InsertStudents'
 import { usersService } from '../../src/services/usersService'
 import { PageProps } from './../_app'
 

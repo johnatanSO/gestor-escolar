@@ -33,8 +33,8 @@ export function TeacherHomeScreen() {
     { image: timetableImage, alt: 'Botão de faltas', title: 'Faltas' },
     {
       image: registerImage,
-      alt: 'Botão de registro',
-      title: 'Cadastrar alunos',
+      alt: 'Botão de disciplinas',
+      title: 'Disciplinas',
       onClickCallback: () => {
         router.push('/teacher/insertStudents')
       },

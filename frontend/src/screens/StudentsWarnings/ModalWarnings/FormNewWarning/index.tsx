@@ -1,15 +1,26 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NewWarning } from '..'
 import { CustomTextField } from '../../../../components/CustomTextField'
 import style from './FormNewWarning.module.scss'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   newWarningData: NewWarning
   setNewWarningData: (value: NewWarning) => void
+  handleBack: () => void
 }
 
-export function FormNewWarning({ newWarningData, setNewWarningData }: Props) {
+export function FormNewWarning({
+  newWarningData,
+  setNewWarningData,
+  handleBack,
+}: Props) {
   return (
     <div className={style.inputsContainer}>
+      <button onClick={handleBack} className={style.backButton} type="button">
+        <FontAwesomeIcon className={style.icon} icon={faAngleLeft} />
+        Voltar
+      </button>
       <CustomTextField
         type="text"
         required

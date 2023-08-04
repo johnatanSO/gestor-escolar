@@ -43,7 +43,7 @@
 
   list-style-type: none;
 
-  li {
+  .warningItem {
     background: $gray-color-100;
     color: $gray-color-400;
     font-weight: 500;
@@ -58,10 +58,47 @@
     align-items: center;
     gap: 15px;
 
+    transition: filter .2s;
+    cursor: pointer;
+
     span {
       white-space: nowrap;
       overflow: hidden;
+      padding: 0.1rem;
       text-overflow: ellipsis;
+    }
+
+    .arrowIcon{
+      height: 1rem;
+    }
+
+    &:hover{
+      filter: brightness(0.95);
+    }
+  }
+  
+  .descriptionContainer{
+    background: $gray-color-100;
+    margin-top: -7px;
+
+    padding: 1rem;
+    padding-top: calc(1rem + 7px);
+
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+
+    h4{
+      color: $gray-color-300;
+      border-bottom: 1px solid $gray-color-200;
+    }
+    p{
+      color: $gray-color-400;
+      font-weight: 500;
+      font-size: 0.875rem;
     }
   }
 }

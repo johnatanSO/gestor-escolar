@@ -6,6 +6,7 @@ import { useColumns } from './hooks/useColumns'
 import { EmptyItems } from '../../../../src/components/EmptyItems'
 import { useRouter } from 'next/router'
 import { ModalWarnings, Warning } from './ModalWarnings'
+import { Loading } from '../../../components/Loading'
 
 export interface Student {
   _id: string
@@ -59,6 +60,10 @@ export function StudentsAbsences() {
           columns={columns}
           rows={students}
         />
+      )}
+
+      {students?.length === 0 && loadingStudents && (
+        <Loading size={30} color="#cd1414" />
       )}
 
       {students?.length === 0 && !loadingStudents && (

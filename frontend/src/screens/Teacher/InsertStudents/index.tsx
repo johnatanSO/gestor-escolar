@@ -9,6 +9,7 @@ import { EmptyItems } from '../../../../src/components/EmptyItems'
 import { useRouter } from 'next/router'
 import { AlertContext } from '../../../../src/contexts/alertContext'
 import { ModalAddStudents } from './ModalAddStudents'
+import { Loading } from '../../../components/Loading'
 
 export interface Subject {
   _id: string
@@ -103,6 +104,10 @@ export function InsertStudents() {
         buttonText="Nova disciplina"
         InputFilter={<h3>Disciplinas</h3>}
       />
+
+      {subjects?.length === 0 && loadingSubjects && (
+        <Loading size={30} color="#cd1414" />
+      )}
 
       {subjects?.length > 0 && (
         <TableComponent

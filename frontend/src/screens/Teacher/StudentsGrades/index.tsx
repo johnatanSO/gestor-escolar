@@ -6,6 +6,7 @@ import { EmptyItems } from '../../../../src/components/EmptyItems'
 import { useRouter } from 'next/router'
 import { ModalStudents } from './ModalStudents'
 import { subjectsService } from '../../../services/subjectsService'
+import { Loading } from '../../../components/Loading'
 
 export interface Subject {
   _id: string
@@ -54,6 +55,10 @@ export function StudentsGrades() {
           columns={columns}
           rows={subjects}
         />
+      )}
+
+      {subjects?.length === 0 && loadingSubjects && (
+        <Loading size={30} color="#cd1414" />
       )}
 
       {subjects?.length === 0 && !loadingSubjects && (

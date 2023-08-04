@@ -1,7 +1,7 @@
-import { ModalLayout } from '../../../components/ModalLayout'
+import { ModalLayout } from '../../../../components/ModalLayout'
 import style from './ModalWarnings.module.scss'
 import { Student } from '..'
-import { EmptyItems } from '../../../components/EmptyItems'
+import { EmptyItems } from '../../../../components/EmptyItems'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faAngleDown,
@@ -10,10 +10,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FormEvent, useContext, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
-import { warningsService } from '../../../services/warningsService'
-import { AlertContext } from '../../../contexts/alertContext'
+import { warningsService } from '../../../../services/warningsService'
+import { AlertContext } from '../../../../contexts/alertContext'
 import { FormNewWarning } from './FormNewWarning'
-import { Loading } from '../../../components/Loading'
+import { Loading } from '../../../../components/Loading'
 import { Collapse, List, ListItem } from '@mui/material'
 
 interface Props {

@@ -1,6 +1,6 @@
-import { Column, CellFunctionParams } from '../../../../src/models/columns'
+import { Column, CellFunctionParams } from '../../../../../src/models/columns'
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import { ActionButtons } from '../../../../src/components/ActionButtons'
+import { ActionButtons } from '../../../../../src/components/ActionButtons'
 import { Student } from '..'
 
 interface UseColumnsParams {

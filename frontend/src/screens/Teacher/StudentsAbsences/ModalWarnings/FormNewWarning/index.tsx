@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NewWarning } from '..'
-import { CustomTextField } from '../../../../components/CustomTextField'
+import { CustomTextField } from '../../../../../components/CustomTextField'
 import style from './FormNewWarning.module.scss'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 

@@ -8,6 +8,7 @@ const usersRoutes = express.Router()
 const usersRepository = new UsersRepository()
 const studentsRepository = new StudentsRepository()
 
+// TO-DO: Implementar token JWT.
 usersRoutes.get('/verify_token/:token', async (req: Request, res: Response) => {
   try {
     const { token } = req.params
@@ -36,6 +37,7 @@ usersRoutes.get('/verify_token/:token', async (req: Request, res: Response) => {
   }
 })
 
+// TO-DO: Implementar token JWT.
 usersRoutes.post('/register', async (req: Request, res: Response) => {
   const { name, email, password, occupation } = req.body
   try {
@@ -61,6 +63,7 @@ usersRoutes.post('/register', async (req: Request, res: Response) => {
   }
 })
 
+// TO-DO: Implementar token JWT.
 usersRoutes.post('/login', async (req: Request, res: Response) => {
   const { email, password } = req.body
   try {

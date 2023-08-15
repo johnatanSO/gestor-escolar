@@ -11,19 +11,19 @@ export default function StudentPage({ setTitle }: PageProps) {
   )
 }
 
-export function getServerSideProps(context: any) {
-  const userInfo = usersService.getUserInfoByCookie(context)
-  const hasPermition = userInfo.occupation === 'student'
-
-  if (!hasPermition) {
+export async function getServerSideProps(context: any) {
+  const hasSession = await usersService.getSession(context)
+  if (!hasSession) {
     return {
       redirect: {
         permanent: false,
-        destination: '/404',
+        destination: '/login',
       },
+      props: {},
     }
   }
+
   return {
-    props: {},
+    ...(await usersService.checkPermission(context)),
   }
 }

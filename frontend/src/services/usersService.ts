@@ -82,4 +82,30 @@ export const usersService = {
     console.log('cokkies', cookies[USER_INFO])
     return cookies[USER_INFO] ? JSON.parse(cookies[USER_INFO]) : null
   },
+
+  async checkPermission(context = null) {
+    const userInfo = usersService.getUserInfoByCookie(context)
+    const isStudent = userInfo?.occupation === 'student'
+    const isTeacher = userInfo?.occupation === 'teacher'
+
+    if (isTeacher) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/teacher',
+        },
+        props: {},
+      }
+    }
+
+    if (isStudent) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/student',
+        },
+        props: {},
+      }
+    }
+  },
 }

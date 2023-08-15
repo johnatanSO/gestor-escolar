@@ -16,6 +16,7 @@ export const warningsService = {
       ...body,
     })
   },
+
   async getAll(idStudent: string) {
     return await http.get('/warnings/' + idStudent)
   },

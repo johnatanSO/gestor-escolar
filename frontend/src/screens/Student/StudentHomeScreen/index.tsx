@@ -5,9 +5,44 @@ import notesImage from '../../../../public/assets/notepad.png'
 import warningImage from '../../../../public/assets/warning.png'
 import timetableImage from '../../../../public/assets/timetable.png'
 import { usersService } from '../../../services/usersService'
+import { useEffect, useState } from 'react'
+import { ButtonComponent } from '../../../components/ButtonComponent'
+import { useRouter } from 'next/router'
 
 export function StudentHomeScreen() {
-  const studentData = usersService.getUserInfo()
+  const [studentData, setStudentData] = useState<any>(undefined)
+  const router = useRouter()
+  const buttonsList: any[] = [
+    {
+      image: notesImage,
+      alt: 'Botão de notas',
+      title: 'Notas',
+      onClickCallback: () => {
+        router.push('/student/grades')
+      },
+    },
+    {
+      image: warningImage,
+      alt: 'Botão de dvertências',
+      title: 'Advertências',
+
+      onClickCallback: () => {
+        router.push('/student/warnings')
+      },
+    },
+    {
+      image: timetableImage,
+      alt: 'Botão de faltas',
+      title: 'Faltas',
+      disabled: true,
+    },
+  ]
+
+  useEffect(() => {
+    const studentData = usersService.getUserInfo()
+    setStudentData(studentData)
+  }, [])
+
   return (
     <>
       <div className={style.avatarContainer}>
@@ -22,32 +57,20 @@ export function StudentHomeScreen() {
       </div>
 
       <ul className={style.buttonsContainer}>
-        <li>
-          <div className={style.imageContainer}>
-            <Image src={notesImage} alt="Notas icon" className={style.image} />
-          </div>
-          <h4>Notas</h4>
-        </li>
-        <li>
-          <div className={style.imageContainer}>
-            <Image
-              src={warningImage}
-              alt="Advertências icon"
-              className={style.image}
-            />
-          </div>
-          <h4>Advertências</h4>
-        </li>
-        <li>
-          <div className={style.imageContainer}>
-            <Image
-              src={timetableImage}
-              alt="Faltas icon"
-              className={style.image}
-            />
-          </div>
-          <h4>Faltas</h4>
-        </li>
+        {buttonsList?.map(
+          ({ image, alt, title, onClickCallback, disabled = false }, key) => {
+            return (
+              <ButtonComponent
+                onClickCallback={onClickCallback}
+                image={image}
+                alt={alt}
+                title={title}
+                key={key}
+                disabled={disabled}
+              />
+            )
+          },
+        )}
       </ul>
     </>
   )

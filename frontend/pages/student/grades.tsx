@@ -1,12 +1,12 @@
-import { StudentHomeScreen } from '../../src/screens/Student/StudentHomeScreen'
+import { Grades } from '../../src/screens/Student/Grades'
 import { usersService } from '../../src/services/usersService'
-import { PageProps } from '../_app'
+import { PageProps } from './../_app'
 
-export default function StudentPage({ setTitle }: PageProps) {
-  setTitle('Estudante')
+export default function GradesPage({ setShowBackButton }: PageProps) {
+  setShowBackButton(true)
   return (
     <>
-      <StudentHomeScreen />
+      <Grades />
     </>
   )
 }

@@ -1,4 +1,5 @@
 import http from '../api/http'
+import { usersService } from './usersService'
 
 interface UpdateParams {
   studentId: string
@@ -12,7 +13,7 @@ export const studentsService = {
   },
 
   async getBySubject(idSubject: string) {
-    return await http.get('/students/getGrades/' + idSubject)
+    return await http.get('/students/subjectStudentsGrades/' + idSubject)
   },
 
   async updateGrades({ studentId, subjectId, grades }: UpdateParams) {
@@ -29,5 +30,11 @@ export const studentsService = {
     return http.put('/students/updateGrades', {
       ...body,
     })
+  },
+
+  async getGrades() {
+    return await http.get(
+      '/students/studentGrades/' + usersService?.getUserInfo()?._id,
+    )
   },
 }

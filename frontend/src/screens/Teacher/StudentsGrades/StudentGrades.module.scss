@@ -1,6 +1,6 @@
 @import "../../../../styles/colors.scss";
 
-.warningDetails {
+.showStudentsButton {
   background: $primary-color;
   color: $white-color;
   box-shadow: 1px 2px 4px rgb(0 0 0 / 0.1);
@@ -17,13 +17,13 @@
   padding: 0.5rem;
 
   cursor: pointer;
-  transition: filter .2s;
+  transition: filter 0.2s;
 
-  &:hover{
+  &:hover {
     filter: brightness(0.8);
   }
 
-  .icon{
+  .icon {
     height: 1rem;
   }
 }

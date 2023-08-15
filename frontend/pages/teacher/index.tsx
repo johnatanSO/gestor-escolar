@@ -17,7 +17,7 @@ export default function TeacherPage({
 
 export function getServerSideProps(context: any) {
   const userInfo = usersService.getUserInfoByCookie(context)
-  const hasPermition = userInfo.occupation === 'teacher'
+  const hasPermition = userInfo?.occupation === 'teacher'
 
   if (!hasPermition) {
     return {
@@ -27,6 +27,7 @@ export function getServerSideProps(context: any) {
       },
     }
   }
+
   return {
     props: {},
   }

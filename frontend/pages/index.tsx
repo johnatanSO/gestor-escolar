@@ -17,7 +17,7 @@ export async function getServerSideProps(context: any) {
     }
   }
 
-  const userInfo = usersService.getUserInfo()
+  const userInfo = usersService.getUserInfoByCookie(context)
   const isStudent = userInfo?.occupation === 'student'
   const isTeacher = userInfo?.occupation === 'teacher'
 

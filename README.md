@@ -2,12 +2,15 @@
 
 <h3> 💻 Sobre o projeto</h3>
 
-<p>Esse é um sistema contruído para auxiliar a administração de alunos de uma escola, feito com ReactJS e utilizando a API de banco de dados e autenticação do FIREBASE. </p>
-<p>📝 O sistema possui funcionalidades para  o gerenciamento de:</p>
- <li>Notas</li>
- <li>Advertências</li>
- <li>Faltas</li>
- <li>E uma área para cadastro de novos alunos</li>
+<p>Esse é um sistema construído para auxiliar a administração de alunos de uma escola, feito com HTML, SASS, NextJS, Typescript/Javascript no FRONT END, Node, Express no BACK END e utilizando o MongoDB como banco de dados com a API Atlas MongoDB. </p>
+
+<h3>📝 O sistema possui funcionalidades para o gerenciamento de:</h3>
+ <li>Login/Cadastro de usuário;</li>
+<h5>Com a permissão de professor: </h5>
+ <li>Cadastro e gerenciamento de disciplinas com a opção de associar alunos a alguma disciplina; </li>
+ <li>Gerenciamento de notas dos alunos;</li>
+ <li>Gerenciamento de advertências;</li>
+ <li>Gerenciamento de faltas (ainda em desenvolvimento...);</li>
  <br>
  
  <h2>🖼 Imagem da tela de login: </h2>
@@ -27,34 +30,26 @@
 
 <div style="display: inline_block">
   <img align="center" alt="John-HTML" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg">
-  <img align="center" alt="John-CSS" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg">
-  <img align="center" alt="John-JS" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg">
-  <img align="center" alt="John-Firebase" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/firebase/firebase-plain.svg">
-  <img align="center" alt="John-Jquery" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jquery/jquery-original.svg">
+  <img align="center" alt="John-SASS" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sass/sass-original.svg">
+  <img align="center" alt="John-Nextjs" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original-wordmark.svg">
+  <img align="center" alt="John-TS" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-plain.svg">
+  <img align="center" alt="John-Node" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg">
+  <img align="center" alt="John-Express" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg">
+  <img align="center" alt="John-MongoDB" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg">
 </div>
+<p>(HTML, SASS, NextJS, Typescsript/Javascript, Node, Express, MongoDB)</p>
 <br>
 <h2>👷 Como testar? </h2>
 <h3>Entre com o seguinte link: </h3>
-<a href="https://johnatanso.github.io/Sistema-Escolar">https://johnatanso.github.io/Sistema-Escolar</a>
+<a href="https://johnatanso.github.io/gestor-escolar">https://johnatanso.github.io/gestor-escolar</a>
 <h3>Ou</h3>
-<li> Clone o repositório com: git clone https://github.com/teteusAraujo/I-need-to-learn"
+<li> Clone o repositório com: git clone https://johnatanso.github.io/gestor-escolar"
 <li> Entre em uma IDE de sua preferência 
-<li> Execute o servidor ou use um puglin que crie um servidor
+<li> Execute o servidor na pasta back-end e depois o front-end
+<li> Crie uma conta nova
+<li> Teste as funcionalidades
+    
 
-<h2>Login: </h2>
-<p>Para fazer login, utilize um dos seguintes conjuntos de dados abaixo ⬇⬇⬇</p>
-  
-<div>
-  <h3>👨🏻‍🏫 Como professor: </h3>
-  <li>E-mail: professor@testeprofessor.com</li>
-  <li>Senha: professor123</li>
-</div>
-  
-<div>
-  <h3>👨🏻‍🎓 Como aluno: </h3>
-  <li>E-mail: johnatan@testealuno.com</li>
-  <li>Senha: 123456</li>
-</div>
 <br>
  
 <div>

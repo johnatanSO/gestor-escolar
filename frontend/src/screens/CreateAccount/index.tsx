@@ -65,11 +65,8 @@ export function CreateAccount() {
     usersService
       .register({ newUser })
       .then((res) => {
-        usersService.saveUser(res.data.item)
-        if (res.data?.item?.occupation === 'student')
-          return router.push('/student')
-        if (res.data?.item?.occupation === 'teacher')
-          return router.push('/teacher')
+        usersService.saveUser(res.data)
+        router.push('/')
       })
       .catch((err) => {
         console.log('ERRO AO TENTAR CADASTRAR USUÁRIO, ', err)

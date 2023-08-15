@@ -5,25 +5,29 @@ export default function HomePage() {
   return <></>
 }
 
-export function getServerSideProps(context: any) {
-  const userInfo = usersService.getUserInfoByCookie(context)
-  const isStudent = userInfo?.occupation === 'student'
-  const isTeacher = userInfo?.occupation === 'teacher'
-
-  if (!isStudent && !isTeacher) {
+export async function getServerSideProps(context: any) {
+  const hasSession = await usersService.getSession(context)
+  if (!hasSession) {
     return {
       redirect: {
         permanent: false,
         destination: '/login',
       },
+      props: {},
     }
   }
+
+  const userInfo = usersService.getUserInfo()
+  const isStudent = userInfo?.occupation === 'student'
+  const isTeacher = userInfo?.occupation === 'teacher'
+
   if (isTeacher) {
     return {
       redirect: {
         permanent: false,
         destination: '/teacher',
       },
+      props: {},
     }
   }
   if (isStudent) {
@@ -32,6 +36,7 @@ export function getServerSideProps(context: any) {
         permanent: false,
         destination: '/student',
       },
+      props: {},
     }
   }
   return {

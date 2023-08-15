@@ -1,4 +1,3 @@
-import { NextRequest } from 'next/server'
 import http from '../api/http'
 import { NewUser } from '../screens/CreateAccount'
 import { LoginUserData } from '../screens/Login'
@@ -16,8 +15,8 @@ interface RegisterParams {
 }
 
 export const usersService = {
-  async getSession(request: NextRequest) {
-    const token: string | undefined = await this.getToken(request)
+  async getSession(ctx = null) {
+    const token = this.getToken(ctx)
 
     if (!token) return false
 
@@ -25,7 +24,9 @@ export const usersService = {
   },
 
   async verifyToken(token: String) {
-    return token
+    return true
+    // Implementar verificação de token com o back-end
+    // return token
   },
 
   async login({ userData }: LoginParams) {
@@ -44,20 +45,22 @@ export const usersService = {
     })
   },
 
-  async getToken(request: NextRequest) {
-    const token: string | undefined = request.cookies.get(ACCESS_TOKEN_KEY)
-
-    return token || undefined
+  getToken(ctx = null) {
+    const cookies = nookies.get(ctx)
+    return cookies ? cookies[ACCESS_TOKEN_KEY] : null
   },
 
-  async saveUser(userData: any) {
-    globalThis?.localStorage?.setItem(USER_INFO, JSON.stringify(userData))
-    globalThis?.localStorage?.setItem(ACCESS_TOKEN_KEY, userData?._id)
-    setCookie(undefined, ACCESS_TOKEN_KEY, userData?._id, {
+  async saveUser(userResponse: any) {
+    globalThis?.localStorage?.setItem(
+      USER_INFO,
+      JSON.stringify(userResponse.item),
+    )
+    globalThis?.localStorage?.setItem(ACCESS_TOKEN_KEY, userResponse?.token)
+    setCookie(undefined, ACCESS_TOKEN_KEY, userResponse?.token, {
       maxAge: 60 * 60 * 24 * 30,
       path: '/',
     })
-    setCookie(undefined, USER_INFO, JSON.stringify(userData), {
+    setCookie(undefined, USER_INFO, JSON.stringify(userResponse.item), {
       maxAge: 60 * 60 * 24 * 30,
       path: '/',
     })

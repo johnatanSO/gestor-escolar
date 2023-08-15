@@ -27,7 +27,19 @@ export async function getServerSideProps(context: any) {
     }
   }
 
+  const userInfo = usersService.getUserInfoByCookie(context)
+  const isTeacher = userInfo?.occupation === 'teacher'
+  if (!isTeacher) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404',
+      },
+      props: {},
+    }
+  }
+
   return {
-    ...(await usersService.checkPermission(context)),
+    props: {},
   }
 }

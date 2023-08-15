@@ -79,11 +79,10 @@ export const usersService = {
 
   getUserInfoByCookie(context = null) {
     const cookies = nookies.get(context)
-    console.log('cokkies', cookies[USER_INFO])
     return cookies[USER_INFO] ? JSON.parse(cookies[USER_INFO]) : null
   },
 
-  async checkPermission(context = null) {
+  checkPermission(context = null) {
     const userInfo = usersService.getUserInfoByCookie(context)
     const isStudent = userInfo?.occupation === 'student'
     const isTeacher = userInfo?.occupation === 'teacher'

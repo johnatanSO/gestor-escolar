@@ -18,6 +18,6 @@ export async function getServerSideProps(context: any) {
   }
 
   return {
-    ...(await usersService.checkPermission(context)),
+    ...usersService.checkPermission(context),
   }
 }

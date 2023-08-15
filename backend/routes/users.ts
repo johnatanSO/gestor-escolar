@@ -45,19 +45,24 @@ usersRoutes.post('/register', async (req: Request, res: Response) => {
       usersRepository,
       studentsRepository,
     )
-    const newProduct = await createNewUserService.execute({
+    const newUser = await createNewUserService.execute({
       name,
       email,
       password,
       occupation,
     })
 
+    const authenticateUserService = new AuthenticateUserService(usersRepository)
+    const token = await authenticateUserService.getToken(newUser)
+
     res.status(201).json({
-      item: newProduct,
+      item: newUser,
+      token,
       message: 'Usuário cadastrado com sucesso!',
     })
   } catch (error: any) {
     res.status(400).json({
+      token: null,
       error: error.message,
     })
   }
@@ -73,13 +78,17 @@ usersRoutes.post('/login', async (req: Request, res: Response) => {
       password,
     })
 
+    const token = await authenticateUserService.getToken(user)
+
     res.status(200).json({
       item: user,
+      token,
       message: 'Usuário encontrado com sucesso',
     })
   } catch (error: any) {
     res.status(400).json({
       error: error.message,
+      token: null,
     })
   }
 })

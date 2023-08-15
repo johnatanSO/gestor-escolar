@@ -1,4 +1,7 @@
-import { IUsersRepository } from '../repositories/Users/IUsersRepository'
+import { IUsersRepository, User } from '../repositories/Users/IUsersRepository'
+import jwt from 'jsonwebtoken'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 export class AuthenticateUserService {
   usersRepository: IUsersRepository
@@ -13,5 +16,11 @@ export class AuthenticateUserService {
     }
 
     return user
+  }
+
+  async getToken(user: User) {
+    return jwt.sign({ id: user._id }, process.env.SECRET, {
+      expiresIn: '365d',
+    })
   }
 }

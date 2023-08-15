@@ -1,4 +1,4 @@
-// import { Types } from 'mongoose'
+import { Types } from 'mongoose'
 
 export interface NewUser {
   name: string
@@ -11,6 +11,7 @@ export interface NewUser {
 export interface User {
   email: string
   password: string
+  _id?: string | Types.ObjectId
 }
 
 export interface IUsersRepository {

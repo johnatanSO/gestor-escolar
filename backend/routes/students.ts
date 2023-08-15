@@ -24,7 +24,7 @@ studentsRoutes.get('/', async (req: Request, res: Response) => {
 })
 
 studentsRoutes.get(
-  '/getGrades/:idSubject',
+  '/subjectStudentsGrades/:idSubject',
   async (req: Request, res: Response) => {
     try {
       const { idSubject } = req.params
@@ -52,6 +52,41 @@ studentsRoutes.get(
       res
         .status(400)
         .json({ error: err, message: 'Erro ao tentar buscar alunos.' })
+    }
+  },
+)
+
+studentsRoutes.get(
+  '/studentGrades/:idStudent',
+  async (req: Request, res: Response) => {
+    try {
+      const { idStudent } = req.params
+      const student = await studentsRepository.findById(idStudent)
+
+      const queryListSubjects = {
+        students: { $elemMatch: { $eq: idStudent } },
+      }
+
+      const subjects = await subjectsRepository.list(queryListSubjects)
+      const grades = subjects.map((subject) => {
+        const subjectGrades = student.grades.find(
+          (grade) => grade._id === subject._id.toString(),
+        )
+        return {
+          subjectGrades,
+          subjectName: subject.name,
+          subjectCode: subject.code,
+        }
+      })
+
+      res.status(200).json({
+        items: grades,
+        message: 'Busca de notas concluída com sucesso.',
+      })
+    } catch (err) {
+      res
+        .status(400)
+        .json({ error: err, message: 'Erro ao tentar buscar notas.' })
     }
   },
 )

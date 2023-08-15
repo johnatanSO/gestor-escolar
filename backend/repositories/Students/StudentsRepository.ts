@@ -67,4 +67,8 @@ export class StudentsRepository implements IStudentsRepository {
       { $inc: { warningsAmount: 1 } },
     )
   }
+
+  async findById(idStudent: string) {
+    return await StudentModel.findOne({ _id: idStudent })
+  }
 }

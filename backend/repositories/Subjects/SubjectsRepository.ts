@@ -7,8 +7,8 @@ import {
 } from './ISubjectsRepository'
 
 export class SubjectsRepository implements ISubjectsRepository {
-  async list(): Promise<Subject[]> {
-    return await SubjectModel.find()
+  async list(queryList = {}): Promise<Subject[]> {
+    return await SubjectModel.find(queryList)
   }
 
   async findById(subjectId: string): Promise<Subject | null> {

@@ -1,10 +1,10 @@
 import http from '../api/http'
 import { NewUser } from '../screens/CreateAccount'
 import { LoginUserData } from '../screens/Login'
-import nookies, { setCookie, destroyCookie } from 'nookies'
+import nookies from 'nookies'
 
 const USER_INFO = 'userInfo:gestor-escolar'
-const ACCESS_TOKEN_KEY = ':gestor-escolar[v1]:'
+const ACCESS_TOKEN_KEY = 'access:gestor-escolar'
 
 interface LoginParams {
   userData: LoginUserData
@@ -24,7 +24,8 @@ export const usersService = {
   },
 
   async verifyToken(token: String) {
-    return true
+    if (token) return true
+    return false
     // Implementar verificação de token com o back-end
     // return token
   },
@@ -56,11 +57,11 @@ export const usersService = {
       JSON.stringify(userResponse.item),
     )
     globalThis?.localStorage?.setItem(ACCESS_TOKEN_KEY, userResponse?.token)
-    setCookie(undefined, ACCESS_TOKEN_KEY, userResponse?.token, {
+    nookies.set(null, ACCESS_TOKEN_KEY, userResponse?.token, {
       maxAge: 60 * 60 * 24 * 30,
       path: '/',
     })
-    setCookie(undefined, USER_INFO, JSON.stringify(userResponse.item), {
+    nookies.set(null, USER_INFO, JSON.stringify(userResponse.item), {
       maxAge: 60 * 60 * 24 * 30,
       path: '/',
     })
@@ -69,8 +70,8 @@ export const usersService = {
   async deleteToken() {
     globalThis?.localStorage?.removeItem(USER_INFO)
     globalThis?.localStorage?.removeItem(ACCESS_TOKEN_KEY)
-    destroyCookie(null, ACCESS_TOKEN_KEY)
-    destroyCookie(null, USER_INFO)
+    nookies.destroy(null, ACCESS_TOKEN_KEY)
+    nookies.destroy(null, USER_INFO)
   },
 
   getUserInfo() {

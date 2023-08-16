@@ -33,8 +33,7 @@ export const studentsService = {
   },
 
   async getGrades() {
-    return await http.get(
-      '/students/studentGrades/' + usersService?.getUserInfo()?._id,
-    )
+    const idStudent = usersService?.getUserInfo()?._id
+    return await http.get('/students/studentGrades/' + idStudent)
   },
 }

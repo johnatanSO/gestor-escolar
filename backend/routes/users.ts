@@ -63,7 +63,7 @@ usersRoutes.post('/register', async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       token: null,
-      error: error.message,
+      message: error.message,
     })
   }
 })
@@ -87,7 +87,7 @@ usersRoutes.post('/login', async (req: Request, res: Response) => {
     })
   } catch (error: any) {
     res.status(400).json({
-      error: error.message,
+      message: error.message,
       token: null,
     })
   }

@@ -3,6 +3,10 @@ import {
   IUsersRepository,
   NewUser,
 } from '../repositories/Users/IUsersRepository'
+import bcrypt from 'bcrypt'
+import * as dotenv from 'dotenv'
+dotenv.config()
+const saltRounds = 10
 
 export class CreateNewUserService {
   usersRepository: IUsersRepository
@@ -21,18 +25,18 @@ export class CreateNewUserService {
     password,
     occupation,
   }: NewUser): Promise<NewUser> {
-    const alreadExistUser = await this.usersRepository.findByEmail(name)
+    const alreadExistUser = await this.usersRepository.findByEmail(email)
 
     if (alreadExistUser) {
       throw new Error('Já existe um usuário cadastrado com este e-mail!')
     }
 
+    const encryptedPassword: string = await bcrypt.hash(password, saltRounds)
     const newUser = await this.usersRepository.create({
       name,
       email,
-      password,
+      password: encryptedPassword,
       occupation,
-      token: (Math.random() * 8975487548749877).toString(),
     })
 
     if (occupation === 'student') {

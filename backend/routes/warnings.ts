@@ -32,7 +32,7 @@ warningsRoutes.post('/', async (req: Request, res: Response) => {
   }
 })
 
-warningsRoutes.get('/:idSubject', async (req: Request, res: Response) => {
+warningsRoutes.get('/:idStudent', async (req: Request, res: Response) => {
   try {
     const { idStudent } = req.params
     const warnings = await warningsRepository.list(idStudent)

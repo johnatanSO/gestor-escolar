@@ -1,0 +1,13 @@
+@import "../../../../styles//colors.scss";
+
+.totalGrade {
+  font-weight: 600;
+}
+
+.approved {
+  color: $green-color-500;
+}
+
+.disapproved {
+  color: $red-color-500;
+}

@@ -6,11 +6,17 @@
 
 <h3>📝 O sistema possui funcionalidades para o gerenciamento de:</h3>
  <li>Login/Cadastro de usuário;</li>
-<h5>Com a permissão de professor: </h5>
+<h4>Com a permissão de professor: </h4>
+ <li>Cadastro e gerenciamento de alunos; </li>
  <li>Cadastro e gerenciamento de disciplinas com a opção de associar alunos a alguma disciplina; </li>
  <li>Gerenciamento de notas dos alunos;</li>
  <li>Gerenciamento de advertências;</li>
  <li>Gerenciamento de faltas (ainda em desenvolvimento...);</li>
+ <br>
+ <h5>Com a permissão de aluno: </h5>
+ <li>Visualização de notas nas disciplinas; </li>
+ <li>Visualização de advertências;</li>
+ <li>Visualização de faltas (ainda em desenvolvimento...);</li>
  <br>
  
  <h2>🖼 Imagem da tela de login: </h2>
@@ -37,16 +43,17 @@
   <img align="center" alt="John-Express" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg">
   <img align="center" alt="John-MongoDB" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg">
 </div>
-<p>(HTML, SASS, NextJS, Typescsript/Javascript, Node, Express, MongoDB)</p>
+<p>(HTML, SASS, NextJS, Typescsript/Javascript, Node, Express, MongoDB, JWT, BCRYPT)</p>
 <br>
 <h2>👷 Como testar? </h2>
 <h3>Entre com o seguinte link: </h3>
-<a href="https://johnatanso.github.io/gestor-escolar">https://johnatanso.github.io/gestor-escolar</a>
+<a href="gestor-escolar.vercel.app">gestor-escolar.vercel.app</a>
 <h3>Ou</h3>
-<li> Clone o repositório com: git clone https://johnatanso.github.io/gestor-escolar"
+<li> Clone o repositório com: git clone https://github.com/johnatanso/gestor-escolar"
 <li> Entre em uma IDE de sua preferência 
 <li> Execute o servidor na pasta back-end e depois o front-end
-<li> Crie uma conta nova
+<li> Crie uma conta nova de aluno
+<li> Crie uma nova conta de professor
 <li> Teste as funcionalidades
     
 

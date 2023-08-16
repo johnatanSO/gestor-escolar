@@ -15,10 +15,6 @@ export class AuthenticateUserService {
     if (!user) {
       throw new Error('E-mail não encontrado')
     }
-    console.log('EMAIL', email)
-    console.log('PASSWORD', password)
-    console.log('USER PASSWORD', user.password)
-    console.log('USER', user)
 
     const authenticated = await bcrypt.compare(password, user.password)
     if (!authenticated) {

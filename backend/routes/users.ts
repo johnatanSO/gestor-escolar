@@ -18,7 +18,7 @@ usersRoutes.get('/verify_token/:token', async (req: Request, res: Response) => {
 
     if (!isAuthenticated) {
       console.log('Não autenticado')
-      return res.status(200).json({
+      return res.status(400).json({
         token: null,
         message: 'Usuário não autenticado',
       })

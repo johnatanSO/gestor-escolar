@@ -17,15 +17,16 @@ export function ButtonComponent({
   disabled,
 }: Props) {
   return (
-    <li
-      style={disabled ? { opacity: '0.4', cursor: 'not-allowed' } : {}}
+    <button
+      type="button"
+      disabled={disabled}
       className={style.button}
-      onClick={disabled ? undefined : onClickCallback}
+      onClick={onClickCallback}
     >
       <div className={style.imageContainer}>
         <Image src={image} alt={alt} className={style.image} />
       </div>
       <h4>{title || '--'}</h4>
-    </li>
+    </button>
   )
 }

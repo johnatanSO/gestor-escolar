@@ -5,8 +5,11 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  transition: filter 0.2s;
+  
+  border: none;
+  background: none;
 
+  transition: filter 0.2s;
   cursor: pointer;
 
   .imageContainer {
@@ -28,10 +31,15 @@
     }
   }
 
-  &:hover {
+  &:not(:disabled):hover {
     .imageContainer {
       border-color: $red-color-500;
     }
     filter: brightness(0.8);
+  }
+
+  &:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 }

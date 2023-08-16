@@ -56,7 +56,7 @@ export function StudentHomeScreen() {
         <h3>{studentData?.name || '--'}</h3>
       </div>
 
-      <ul className={style.buttonsContainer}>
+      <div className={style.buttonsContainer}>
         {buttonsList?.map(
           ({ image, alt, title, onClickCallback, disabled = false }, key) => {
             return (
@@ -71,7 +71,7 @@ export function StudentHomeScreen() {
             )
           },
         )}
-      </ul>
+      </div>
     </>
   )
 }

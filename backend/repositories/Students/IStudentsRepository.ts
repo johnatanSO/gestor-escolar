@@ -9,6 +9,7 @@ export interface Student {
 export interface NewStudent {
   name: string
   code: string
+  _id: Types.ObjectId | string
 }
 
 export interface UpdateGradesParams {

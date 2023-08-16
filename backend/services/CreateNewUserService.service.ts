@@ -27,7 +27,7 @@ export class CreateNewUserService {
       throw new Error('Já existe um usuário cadastrado com este e-mail!')
     }
 
-    const newUser = this.usersRepository.create({
+    const newUser = await this.usersRepository.create({
       name,
       email,
       password,
@@ -39,7 +39,11 @@ export class CreateNewUserService {
       const entries = await this.studentsRepository.getEntries()
       const code = (entries + 1).toString()
 
-      this.studentsRepository.create({ name, code })
+      this.studentsRepository.create({
+        code,
+        name: newUser.name,
+        _id: newUser._id,
+      })
     }
 
     return newUser

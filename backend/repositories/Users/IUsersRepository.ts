@@ -6,6 +6,7 @@ export interface NewUser {
   password: string
   occupation: string
   token?: string
+  _id?: string | Types.ObjectId
 }
 
 export interface User {

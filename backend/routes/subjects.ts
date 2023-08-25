@@ -1,9 +1,11 @@
+import { ListAllSubjectsService } from './../services/ListAllSubjectsService.service'
 import express, { Request, Response } from 'express'
 import { SubjectsRepository } from '../repositories/Subjects/SubjectsRepository'
 import { CreateNewSubjectService } from '../services/CreateNewSubjectService.service'
 import { DeleteSubjectService } from '../services/DeleteSubjectService.service'
 import { InsertStudentInSubjectService } from '../services/InsertStudentInSubjectService.service'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
+
 const subjectsRoutes = express.Router()
 
 const subjectsRepository = new SubjectsRepository()
@@ -11,16 +13,24 @@ const studentsRepository = new StudentsRepository()
 
 subjectsRoutes.get('/', async (req: Request, res: Response) => {
   try {
-    const subjects = await subjectsRepository.list()
+    const listAllSubjectsService = new ListAllSubjectsService(
+      subjectsRepository,
+    )
+    const subjects = await listAllSubjectsService.execute()
 
     res.status(200).json({
+      success: true,
+      title: 'Sucesso',
+      message: 'Busca de disciplinas concluída com sucesso',
       items: subjects,
-      message: 'Busca concluída com sucesso',
     })
   } catch (err) {
-    res
-      .status(400)
-      .json({ error: err, message: 'Erro ao tentar realizar busca' })
+    res.status(400).json({
+      success: false,
+      title: 'Erro ao tentar realizar busca disciplinas',
+      message: err.message,
+      error: err,
+    })
   }
 })
 

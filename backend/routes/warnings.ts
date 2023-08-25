@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
 import { CreateNewWarningService } from '../services/CreateNewWarningService.service'
 import { WarningsRepository } from '../repositories/Warnings/WarningsRepository'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
@@ -8,7 +8,7 @@ const warningsRoutes = express.Router()
 const warningsRepository = new WarningsRepository()
 const studentsRepository = new StudentsRepository()
 
-warningsRoutes.post('/', async (req: Request, res: Response) => {
+warningsRoutes.post('/', async (req, res) => {
   try {
     const { idStudent, title, description } = req.body
     const createNewWarningService = new CreateNewWarningService(
@@ -33,7 +33,7 @@ warningsRoutes.post('/', async (req: Request, res: Response) => {
   }
 })
 
-warningsRoutes.get('/:idStudent', async (req: Request, res: Response) => {
+warningsRoutes.get('/:idStudent', async (req, res) => {
   try {
     const { idStudent } = req.params
     const warnings = await warningsRepository.list(idStudent)

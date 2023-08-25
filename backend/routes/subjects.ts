@@ -1,5 +1,5 @@
+import express from 'express'
 import { ListAllSubjectsService } from './../services/ListAllSubjectsService.service'
-import express, { Request, Response } from 'express'
 import { SubjectsRepository } from '../repositories/Subjects/SubjectsRepository'
 import { CreateNewSubjectService } from '../services/CreateNewSubjectService.service'
 import { DeleteSubjectService } from '../services/DeleteSubjectService.service'
@@ -11,7 +11,7 @@ const subjectsRoutes = express.Router()
 const subjectsRepository = new SubjectsRepository()
 const studentsRepository = new StudentsRepository()
 
-subjectsRoutes.get('/', async (req: Request, res: Response) => {
+subjectsRoutes.get('/', async (req, res) => {
   try {
     const listAllSubjectsService = new ListAllSubjectsService(
       subjectsRepository,
@@ -34,7 +34,7 @@ subjectsRoutes.get('/', async (req: Request, res: Response) => {
   }
 })
 
-subjectsRoutes.post('/', async (req: Request, res: Response) => {
+subjectsRoutes.post('/', async (req, res) => {
   try {
     const { name } = req.body
     const createNewSubjectService = new CreateNewSubjectService(
@@ -55,7 +55,7 @@ subjectsRoutes.post('/', async (req: Request, res: Response) => {
   }
 })
 
-subjectsRoutes.delete('/', async (req: Request, res: Response) => {
+subjectsRoutes.delete('/', async (req, res) => {
   try {
     const { idSubject } = req.query as any
     const deleteSubjectService = new DeleteSubjectService(subjectsRepository)
@@ -71,7 +71,7 @@ subjectsRoutes.delete('/', async (req: Request, res: Response) => {
   }
 })
 
-subjectsRoutes.put('/insertStudents', async (req: Request, res: Response) => {
+subjectsRoutes.put('/insertStudents', async (req, res) => {
   try {
     const { studentsIds, subjectId } = req.body as any
     const insertStudentInSubjectService = new InsertStudentInSubjectService(

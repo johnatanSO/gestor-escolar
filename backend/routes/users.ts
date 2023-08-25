@@ -1,15 +1,16 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
 import { CreateNewUserService } from '../services/CreateNewUserService.service'
 import { UsersRepository } from '../repositories/Users/UsersRepository'
 import { AuthenticateUserService } from '../services/AuthenticateUserService.service'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
+
 const usersRoutes = express.Router()
 
 const usersRepository = new UsersRepository()
 const studentsRepository = new StudentsRepository()
 
 // TO-DO: Implementar token JWT.
-usersRoutes.get('/verify_token/:token', async (req: Request, res: Response) => {
+usersRoutes.get('/verify_token/:token', async (req, res) => {
   try {
     const { token } = req.params
     const user = await usersRepository.checkToken(token)
@@ -38,7 +39,7 @@ usersRoutes.get('/verify_token/:token', async (req: Request, res: Response) => {
 })
 
 // TO-DO: Implementar token JWT.
-usersRoutes.post('/register', async (req: Request, res: Response) => {
+usersRoutes.post('/register', async (req, res) => {
   const { name, email, password, occupation } = req.body
   try {
     const createNewUserService = new CreateNewUserService(
@@ -69,7 +70,7 @@ usersRoutes.post('/register', async (req: Request, res: Response) => {
 })
 
 // TO-DO: Implementar token JWT.
-usersRoutes.post('/login', async (req: Request, res: Response) => {
+usersRoutes.post('/login', async (req, res) => {
   const { email, password } = req.body
   try {
     const authenticateUserService = new AuthenticateUserService(usersRepository)

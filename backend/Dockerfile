@@ -1,7 +1,7 @@
 FROM node
 
 
-WORKDIR /usr/vendergas
+WORKDIR /src/app
 
 COPY ./package*.json .
 

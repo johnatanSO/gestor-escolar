@@ -4,17 +4,11 @@ WORKDIR /usr/app
 
 COPY ./package.json ./
 
-RUN ls
-
 RUN npm install
 
-RUN ls
+RUN npm install bcrypt
 
 COPY . .
-
-RUN ls
-
-RUN npm install bcrypt
 
 EXPOSE 4444
 

@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm start
+    container_name: gestor_escolar_container
+    ports:
+      - 4444:4444
+    volumes: 
+      - .:/usr/app
+    

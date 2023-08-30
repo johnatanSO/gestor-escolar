@@ -20,6 +20,7 @@ app.use(routes)
 
 app.get('/', async (req: any, res: any) => {
   try {
+    console.log('RELOAD COM O DOCKER COMPOSE!!!!')
     res
       .status(200)
       .send(`<h1>Servidor funcionando corretamente na porta ${PORT}</h1>`)

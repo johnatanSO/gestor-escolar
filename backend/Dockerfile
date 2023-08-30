@@ -1,13 +1,20 @@
 FROM node
 
+WORKDIR /usr/app
 
-WORKDIR /src/app
+COPY ./package.json ./
 
-COPY ./package*.json .
+RUN ls
 
-run npm install
+RUN npm install
+
+RUN ls
 
 COPY . .
+
+RUN ls
+
+RUN npm install bcrypt
 
 EXPOSE 4444
 

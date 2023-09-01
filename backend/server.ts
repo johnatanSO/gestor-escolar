@@ -1,7 +1,7 @@
 import express, { Express } from 'express'
 import dbConnection from './mongoConfigs'
 import cors from 'cors'
-import { routes } from './routes'
+import { routes } from './src/controllers'
 
 interface CustomExpress extends Express {
   mongo?: any
@@ -20,7 +20,6 @@ app.use(routes)
 
 app.get('/', async (req: any, res: any) => {
   try {
-    console.log('RELOAD COM O DOCKER COMPOSE!!!!')
     res
       .status(200)
       .send(`<h1>Servidor funcionando corretamente na porta ${PORT}</h1>`)

@@ -1,10 +1,10 @@
 import express from 'express'
-import { ListAllStudentsGradesService } from './../services/ListAllStudentsGradesService.service'
-import { ListStudentsService } from './../services/ListStudentsService.service'
+import { ListAllStudentsGradesService } from '../useCases/ListAllStudentsGradesService.service'
+import { ListStudentsService } from '../useCases/ListStudentsService.service'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
-import { UpdateGradesService } from '../services/UpdateGradesService.service'
+import { UpdateGradesService } from '../useCases/UpdateGradesService.service'
 import { SubjectsRepository } from '../repositories/Subjects/SubjectsRepository'
-import { ListSingleStudentGrades } from '../services/ListSingleStudentGrades.service'
+import { ListSingleStudentGrades } from '../useCases/ListSingleStudentGrades.service'
 
 const studentsRoutes = express.Router()
 

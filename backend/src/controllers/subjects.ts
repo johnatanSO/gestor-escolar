@@ -1,9 +1,9 @@
 import express from 'express'
-import { ListAllSubjectsService } from './../services/ListAllSubjectsService.service'
+import { ListAllSubjectsService } from '../useCases/ListAllSubjectsService.service'
 import { SubjectsRepository } from '../repositories/Subjects/SubjectsRepository'
-import { CreateNewSubjectService } from '../services/CreateNewSubjectService.service'
-import { DeleteSubjectService } from '../services/DeleteSubjectService.service'
-import { InsertStudentInSubjectService } from '../services/InsertStudentInSubjectService.service'
+import { CreateNewSubjectService } from '../useCases/CreateNewSubjectService.service'
+import { DeleteSubjectService } from '../useCases/DeleteSubjectService.service'
+import { InsertStudentInSubjectService } from '../useCases/InsertStudentInSubjectService.service'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
 
 const subjectsRoutes = express.Router()

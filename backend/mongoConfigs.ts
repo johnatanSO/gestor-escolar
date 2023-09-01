@@ -1,7 +1,10 @@
 import mongoose from 'mongoose'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-const MONGO_USERNAME = 'johnatanSO'
-const MONGO_PASSWORD = 'pW67rJ9mzs4o9MoU'
+const MONGO_USERNAME = process.env.database_username
+const MONGO_PASSWORD = process.env.database_password
+
 const mongoURL = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@gestor-escolar-cluster.c2i24so.mongodb.net/`
 
 mongoose.connect(mongoURL)

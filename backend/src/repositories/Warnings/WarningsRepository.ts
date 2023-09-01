@@ -1,4 +1,4 @@
-import { WarningModel } from '../../models/warning'
+import { WarningModel } from '../../entities/warning'
 import { IWarningsRepository, NewWarning, Warning } from './IWarningsRepository'
 
 export class WarningsRepository implements IWarningsRepository {

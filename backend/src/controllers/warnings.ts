@@ -1,5 +1,5 @@
 import express from 'express'
-import { CreateNewWarningService } from '../services/CreateNewWarningService.service'
+import { CreateNewWarningService } from '../useCases/CreateNewWarningService.service'
 import { WarningsRepository } from '../repositories/Warnings/WarningsRepository'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
 

@@ -1,4 +1,4 @@
-import { UserModel } from '../../models/user'
+import { UserModel } from '../../entities/user'
 import { IUsersRepository, NewUser } from './IUsersRepository'
 
 export class UsersRepository implements IUsersRepository {

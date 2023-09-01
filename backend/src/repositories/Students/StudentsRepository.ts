@@ -1,4 +1,4 @@
-import { StudentModel } from '../../models/student'
+import { StudentModel } from '../../entities/student'
 import {
   IStudentsRepository,
   NewStudent,

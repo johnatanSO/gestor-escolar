@@ -1,7 +1,7 @@
 import express from 'express'
-import { CreateNewUserService } from '../services/CreateNewUserService.service'
+import { CreateNewUserService } from '../useCases/CreateNewUserService.service'
 import { UsersRepository } from '../repositories/Users/UsersRepository'
-import { AuthenticateUserService } from '../services/AuthenticateUserService.service'
+import { AuthenticateUserService } from '../useCases/AuthenticateUserService.service'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
 
 const usersRoutes = express.Router()

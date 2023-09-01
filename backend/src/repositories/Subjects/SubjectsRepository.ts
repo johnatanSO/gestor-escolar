@@ -1,4 +1,4 @@
-import { SubjectModel } from '../../models/subject'
+import { SubjectModel } from '../../entities/subject'
 import {
   ISubjectsRepository,
   InsertStudentParams,

@@ -2,7 +2,6 @@ import express from 'express'
 import { SubjectsRepository } from '../repositories/Subjects/SubjectsRepository'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
 import { SubjectController } from '../controllers/SubjectController'
-import { CreateNewSubjectService } from '../useCases/Subject/CreateNewSubjectService.service'
 import { InsertStudentInSubjectService } from '../useCases/Subject/InsertStudentInSubjectService.service'
 import { DeleteSubjectService } from '../useCases/Subject/DeleteSubjectService.service'
 
@@ -15,26 +14,7 @@ const subjectController = new SubjectController()
 
 subjectsRoutes.get('/', subjectController.listAllSubjectsService)
 
-subjectsRoutes.post('/', async (req, res) => {
-  try {
-    const { name } = req.body
-    const createNewSubjectService = new CreateNewSubjectService(
-      subjectsRepository,
-    )
-    const newSubject = await createNewSubjectService.execute({
-      name,
-    })
-
-    res.status(201).json({
-      item: newSubject,
-      message: 'Disciplina cadastrada com sucesso.',
-    })
-  } catch (err) {
-    res
-      .status(400)
-      .json({ error: err, message: 'Erro ao tentar cadastrar disciplina' })
-  }
-})
+subjectsRoutes.post('/', subjectController.createNewSubject)
 
 subjectsRoutes.delete('/', async (req, res) => {
   try {

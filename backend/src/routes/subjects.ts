@@ -1,38 +1,19 @@
 import express from 'express'
-import { ListAllSubjectsService } from '../useCases/ListAllSubjectsService.service'
 import { SubjectsRepository } from '../repositories/Subjects/SubjectsRepository'
-import { CreateNewSubjectService } from '../useCases/CreateNewSubjectService.service'
-import { DeleteSubjectService } from '../useCases/DeleteSubjectService.service'
-import { InsertStudentInSubjectService } from '../useCases/InsertStudentInSubjectService.service'
 import { StudentsRepository } from '../repositories/Students/StudentsRepository'
+import { SubjectController } from '../controllers/SubjectController'
+import { CreateNewSubjectService } from '../useCases/Subject/CreateNewSubjectService.service'
+import { InsertStudentInSubjectService } from '../useCases/Subject/InsertStudentInSubjectService.service'
+import { DeleteSubjectService } from '../useCases/Subject/DeleteSubjectService.service'
 
 const subjectsRoutes = express.Router()
 
 const subjectsRepository = new SubjectsRepository()
 const studentsRepository = new StudentsRepository()
 
-subjectsRoutes.get('/', async (req, res) => {
-  try {
-    const listAllSubjectsService = new ListAllSubjectsService(
-      subjectsRepository,
-    )
-    const subjects = await listAllSubjectsService.execute()
+const subjectController = new SubjectController()
 
-    res.status(200).json({
-      success: true,
-      title: 'Sucesso',
-      message: 'Busca de disciplinas concluída com sucesso',
-      items: subjects,
-    })
-  } catch (err) {
-    res.status(400).json({
-      success: false,
-      title: 'Erro ao tentar realizar busca disciplinas',
-      message: err.message,
-      error: err,
-    })
-  }
-})
+subjectsRoutes.get('/', subjectController.listAllSubjectsService)
 
 subjectsRoutes.post('/', async (req, res) => {
   try {

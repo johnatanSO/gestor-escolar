@@ -18,7 +18,7 @@ export interface InsertStudentParams {
 }
 
 export interface ISubjectsRepository {
-  list: () => Promise<Subject[]>
+  list: (query: any) => Promise<Subject[]>
   create: (newSubjectData: NewSubject) => Promise<any>
   findById: (idSubject: string | Types.ObjectId) => Promise<Subject | null>
   delete: (idSubject: string) => void

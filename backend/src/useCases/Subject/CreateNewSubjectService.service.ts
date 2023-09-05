@@ -2,7 +2,7 @@ import {
   ISubjectsRepository,
   NewSubject,
   Subject,
-} from '../repositories/Subjects/ISubjectsRepository'
+} from '../../repositories/Subjects/ISubjectsRepository'
 
 export class CreateNewSubjectService {
   subjectsRepository: ISubjectsRepository

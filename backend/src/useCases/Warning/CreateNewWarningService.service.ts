@@ -2,8 +2,8 @@ import {
   IWarningsRepository,
   NewWarning,
   Warning,
-} from '../repositories/Warnings/IWarningsRepository'
-import { IStudentsRepository } from '../repositories/Students/IStudentsRepository'
+} from '../../repositories/Warnings/IWarningsRepository'
+import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 
 export class CreateNewWarningService {
   warningsRepository: IWarningsRepository

@@ -1,12 +1,14 @@
-import { StudentsRepository } from './../repositories/Students/StudentsRepository'
-import { SubjectsRepository } from './../repositories/Subjects/SubjectsRepository'
+import { inject, injectable } from 'tsyringe'
+import { ISubjectsRepository } from '../../repositories/Subjects/ISubjectsRepository'
+import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 
+@injectable()
 export class ListAllStudentsGradesService {
-  subjectsRepository: SubjectsRepository
-  studentsRepository: StudentsRepository
+  subjectsRepository: ISubjectsRepository
+  studentsRepository: IStudentsRepository
   constructor(
-    subjectsRepository: SubjectsRepository,
-    studentsRepository: StudentsRepository,
+    @inject('SubjectsRepository') subjectsRepository: ISubjectsRepository,
+    @inject('StudentsRepository') studentsRepository: IStudentsRepository,
   ) {
     this.subjectsRepository = subjectsRepository
     this.studentsRepository = studentsRepository

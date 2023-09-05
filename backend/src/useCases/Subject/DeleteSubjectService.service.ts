@@ -1,4 +1,4 @@
-import { ISubjectsRepository } from './../repositories/Subjects/ISubjectsRepository'
+import { ISubjectsRepository } from './../../repositories/Subjects/ISubjectsRepository'
 
 export class DeleteSubjectService {
   subjectsRepository: ISubjectsRepository

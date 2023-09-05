@@ -1,8 +1,8 @@
-import { IStudentsRepository } from '../repositories/Students/IStudentsRepository'
+import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 import {
   ISubjectsRepository,
   InsertStudentParams,
-} from '../repositories/Subjects/ISubjectsRepository'
+} from '../../repositories/Subjects/ISubjectsRepository'
 
 export class InsertStudentInSubjectService {
   subjectsRepository: ISubjectsRepository

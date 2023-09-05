@@ -68,7 +68,7 @@ export class StudentsRepository implements IStudentsRepository {
     )
   }
 
-  async findById(idStudent: string) {
+  async findById(idStudent: string): Promise<any> {
     return await StudentModel.findOne({ _id: idStudent })
   }
 }

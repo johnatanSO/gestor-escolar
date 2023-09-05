@@ -1,8 +1,8 @@
-import { IStudentsRepository } from '../repositories/Students/IStudentsRepository'
+import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 import {
   IUsersRepository,
   NewUser,
-} from '../repositories/Users/IUsersRepository'
+} from '../../repositories/Users/IUsersRepository'
 import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
 dotenv.config()

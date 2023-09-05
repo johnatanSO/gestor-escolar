@@ -1,11 +1,15 @@
+import { inject, injectable } from 'tsyringe'
 import {
   IStudentsRepository,
   UpdateGradesParams,
-} from '../repositories/Students/IStudentsRepository'
+} from '../../repositories/Students/IStudentsRepository'
 
+@injectable()
 export class UpdateGradesService {
   studentsRepository: IStudentsRepository
-  constructor(studentsRepository: IStudentsRepository) {
+  constructor(
+    @inject('StudentsRepository') studentsRepository: IStudentsRepository,
+  ) {
     this.studentsRepository = studentsRepository
   }
 

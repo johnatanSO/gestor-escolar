@@ -1,5 +1,5 @@
-import { Warning } from '../repositories/Warnings/IWarningsRepository'
-import { WarningsRepository } from '../repositories/Warnings/WarningsRepository'
+import { Warning } from '../../repositories/Warnings/IWarningsRepository'
+import { WarningsRepository } from '../../repositories/Warnings/WarningsRepository'
 
 export class ListWarningsService {
   warningsRepository: WarningsRepository

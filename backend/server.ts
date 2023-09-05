@@ -1,7 +1,9 @@
+import 'reflect-metadata'
 import express, { Express } from 'express'
-import dbConnection from './mongoConfigs'
+import dbConnection from './src/database/mongoConfigs'
 import cors from 'cors'
-import { routes } from './src/controllers'
+import { routes } from './src/routes'
+import './src/shared/containers'
 
 interface CustomExpress extends Express {
   mongo?: any

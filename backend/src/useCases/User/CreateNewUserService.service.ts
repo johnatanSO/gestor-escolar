@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe'
 import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 import {
   IUsersRepository,
@@ -8,12 +9,13 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 const saltRounds = 10
 
+@injectable()
 export class CreateNewUserService {
   usersRepository: IUsersRepository
   studentsRepository: IStudentsRepository
   constructor(
-    usersRepository: IUsersRepository,
-    studentsRepository: IStudentsRepository,
+    @inject('UsersRepository') usersRepository: IUsersRepository,
+    @inject('StudentsRepository') studentsRepository: IStudentsRepository,
   ) {
     this.usersRepository = usersRepository
     this.studentsRepository = studentsRepository

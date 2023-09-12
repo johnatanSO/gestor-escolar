@@ -1,4 +1,4 @@
-import { StudentModel } from '../../entities/student'
+import { IStudent, StudentModel } from '../../entities/student'
 import {
   IStudentsRepository,
   NewStudent,
@@ -6,17 +6,22 @@ import {
 } from './IStudentsRepository'
 
 export class StudentsRepository implements IStudentsRepository {
-  async list(queryList?: any): Promise<any[]> {
-    const students = await StudentModel.find(queryList || {})
+  model: typeof StudentModel
+  constructor() {
+    this.model = StudentModel
+  }
+
+  async list(queryList?: any): Promise<IStudent[]> {
+    const students = await this.model.find(queryList || {})
     return students
   }
 
   async getEntries(): Promise<number> {
-    return await StudentModel.countDocuments()
+    return await this.model.countDocuments()
   }
 
   async create(newStudentData: NewStudent) {
-    const newStudent = new StudentModel(newStudentData)
+    const newStudent = await this.model.create(newStudentData)
     await newStudent.save()
   }
 
@@ -31,14 +36,14 @@ export class StudentsRepository implements IStudentsRepository {
         totalGrades: (firstGrade + secondGrade) / 2,
       }
 
-      const student = await StudentModel.findOne({ _id: studentId })
+      const student = await this.model.findOne({ _id: studentId })
 
       const gradeAreadyExist = student?.grades?.find(
         (grade) => grade?._id === subjectId,
       )
 
       if (gradeAreadyExist) {
-        return StudentModel.updateMany(
+        return this.model.updateMany(
           { _id: studentId, grades: { $elemMatch: { _id: subjectId } } },
           {
             $set: {
@@ -48,7 +53,7 @@ export class StudentsRepository implements IStudentsRepository {
         )
       }
 
-      return StudentModel.updateMany(
+      return this.model.updateMany(
         { _id: studentId },
         {
           $push: {
@@ -62,13 +67,13 @@ export class StudentsRepository implements IStudentsRepository {
   }
 
   async updateWarningsAmount(idStudent: string) {
-    return StudentModel.updateOne(
+    return await this.model.updateOne(
       { _id: idStudent },
       { $inc: { warningsAmount: 1 } },
     )
   }
 
-  async findById(idStudent: string): Promise<any> {
+  async findById(idStudent: string): Promise<IStudent> {
     return await StudentModel.findOne({ _id: idStudent })
   }
 }

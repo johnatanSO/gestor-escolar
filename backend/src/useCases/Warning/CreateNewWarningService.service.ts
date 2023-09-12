@@ -4,13 +4,15 @@ import {
   Warning,
 } from '../../repositories/Warnings/IWarningsRepository'
 import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class CreateNewWarningService {
   warningsRepository: IWarningsRepository
   studentsRepository: IStudentsRepository
   constructor(
-    warningsRepository: IWarningsRepository,
-    studentsRepository: IStudentsRepository,
+    @inject('WarningsRepository') warningsRepository: IWarningsRepository,
+    @inject('StudentsRepository') studentsRepository: IStudentsRepository,
   ) {
     this.warningsRepository = warningsRepository
     this.studentsRepository = studentsRepository

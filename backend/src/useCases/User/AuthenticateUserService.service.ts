@@ -5,11 +5,13 @@ import {
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv'
+import { inject, injectable } from 'tsyringe'
 dotenv.config()
 
+@injectable()
 export class AuthenticateUserService {
   usersRepository: IUsersRepository
-  constructor(usersRepository: IUsersRepository) {
+  constructor(@inject('UsersRepository') usersRepository: IUsersRepository) {
     this.usersRepository = usersRepository
   }
 

@@ -1,15 +1,17 @@
+import { inject, injectable } from 'tsyringe'
 import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 import {
   ISubjectsRepository,
   InsertStudentParams,
 } from '../../repositories/Subjects/ISubjectsRepository'
 
+@injectable()
 export class InsertStudentInSubjectService {
   subjectsRepository: ISubjectsRepository
   studentsRepository: IStudentsRepository
   constructor(
-    subjectsRepository: ISubjectsRepository,
-    studentsRepository: IStudentsRepository,
+    @inject('SubjectsRepository') subjectsRepository: ISubjectsRepository,
+    @inject('StudentsRepository') studentsRepository: IStudentsRepository,
   ) {
     this.subjectsRepository = subjectsRepository
     this.studentsRepository = studentsRepository

@@ -1,4 +1,13 @@
-import mongoose from 'mongoose'
+import mongoose, { Types } from 'mongoose'
+
+export interface IStudent {
+  _id: Types.ObjectId
+  code: string
+  name: string
+  absences: any[]
+  grades: any[]
+  warningsAmount: number
+}
 
 const studentSchema = new mongoose.Schema({
   code: { type: String, default: null },
@@ -8,4 +17,4 @@ const studentSchema = new mongoose.Schema({
   warningsAmount: { type: Number, default: 0 },
 })
 
-export const StudentModel = mongoose.model('Student', studentSchema)
+export const StudentModel = mongoose.model<IStudent>('Student', studentSchema)

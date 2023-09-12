@@ -24,6 +24,7 @@
     "@rocketseat/eslint-config": "^1.2.0",
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^20.1.4",
     "eslint": "^8.38.0",
     "ts-node-dev": "^2.0.0",

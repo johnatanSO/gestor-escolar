@@ -1,8 +1,12 @@
+import { inject, injectable } from 'tsyringe'
 import { ISubjectsRepository } from './../../repositories/Subjects/ISubjectsRepository'
 
+@injectable()
 export class DeleteSubjectService {
   subjectsRepository: ISubjectsRepository
-  constructor(subjectsRepository: ISubjectsRepository) {
+  constructor(
+    @inject('SubjectsRepository') subjectsRepository: ISubjectsRepository,
+  ) {
     this.subjectsRepository = subjectsRepository
   }
 

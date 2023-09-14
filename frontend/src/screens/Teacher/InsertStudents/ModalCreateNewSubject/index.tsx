@@ -14,7 +14,7 @@ export interface NewSubjectData {
 }
 
 interface Props {
-  subjectDataToEdit: NewSubjectData
+  subjectDataToEdit: NewSubjectData | undefined
   open: boolean
   handleClose: () => void
 }

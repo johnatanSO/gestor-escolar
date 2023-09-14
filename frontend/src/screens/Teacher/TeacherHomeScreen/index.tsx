@@ -9,11 +9,16 @@ import registerImage from '../../../../public/assets/register.png'
 import { usersService } from '../../../services/usersService'
 import { ButtonComponent } from '../../../components/ButtonComponent'
 import { useRouter } from 'next/router'
+import { ButtonHomeScreen } from '../../../models/buttonHomeScreen'
+
+interface Teacher {
+  name: string
+}
 
 export function TeacherHomeScreen() {
   const router = useRouter()
-  const [teacherData, setTeacherData] = useState<any>(undefined)
-  const buttonsList: any[] = [
+  const [teacherData, setTeacherData] = useState<Teacher | undefined>(undefined)
+  const buttonsList: ButtonHomeScreen[] = [
     {
       image: notesImage,
       alt: 'Botão de notas',
@@ -36,6 +41,7 @@ export function TeacherHomeScreen() {
       alt: 'Botão de faltas',
       title: 'Faltas',
       disabled: true,
+      onClickCallback: () => {},
     },
     {
       image: registerImage,

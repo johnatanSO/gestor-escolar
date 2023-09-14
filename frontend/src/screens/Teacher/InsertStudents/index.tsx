@@ -123,7 +123,7 @@ export function Subjects() {
 
       {formModalOpened && (
         <ModalCreateNewSubject
-          subjectDataToEdit={undefined as any}
+          subjectDataToEdit={undefined}
           open={formModalOpened}
           handleClose={() => {
             setFormModalOpened(false)

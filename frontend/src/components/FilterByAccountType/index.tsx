@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { CustomTextField } from '../CustomTextField'
 import style from './FilterByAccountType.module.scss'
 import { useRouter } from 'next/router'
 import { MenuItem } from '@mui/material'
 
 export function FilterByAccountType() {
-  const [accountType, setAccountType] = useState<'in' | 'out' | 'all'>('all')
+  const [accountType, setAccountType] = useState<'in' | 'out' | 'all' | string>(
+    'all',
+  )
   const router = useRouter()
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export function FilterByAccountType() {
         placeholder="Escolha o tipo da conta"
         className={style.input}
         value={accountType}
-        onChange={(event: any) => {
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
           setAccountType(event?.target.value)
         }}
       >

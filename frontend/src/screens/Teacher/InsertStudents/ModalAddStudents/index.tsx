@@ -1,5 +1,11 @@
 import { ModalLayout } from '../../../../components/ModalLayout'
-import { FormEvent, useState, useContext, useEffect } from 'react'
+import {
+  FormEvent,
+  useState,
+  useContext,
+  useEffect,
+  SyntheticEvent,
+} from 'react'
 import style from './ModalAddStudents.module.scss'
 import { subjectsService } from '../../../../services/subjectsService'
 import { AlertContext } from '../../../../contexts/alertContext'
@@ -97,11 +103,11 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
     getStudents()
   }, [])
 
-  function handleSelectStudent(event: any, studentId: string) {
+  function handleSelectStudent(checked: boolean, studentId: string) {
     const newStudents = [...students]
     newStudents.forEach((student) => {
       if (student?._id === studentId) {
-        student.checked = event.target.checked
+        student.checked = checked
       }
     })
     setStudents(newStudents)
@@ -122,8 +128,11 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
           return (
             <li key={student._id}>
               <FormControlLabel
-                onChange={(event) => {
-                  handleSelectStudent(event, student._id)
+                onChange={(
+                  event: SyntheticEvent<Element>,
+                  checked: boolean,
+                ) => {
+                  handleSelectStudent(checked, student._id)
                 }}
                 sx={{ width: '100%' }}
                 control={

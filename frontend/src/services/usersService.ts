@@ -31,7 +31,7 @@ export const usersService = {
   },
 
   async login({ userData }: LoginParams) {
-    const body: any = { ...userData }
+    const body = { ...userData }
 
     return http.post('/login', {
       ...body,

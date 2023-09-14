@@ -8,11 +8,16 @@ import { usersService } from '../../../services/usersService'
 import { useEffect, useState } from 'react'
 import { ButtonComponent } from '../../../components/ButtonComponent'
 import { useRouter } from 'next/router'
+import { ButtonHomeScreen } from '../../../models/buttonHomeScreen'
+
+interface Student {
+  name: string
+}
 
 export function StudentHomeScreen() {
-  const [studentData, setStudentData] = useState<any>(undefined)
+  const [studentData, setStudentData] = useState<Student | undefined>(undefined)
   const router = useRouter()
-  const buttonsList: any[] = [
+  const buttonsList: ButtonHomeScreen[] = [
     {
       image: notesImage,
       alt: 'Botão de notas',
@@ -25,7 +30,6 @@ export function StudentHomeScreen() {
       image: warningImage,
       alt: 'Botão de dvertências',
       title: 'Advertências',
-
       onClickCallback: () => {
         router.push('/student/warnings')
       },
@@ -34,6 +38,7 @@ export function StudentHomeScreen() {
       image: timetableImage,
       alt: 'Botão de faltas',
       title: 'Faltas',
+      onClickCallback: () => {},
       disabled: true,
     },
   ]

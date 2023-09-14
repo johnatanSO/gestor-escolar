@@ -21,7 +21,16 @@ interface AlertNotifyConfigs {
   handleClose: () => void
 }
 
-export const AlertContext = createContext({} as any)
+interface AlertContextInterface {
+  alertDialogConfirmConfigs: AlertDialogConfirmConfigs
+  setAlertDialogConfirmConfigs: (
+    alertConfigs: AlertDialogConfirmConfigs,
+  ) => void
+  alertNotifyConfigs: AlertNotifyConfigs
+  setAlertNotifyConfigs: (notifyConfigs: AlertNotifyConfigs) => void
+}
+
+export const AlertContext = createContext({} as AlertContextInterface)
 
 export function AlertContextComponent({
   children,

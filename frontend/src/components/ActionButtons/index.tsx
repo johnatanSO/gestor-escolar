@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import style from './ActionButtons.module.scss'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 interface Action {
-  icon: any
+  icon: IconProp
   title: string
   color?: string
   onClickFunction: (data?: any) => void

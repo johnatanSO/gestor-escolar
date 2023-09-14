@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import style from './EmptyItems.module.scss'
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 interface EmpytItems {
   text: string
-  icon?: any
+  icon?: IconProp
   customStyle?: any
 }
 

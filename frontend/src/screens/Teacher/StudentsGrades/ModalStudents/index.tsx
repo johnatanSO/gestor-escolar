@@ -33,7 +33,9 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
   const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
   const [students, setStudents] = useState<Student[]>([])
-  const [studentToEdit, setStudentToEdit] = useState<any>(undefined)
+  const [studentToEdit, setStudentToEdit] = useState<Student | undefined>(
+    undefined,
+  )
   const [editMode, setEditMode] = useState<boolean>(false)
 
   async function getStudentsBySubject() {
@@ -53,11 +55,12 @@ export function ModalStudents({ open, handleClose, subjectData }: Props) {
 
   function onEditGrades(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (!studentToEdit) return
     studentsService
       .updateGrades({
-        studentId: studentToEdit?._id,
-        subjectId: subjectData?._id,
-        grades: studentToEdit?.grades,
+        studentId: studentToEdit._id,
+        subjectId: subjectData._id,
+        grades: studentToEdit.grades,
       })
       .then(async (res) => {
         setAlertNotifyConfigs({

@@ -1,7 +1,8 @@
+import { Column } from '../../models/columns'
 import style from './TableComponent.module.scss'
 
 interface Props {
-  columns: any[]
+  columns: Column[]
   rows: any[]
   loading: boolean
 }

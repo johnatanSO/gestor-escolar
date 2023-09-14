@@ -1,8 +1,8 @@
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import style from './ButtomComponent.module.scss'
 
 type Props = {
-  image: any
+  image: StaticImageData
   title: string
   alt: string
   onClickCallback: () => void

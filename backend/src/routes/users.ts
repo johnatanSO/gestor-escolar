@@ -4,10 +4,6 @@ import express from 'express'
 const usersRoutes = express.Router()
 const userController = new UserController()
 
-usersRoutes.get('/verify_token/:token', userController.verifyToken)
-
-usersRoutes.post('/register', userController.createNewUser)
-
-usersRoutes.post('/login', userController.login)
+usersRoutes.post('/', userController.createNewUser)
 
 export { usersRoutes }

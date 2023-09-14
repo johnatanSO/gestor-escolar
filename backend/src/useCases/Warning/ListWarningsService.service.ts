@@ -1,12 +1,12 @@
 import { inject, injectable } from 'tsyringe'
-import { Warning } from '../../repositories/Warnings/IWarningsRepository'
 import { WarningsRepository } from '../../repositories/Warnings/WarningsRepository'
+import { Warning } from '../../entities/warning'
 
 @injectable()
 export class ListWarningsService {
   warningsRepository: WarningsRepository
   constructor(
-    @inject('SarningsRepository') warningsRepository: WarningsRepository,
+    @inject('WarningsRepository') warningsRepository: WarningsRepository,
   ) {
     this.warningsRepository = warningsRepository
   }

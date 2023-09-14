@@ -1,11 +1,13 @@
-import { inject, injectable } from 'tsyringe'
+import { CreateNewStudentService } from './../Student/CreateNewStudentService.service'
+import { container, inject, injectable } from 'tsyringe'
 import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 import {
+  INewUserDTO,
   IUsersRepository,
-  NewUser,
 } from '../../repositories/Users/IUsersRepository'
 import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
+import { User } from '../../entities/user'
 dotenv.config()
 const saltRounds = 10
 
@@ -26,9 +28,8 @@ export class CreateNewUserService {
     email,
     password,
     occupation,
-  }: NewUser): Promise<NewUser> {
+  }: INewUserDTO): Promise<User> {
     const alreadExistUser = await this.usersRepository.findByEmail(email)
-
     if (alreadExistUser) {
       throw new Error('Já existe um usuário cadastrado com este e-mail!')
     }
@@ -41,15 +42,9 @@ export class CreateNewUserService {
       occupation,
     })
 
-    if (occupation === 'student') {
-      const entries = await this.studentsRepository.getEntries()
-      const code = (entries + 1).toString()
-
-      this.studentsRepository.create({
-        code,
-        name: newUser.name,
-        _id: newUser._id,
-      })
+    if (newUser.occupation === 'student') {
+      const createNewStudentService = container.resolve(CreateNewStudentService)
+      await createNewStudentService.execute(newUser)
     }
 
     return newUser

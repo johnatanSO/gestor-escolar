@@ -1,10 +1,10 @@
 import {
   IWarningsRepository,
-  NewWarning,
-  Warning,
+  INewWarningDTO,
 } from '../../repositories/Warnings/IWarningsRepository'
 import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 import { inject, injectable } from 'tsyringe'
+import { Warning } from '../../entities/warning'
 
 @injectable()
 export class CreateNewWarningService {
@@ -22,13 +22,13 @@ export class CreateNewWarningService {
     idStudent,
     title,
     description,
-  }: NewWarning): Promise<Warning> {
+  }: INewWarningDTO): Promise<Warning> {
     if (!title) {
       throw new Error('Título não foi informado')
     }
 
     const entries = await this.warningsRepository.getEntries(idStudent)
-    const code: string = (entries + 1).toString()
+    const code = (entries + 1).toString()
 
     const newWarning = await this.warningsRepository.create({
       code,
@@ -36,7 +36,7 @@ export class CreateNewWarningService {
       title,
       description,
     })
-    this.studentsRepository.updateWarningsAmount(idStudent)
+
     return newWarning
   }
 }

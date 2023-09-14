@@ -1,10 +1,9 @@
 import { Model } from 'mongoose'
-import { SubjectModel } from '../../entities/subject'
+import { ISubject, SubjectModel } from '../../entities/subject'
 import {
   ISubjectsRepository,
-  InsertStudentParams,
-  NewSubject,
-  Subject,
+  IInsertStudentDTO,
+  INewSubjectDTO,
 } from './ISubjectsRepository'
 
 export class SubjectsRepository implements ISubjectsRepository {
@@ -13,26 +12,29 @@ export class SubjectsRepository implements ISubjectsRepository {
     this.model = SubjectModel
   }
 
-  async list(queryList = {}): Promise<Subject[]> {
+  async list(queryList = {}): Promise<ISubject[]> {
     return await this.model.find(queryList)
   }
 
-  async findById(subjectId: string): Promise<Subject | null> {
+  async findById(subjectId: string): Promise<ISubject> {
     return await this.model.findOne({ _id: subjectId })
   }
 
-  async delete(idSubject: string) {
+  async delete(idSubject: string): Promise<void> {
     await this.model.deleteOne({ _id: idSubject })
   }
 
-  async create(SubjectData: NewSubject): Promise<any> {
+  async create(SubjectData: INewSubjectDTO): Promise<ISubject> {
     const newSubject = await this.model.create(SubjectData)
     await newSubject.save()
 
     return newSubject
   }
 
-  async insertStudent({ studentsIds, subjectId }: InsertStudentParams) {
+  async insertStudent({
+    studentsIds,
+    subjectId,
+  }: IInsertStudentDTO): Promise<void> {
     await this.model.updateOne(
       { _id: subjectId },
       { $set: { students: studentsIds } },

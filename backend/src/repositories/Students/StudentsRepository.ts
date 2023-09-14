@@ -1,8 +1,8 @@
 import { IStudent, StudentModel } from '../../entities/student'
 import {
+  INewStudentDTO,
   IStudentsRepository,
-  NewStudent,
-  UpdateGradesParams,
+  IUpdateGradesDTO,
 } from './IStudentsRepository'
 
 export class StudentsRepository implements IStudentsRepository {
@@ -20,12 +20,12 @@ export class StudentsRepository implements IStudentsRepository {
     return await this.model.countDocuments()
   }
 
-  async create(newStudentData: NewStudent) {
+  async create(newStudentData: INewStudentDTO): Promise<void> {
     const newStudent = await this.model.create(newStudentData)
     await newStudent.save()
   }
 
-  async updateGrades({ studentsIds, subjectId, grades }: UpdateGradesParams) {
+  async updateGrades({ studentsIds, subjectId, grades }: IUpdateGradesDTO) {
     const { firstGrade, secondGrade } = grades
 
     const promisesToUpdate = studentsIds.map(async (studentId) => {
@@ -66,11 +66,8 @@ export class StudentsRepository implements IStudentsRepository {
     await Promise.all(promisesToUpdate)
   }
 
-  async updateWarningsAmount(idStudent: string) {
-    return await this.model.updateOne(
-      { _id: idStudent },
-      { $inc: { warningsAmount: 1 } },
-    )
+  async update({ filters, updateFields }: any): Promise<void> {
+    await this.model.updateOne(filters, updateFields)
   }
 
   async findById(idStudent: string): Promise<IStudent> {

@@ -1,9 +1,9 @@
 import { Model } from 'mongoose'
-import { UserModel } from '../../entities/user'
-import { IUsersRepository, NewUser } from './IUsersRepository'
+import { User, UserModel } from '../../entities/user'
+import { INewUserDTO, IUsersRepository } from './IUsersRepository'
 
 export class UsersRepository implements IUsersRepository {
-  model: Model<any>
+  model: Model<User>
   constructor() {
     this.model = UserModel
   }
@@ -13,7 +13,7 @@ export class UsersRepository implements IUsersRepository {
     password,
     email,
     occupation,
-  }: NewUser): Promise<NewUser> {
+  }: INewUserDTO): Promise<User> {
     const newUser = await this.model.create({
       name,
       password,
@@ -24,15 +24,7 @@ export class UsersRepository implements IUsersRepository {
     return newUser
   }
 
-  async findByEmail(email: string): Promise<NewUser> {
-    return await this.model.findOne({ email }, '-password')
-  }
-
-  async authenticate(email: string): Promise<any> {
+  async findByEmail(email: string): Promise<User> {
     return await this.model.findOne({ email })
-  }
-
-  async checkToken(token: string): Promise<any> {
-    return await this.model.findOne({ token }, '-password')
   }
 }

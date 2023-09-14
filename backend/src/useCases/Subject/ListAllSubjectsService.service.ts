@@ -1,8 +1,6 @@
 import { inject, injectable } from 'tsyringe'
-import {
-  ISubjectsRepository,
-  Subject,
-} from '../../repositories/Subjects/ISubjectsRepository'
+import { ISubjectsRepository } from '../../repositories/Subjects/ISubjectsRepository'
+import { ISubject } from '../../entities/subject'
 
 @injectable()
 export class ListAllSubjectsService {
@@ -13,7 +11,7 @@ export class ListAllSubjectsService {
     this.subjectsRepository = subjectsRepository
   }
 
-  async execute(): Promise<Subject[]> {
+  async execute(): Promise<ISubject[]> {
     return await this.subjectsRepository.list({})
   }
 }

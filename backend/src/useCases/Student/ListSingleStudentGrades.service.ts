@@ -2,6 +2,16 @@ import { inject, injectable } from 'tsyringe'
 import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 import { ISubjectsRepository } from '../../repositories/Subjects/ISubjectsRepository'
 
+interface IResponse {
+  subjectGrades: {
+    firstGrade: number
+    secondGrade: number
+    totalGrades: number
+  }
+  subjectName: string
+  subjectCode: string
+}
+
 @injectable()
 export class ListSingleStudentGrades {
   subjectsRepository: ISubjectsRepository
@@ -14,7 +24,7 @@ export class ListSingleStudentGrades {
     this.studentsRepository = studentsRepository
   }
 
-  async execute(idStudent: string): Promise<any[]> {
+  async execute(idStudent: string): Promise<IResponse[]> {
     const student = await this.studentsRepository.findById(idStudent)
 
     const queryListSubjects = {

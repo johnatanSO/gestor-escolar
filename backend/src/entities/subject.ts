@@ -1,4 +1,11 @@
-import mongoose from 'mongoose'
+import mongoose, { Types } from 'mongoose'
+
+export interface ISubject {
+  _id: Types.ObjectId
+  code?: string
+  name: string
+  students: string[]
+}
 
 const subjectSchema = new mongoose.Schema({
   code: { type: String, default: null },
@@ -6,4 +13,4 @@ const subjectSchema = new mongoose.Schema({
   students: { type: Array, default: null },
 })
 
-export const SubjectModel = mongoose.model('Subject', subjectSchema)
+export const SubjectModel = mongoose.model<ISubject>('Subject', subjectSchema)

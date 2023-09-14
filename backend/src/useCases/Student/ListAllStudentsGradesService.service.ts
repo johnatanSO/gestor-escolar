@@ -2,6 +2,16 @@ import { inject, injectable } from 'tsyringe'
 import { ISubjectsRepository } from '../../repositories/Subjects/ISubjectsRepository'
 import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 
+interface IResponse {
+  code: string
+  name: string
+  grades: {
+    firstGrade: number
+    secondGrade: number
+    totalGrades: number
+  }
+}
+
 @injectable()
 export class ListAllStudentsGradesService {
   subjectsRepository: ISubjectsRepository
@@ -14,7 +24,7 @@ export class ListAllStudentsGradesService {
     this.studentsRepository = studentsRepository
   }
 
-  async execute(idSubject: string) {
+  async execute(idSubject: string): Promise<IResponse[]> {
     const subject = await this.subjectsRepository.findById(idSubject)
     const queryList = {
       _id: { $in: subject?.students },
@@ -25,8 +35,10 @@ export class ListAllStudentsGradesService {
       const grades = student?.grades?.find(
         (grade: any) => grade?._id === idSubject,
       )
+      delete grades._id
       return {
-        ...student._doc,
+        code: student.code,
+        name: student.name,
         grades,
       }
     })

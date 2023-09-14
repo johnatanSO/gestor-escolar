@@ -1,13 +1,13 @@
 import { Types } from 'mongoose'
 import { IStudent } from '../../entities/student'
 
-export interface NewStudent {
-  name: string
+export interface INewStudentDTO {
+  _id: Types.ObjectId
   code: string
-  _id: Types.ObjectId | string
+  name: string
 }
 
-export interface UpdateGradesParams {
+export interface IUpdateGradesDTO {
   studentsIds: string[]
   subjectId: string
   grades: {
@@ -16,11 +16,16 @@ export interface UpdateGradesParams {
   }
 }
 
+export interface IUpdateStudentDTO {
+  filters: any
+  updateFields: any
+}
+
 export interface IStudentsRepository {
   list: (queryList: any) => Promise<IStudent[]>
-  create: (newStudentData: NewStudent) => void
+  create: (newStudentData: INewStudentDTO) => Promise<void>
   getEntries: () => Promise<number>
-  updateGrades: (updateGradesParams: UpdateGradesParams) => Promise<any>
-  updateWarningsAmount: (idStudent: string) => void
+  updateGrades: (updateGradesParams: IUpdateGradesDTO) => Promise<any>
+  update: (updateParams: IUpdateStudentDTO) => Promise<void>
   findById: (idStudent: string) => Promise<IStudent>
 }

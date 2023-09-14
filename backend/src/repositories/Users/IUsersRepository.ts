@@ -1,22 +1,13 @@
-import { Types } from 'mongoose'
+import { User } from '../../entities/user'
 
-export interface NewUser {
+export interface INewUserDTO {
   name: string
   email: string
   password: string
   occupation: string
-  _id?: string | Types.ObjectId
-}
-
-export interface User {
-  email: string
-  password: string
-  _id?: string | Types.ObjectId
 }
 
 export interface IUsersRepository {
-  create: (newUserData: NewUser) => Promise<NewUser>
-  findByEmail: (email: string) => Promise<NewUser>
-  authenticate: (email: string) => Promise<User>
-  checkToken: (token: string) => Promise<any>
+  create: (newUserData: INewUserDTO) => Promise<User>
+  findByEmail: (email: string) => Promise<User>
 }

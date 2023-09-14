@@ -28,11 +28,13 @@ export class StudentController {
   async listAllStudentsGrades(req: Request, res: Response): Promise<Response> {
     try {
       const { idSubject } = req.params
+
       const listAllStudentsGradesService = container.resolve(
         ListAllStudentsGradesService,
       )
-
-      const studentsGrades = listAllStudentsGradesService.execute(idSubject)
+      const studentsGrades = await listAllStudentsGradesService.execute(
+        idSubject,
+      )
 
       return res.status(200).json({
         items: studentsGrades,

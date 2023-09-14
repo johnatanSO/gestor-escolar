@@ -1,24 +1,16 @@
 import { Types } from 'mongoose'
+import { Warning } from '../../entities/warning'
 
-export interface NewWarning {
+export interface INewWarningDTO {
   code?: string
   title: string
   description: string
   idStudent: string
 }
 
-export interface Warning {
-  code: string
-  uniqueId: string
-  title: string
-  description: string
-  idStudent: string
-  date: Date
-}
-
 export interface IWarningsRepository {
   list: (idStudent?: string) => Promise<Warning[]>
-  create: (newSubjectData: NewWarning) => Promise<any>
+  create: (newWarningData: INewWarningDTO) => Promise<any>
   findById: (idSubject: string | Types.ObjectId) => Promise<Warning | null>
   getEntries: (idStudent: string) => Promise<number>
 }

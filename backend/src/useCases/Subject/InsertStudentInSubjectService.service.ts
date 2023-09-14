@@ -1,32 +1,32 @@
-import { inject, injectable } from 'tsyringe'
-import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
+import { UpdateGradesService } from './../Student/UpdateGradesService.service'
+import { container, inject, injectable } from 'tsyringe'
 import {
   ISubjectsRepository,
-  InsertStudentParams,
+  IInsertStudentDTO,
 } from '../../repositories/Subjects/ISubjectsRepository'
 
 @injectable()
 export class InsertStudentInSubjectService {
   subjectsRepository: ISubjectsRepository
-  studentsRepository: IStudentsRepository
   constructor(
     @inject('SubjectsRepository') subjectsRepository: ISubjectsRepository,
-    @inject('StudentsRepository') studentsRepository: IStudentsRepository,
   ) {
     this.subjectsRepository = subjectsRepository
-    this.studentsRepository = studentsRepository
   }
 
-  async execute({ studentsIds, subjectId }: InsertStudentParams) {
+  async execute({ studentsIds, subjectId }: IInsertStudentDTO): Promise<void> {
     if (!subjectId) {
       throw new Error('Nenhuma disciplina selecionada.')
     }
 
-    this.subjectsRepository.insertStudent({
+    await this.subjectsRepository.insertStudent({
       studentsIds,
       subjectId,
     })
-    this.studentsRepository.updateGrades({
+
+    // Definindo nota inicial do aluno como zero.
+    const updateGradesService = container.resolve(UpdateGradesService)
+    await updateGradesService.execute({
       studentsIds,
       subjectId,
       grades: {

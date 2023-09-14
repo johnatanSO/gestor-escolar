@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import {
   IStudentsRepository,
-  UpdateGradesParams,
+  IUpdateGradesDTO,
 } from '../../repositories/Students/IStudentsRepository'
 
 @injectable()
@@ -13,7 +13,11 @@ export class UpdateGradesService {
     this.studentsRepository = studentsRepository
   }
 
-  async execute({ studentsIds, subjectId, grades }: UpdateGradesParams) {
+  async execute({
+    studentsIds,
+    subjectId,
+    grades,
+  }: IUpdateGradesDTO): Promise<void> {
     if (!subjectId) {
       throw new Error('Nenhuma disciplina selecionada.')
     }

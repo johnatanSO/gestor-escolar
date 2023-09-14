@@ -1,9 +1,9 @@
 import { Model } from 'mongoose'
-import { WarningModel } from '../../entities/warning'
-import { IWarningsRepository, NewWarning, Warning } from './IWarningsRepository'
+import { Warning, WarningModel } from '../../entities/warning'
+import { IWarningsRepository, INewWarningDTO } from './IWarningsRepository'
 
 export class WarningsRepository implements IWarningsRepository {
-  model: Model<any>
+  model: Model<Warning>
   constructor() {
     this.model = WarningModel
   }
@@ -19,7 +19,7 @@ export class WarningsRepository implements IWarningsRepository {
     return await this.model.findOne({ _id: warningId })
   }
 
-  async create(newWarningData: NewWarning): Promise<any> {
+  async create(newWarningData: INewWarningDTO): Promise<any> {
     const newWarning = await this.model.create(newWarningData)
     await newWarning.save()
 

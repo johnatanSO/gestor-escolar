@@ -1,21 +1,18 @@
+import { UpdateWarningsAmount } from './../Student/UpdateWarningsAmount.service'
 import {
   IWarningsRepository,
   INewWarningDTO,
 } from '../../repositories/Warnings/IWarningsRepository'
-import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
-import { inject, injectable } from 'tsyringe'
+import { container, inject, injectable } from 'tsyringe'
 import { Warning } from '../../entities/warning'
 
 @injectable()
 export class CreateNewWarningService {
   warningsRepository: IWarningsRepository
-  studentsRepository: IStudentsRepository
   constructor(
     @inject('WarningsRepository') warningsRepository: IWarningsRepository,
-    @inject('StudentsRepository') studentsRepository: IStudentsRepository,
   ) {
     this.warningsRepository = warningsRepository
-    this.studentsRepository = studentsRepository
   }
 
   async execute({
@@ -36,6 +33,9 @@ export class CreateNewWarningService {
       title,
       description,
     })
+
+    const updateWarningsAmount = container.resolve(UpdateWarningsAmount)
+    await updateWarningsAmount.execute(idStudent)
 
     return newWarning
   }

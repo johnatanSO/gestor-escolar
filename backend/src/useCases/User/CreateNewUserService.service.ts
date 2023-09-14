@@ -1,6 +1,5 @@
 import { CreateNewStudentService } from './../Student/CreateNewStudentService.service'
 import { container, inject, injectable } from 'tsyringe'
-import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
 import {
   INewUserDTO,
   IUsersRepository,
@@ -14,13 +13,8 @@ const saltRounds = 10
 @injectable()
 export class CreateNewUserService {
   usersRepository: IUsersRepository
-  studentsRepository: IStudentsRepository
-  constructor(
-    @inject('UsersRepository') usersRepository: IUsersRepository,
-    @inject('StudentsRepository') studentsRepository: IStudentsRepository,
-  ) {
+  constructor(@inject('UsersRepository') usersRepository: IUsersRepository) {
     this.usersRepository = usersRepository
-    this.studentsRepository = studentsRepository
   }
 
   async execute({

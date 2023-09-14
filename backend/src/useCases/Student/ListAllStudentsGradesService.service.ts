@@ -31,11 +31,10 @@ export class ListAllStudentsGradesService {
     }
 
     const students = await this.studentsRepository.list(queryList)
-    const studentsGradesFormated = students.map((student: any) => {
-      const grades = student?.grades?.find(
-        (grade: any) => grade?._id === idSubject,
-      )
+    const studentsGradesFormated = students.map((student) => {
+      const grades = student?.grades?.find((grade) => grade?._id === idSubject)
       delete grades._id
+
       return {
         code: student.code,
         name: student.name,

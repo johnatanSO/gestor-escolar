@@ -48,9 +48,9 @@ export class SubjectController {
 
   async deleteSubject(req: Request, res: Response): Promise<Response> {
     try {
-      const { idSubject } = req.query as any
+      const { idSubject } = req.query
       const deleteSubjectService = container.resolve(DeleteSubjectService)
-      await deleteSubjectService.execute(idSubject)
+      await deleteSubjectService.execute(idSubject.toString())
 
       return res.status(202).json({
         message: 'Disciplina excluída com sucesso',
@@ -64,7 +64,7 @@ export class SubjectController {
 
   async insertStudents(req: Request, res: Response): Promise<Response> {
     try {
-      const { studentsIds, subjectId } = req.body as any
+      const { studentsIds, subjectId } = req.body
       const insertStudentInSubjectService = container.resolve(
         InsertStudentInSubjectService,
       )

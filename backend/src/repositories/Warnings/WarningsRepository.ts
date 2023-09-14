@@ -19,7 +19,7 @@ export class WarningsRepository implements IWarningsRepository {
     return await this.model.findOne({ _id: warningId })
   }
 
-  async create(newWarningData: INewWarningDTO): Promise<any> {
+  async create(newWarningData: INewWarningDTO): Promise<Warning> {
     const newWarning = await this.model.create(newWarningData)
     await newWarning.save()
 

@@ -1,12 +1,13 @@
 import 'reflect-metadata'
-import express, { Express } from 'express'
+import express, { Express, Request, Response } from 'express'
 import dbConnection from './src/database/mongoConfigs'
 import cors from 'cors'
 import { routes } from './src/routes'
 import './src/shared/containers'
+import { Mongoose } from 'mongoose'
 
 interface CustomExpress extends Express {
-  mongo?: any
+  mongo?: Mongoose
 }
 
 // Configs:
@@ -20,12 +21,18 @@ app.listen(PORT, () => console.log(`SERVIDOR RODANDO NA PORTA ${PORT}!`))
 // Rotas do sistema:
 app.use(routes)
 
-app.get('/', async (req: any, res: any) => {
+app.get('/', async (req: Request, res: Response) => {
   try {
-    res
+    return res
       .status(200)
       .send(`<h1>Servidor funcionando corretamente na porta ${PORT}</h1>`)
   } catch (err) {
-    res.status(500).send('<h1>Falha ao iniciar o servidor</h1>', err)
+    return res.status(500).send(
+      `
+        <h1>Falha ao iniciar o servidor</h1>
+        </br>
+        <p>${err.message}</p>
+      `,
+    )
   }
 })

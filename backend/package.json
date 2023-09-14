@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "ts-node-dev --transpile-only server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint --fix --ext .js,.ts,.tsx ."
   },
   "author": "",
   "license": "ISC",

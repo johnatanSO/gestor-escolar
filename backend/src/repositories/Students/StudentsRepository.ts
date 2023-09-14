@@ -3,6 +3,7 @@ import {
   INewStudentDTO,
   IStudentsRepository,
   IUpdateGradesDTO,
+  IUpdateStudentDTO,
 } from './IStudentsRepository'
 
 export class StudentsRepository implements IStudentsRepository {
@@ -66,7 +67,7 @@ export class StudentsRepository implements IStudentsRepository {
     await Promise.all(promisesToUpdate)
   }
 
-  async update({ filters, updateFields }: any): Promise<void> {
+  async update({ filters, updateFields }: IUpdateStudentDTO): Promise<void> {
     await this.model.updateOne(filters, updateFields)
   }
 

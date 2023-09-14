@@ -7,7 +7,7 @@ import {
 } from './ISubjectsRepository'
 
 export class SubjectsRepository implements ISubjectsRepository {
-  model: Model<any>
+  model: Model<ISubject>
   constructor() {
     this.model = SubjectModel
   }

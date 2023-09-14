@@ -15,7 +15,7 @@ export function useColumns({
   const actions = [
     {
       icon: faGraduationCap,
-      title: 'Adicionar alunos',
+      title: 'Associar alunos',
       color: '#31a2ff',
       onClickFunction: handleAddStudents,
     },

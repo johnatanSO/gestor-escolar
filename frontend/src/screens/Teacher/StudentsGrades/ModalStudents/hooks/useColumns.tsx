@@ -46,7 +46,7 @@ export function useColumns({ handleEditGrades }: Params): Column[] {
     },
     {
       field: 'acoes',
-      headerName: 'Ações',
+      headerName: '',
       valueFormatter: (params: CellFunctionParams) => (
         <FontAwesomeIcon
           onClick={() => {

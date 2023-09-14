@@ -13,7 +13,7 @@ export interface NewUser {
   name: string
   email: string
   password: string
-  occupation: 'student' | 'teacher' | string
+  occupation: string
 }
 
 export function CreateAccount() {
@@ -22,7 +22,7 @@ export function CreateAccount() {
     name: '',
     email: '',
     password: '',
-    occupation: 'student',
+    occupation: 'teacher',
   }
   const [newUser, setNewUser] = useState<NewUser>(defaultValuesNewUser)
   const [loading, setLoading] = useState<boolean>(false)
@@ -65,8 +65,7 @@ export function CreateAccount() {
     usersService
       .register({ newUser })
       .then((res) => {
-        usersService.saveUser(res.data)
-        router.push('/')
+        router.push('/login')
       })
       .catch((err) => {
         console.log('ERRO AO TENTAR CADASTRAR USUÁRIO, ', err)

@@ -17,7 +17,7 @@ export interface Subject {
   students: string[]
 }
 
-export function InsertStudents() {
+export function Subjects() {
   const {
     alertDialogConfirmConfigs,
     setAlertDialogConfirmConfigs,

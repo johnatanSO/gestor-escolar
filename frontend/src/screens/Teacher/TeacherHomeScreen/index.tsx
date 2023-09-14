@@ -42,7 +42,7 @@ export function TeacherHomeScreen() {
       alt: 'Botão de disciplinas',
       title: 'Disciplinas',
       onClickCallback: () => {
-        router.push('/teacher/insertStudents')
+        router.push('/teacher/subjects')
       },
     },
   ]

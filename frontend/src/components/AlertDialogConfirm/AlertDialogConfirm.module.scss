@@ -16,16 +16,16 @@
   padding: 30px;
   gap: 25px;
 
-  background: $gray-color-400;
+  background: $gray-color-100;
 }
 
 .title {
-  color: $gray-color-200;
+  color: $gray-color-400;
   font-weight: 600;
 }
 
 .text {
-  color: $gray-color-200;
+  color: $gray-color-400;
   font-weight: 500;
 }
 
@@ -43,15 +43,19 @@
     font-weight: 500;
     font-size: 0.8rem;
     border: none;
-    
+
     color: $white-color;
     box-shadow: 1px 2px 5px rgb(0 0 0 / 0.4);
 
-    transition: filter .2s;
+    transition: filter 0.2s;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       filter: brightness(0.8);
+    }
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
     }
   }
 }

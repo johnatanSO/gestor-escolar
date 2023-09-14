@@ -19,16 +19,16 @@ export function ActionButtons({ actions, params }: Props) {
       {actions?.map((action, key) => {
         return (
           <button
-            style={{ color: action?.color || '' }}
+            style={{ backgroundColor: action?.color || '' }}
             key={key}
             type="button"
             title={action?.title}
-            disabled={params?.data?.status === 'canceled'}
             onClick={() => {
               action?.onClickFunction?.(params.data)
             }}
           >
             <FontAwesomeIcon className={style.icon} icon={action.icon} />
+            {action?.title}
           </button>
         )
       })}

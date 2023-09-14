@@ -1,12 +1,12 @@
-import { InsertStudents } from '../../src/screens/Teacher/InsertStudents'
+import { Subjects } from '../../src/screens/Teacher/InsertStudents'
 import { usersService } from '../../src/services/usersService'
 import { PageProps } from './../_app'
 
-export default function NewSubjectPage({ setShowBackButton }: PageProps) {
+export default function SubjectsPage({ setShowBackButton }: PageProps) {
   setShowBackButton(true)
   return (
     <>
-      <InsertStudents />
+      <Subjects />
     </>
   )
 }

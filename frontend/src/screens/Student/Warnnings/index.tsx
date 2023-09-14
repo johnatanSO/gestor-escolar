@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { TableComponent } from '../../../components/TableComponent'
-import { Column } from '../../../models/columns'
 import { useColumns } from './hooks/useColumns'
 import { EmptyItems } from '../../../components/EmptyItems'
 import { useRouter } from 'next/router'
@@ -40,7 +39,7 @@ export function Warnings() {
     getWarnings()
   }, [router.query])
 
-  const columns: Column[] = useColumns()
+  const columns = useColumns()
 
   return (
     <>

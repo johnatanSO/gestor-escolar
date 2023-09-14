@@ -1,7 +1,7 @@
-import { Column, CellFunctionParams } from '../../../../../src/models/columns'
 import { faGraduationCap, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ActionButtons } from '../../../../../src/components/ActionButtons'
 import { Subject } from '..'
+import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
 
 interface UseColumnsParams {
   handleDeleteSubject: (subject: Subject) => void
@@ -11,7 +11,7 @@ interface UseColumnsParams {
 export function useColumns({
   handleDeleteSubject,
   handleAddStudents,
-}: UseColumnsParams): Column[] {
+}: UseColumnsParams) {
   const actions = [
     {
       icon: faGraduationCap,

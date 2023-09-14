@@ -1,17 +1,14 @@
 import { faPen } from '@fortawesome/free-solid-svg-icons'
-import {
-  Column,
-  CellFunctionParams,
-} from '../../../../../../src/models/columns'
 import style from '../ModalStudents.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Student } from '..'
+import { CellFunctionParams } from '../../../../../components/TableComponent/interfaces'
 
 type Params = {
   handleEditGrades: (student: Student) => void
 }
 
-export function useColumns({ handleEditGrades }: Params): Column[] {
+export function useColumns({ handleEditGrades }: Params) {
   return [
     {
       field: 'code',

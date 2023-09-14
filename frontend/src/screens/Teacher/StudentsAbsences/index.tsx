@@ -1,7 +1,6 @@
 import { studentsService } from '../../../services/studentsService'
 import { useEffect, useState } from 'react'
 import { TableComponent } from '../../../../src/components/TableComponent'
-import { Column } from '../../../../src/models/columns'
 import { useColumns } from './hooks/useColumns'
 import { EmptyItems } from '../../../../src/components/EmptyItems'
 import { useRouter } from 'next/router'
@@ -48,7 +47,7 @@ export function StudentsAbsences() {
     setSelectedStudent(student)
   }
 
-  const columns: Column[] = useColumns({
+  const columns = useColumns({
     handleOpenWarnings,
   })
 

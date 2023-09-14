@@ -3,7 +3,6 @@ import { HeaderPage } from '../../../components/HeaderPage'
 import { useContext, useEffect, useState } from 'react'
 import { ModalCreateNewSubject } from './ModalCreateNewSubject'
 import { TableComponent } from '../../../../src/components/TableComponent'
-import { Column } from '../../../../src/models/columns'
 import { useColumns } from './hooks/useColumns'
 import { EmptyItems } from '../../../../src/components/EmptyItems'
 import { useRouter } from 'next/router'
@@ -90,7 +89,7 @@ export function Subjects() {
     setSelectedSubject(subject)
   }
 
-  const columns: Column[] = useColumns({
+  const columns = useColumns({
     handleDeleteSubject,
     handleAddStudents,
   })

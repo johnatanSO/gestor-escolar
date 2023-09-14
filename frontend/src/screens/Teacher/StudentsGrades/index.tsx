@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { TableComponent } from '../../../../src/components/TableComponent'
-import { Column } from '../../../../src/models/columns'
 import { useColumns } from './hooks/useColumns'
 import { EmptyItems } from '../../../../src/components/EmptyItems'
 import { useRouter } from 'next/router'
@@ -45,7 +44,7 @@ export function StudentsGrades() {
     setSubjectData(subject)
   }
 
-  const columns: Column[] = useColumns({ handleShowStudents })
+  const columns = useColumns({ handleShowStudents })
 
   return (
     <>

@@ -1,13 +1,13 @@
-import { Column, CellFunctionParams } from '../../../../../src/models/columns'
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { ActionButtons } from '../../../../../src/components/ActionButtons'
 import { Student } from '..'
+import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
 
 interface UseColumnsParams {
   handleOpenWarnings: (student: Student) => void
 }
 
-export function useColumns({ handleOpenWarnings }: UseColumnsParams): Column[] {
+export function useColumns({ handleOpenWarnings }: UseColumnsParams) {
   const actions = [
     {
       icon: faWarning,

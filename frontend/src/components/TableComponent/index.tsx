@@ -1,5 +1,5 @@
-import { Column } from '../../models/columns'
 import style from './TableComponent.module.scss'
+import { Column } from './interfaces'
 
 interface Props {
   columns: Column[]

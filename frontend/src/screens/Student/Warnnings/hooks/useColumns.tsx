@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
-import { Column, CellFunctionParams } from '../../../../models/columns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import style from '../Warnings.module.scss'
+import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
 
-export function useColumns(): Column[] {
+export function useColumns() {
   return [
     {
       headerName: 'Código',

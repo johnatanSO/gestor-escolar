@@ -1,7 +1,7 @@
-import { Column, CellFunctionParams } from '../../../../../src/models/columns'
+import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
 import style from '../Grades.module.scss'
 
-export function useColumns(): Column[] {
+export function useColumns() {
   function getAvarageStatus(grade: number) {
     if (grade > 5) return style.approved
     return style.disapproved

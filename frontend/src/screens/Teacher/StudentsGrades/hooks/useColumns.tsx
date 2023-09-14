@@ -1,14 +1,14 @@
-import { Column, CellFunctionParams } from '../../../../../src/models/columns'
 import style from '../StudentsGrades.module.scss'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { Subject } from '..'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
 
 interface Params {
   handleShowStudents: (subject: Subject) => void
 }
 
-export function useColumns({ handleShowStudents }: Params): Column[] {
+export function useColumns({ handleShowStudents }: Params) {
   return [
     {
       headerName: 'Código',

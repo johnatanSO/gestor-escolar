@@ -9,7 +9,7 @@ import registerImage from '../../../../public/assets/register.png'
 import { usersService } from '../../../services/usersService'
 import { ButtonComponent } from '../../../components/ButtonComponent'
 import { useRouter } from 'next/router'
-import { ButtonHomeScreen } from '../../../models/buttonHomeScreen'
+import { ButtonHomeScreen } from '../../../models/ButtonHomeScreen'
 
 interface Teacher {
   name: string

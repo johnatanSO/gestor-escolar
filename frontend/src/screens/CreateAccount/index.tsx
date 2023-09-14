@@ -36,7 +36,7 @@ export function CreateAccount() {
         ...alertNotifyConfigs,
         type: 'error',
         text: 'E-mail não informado',
-        open: 'true',
+        open: true,
       })
       return
     }
@@ -46,7 +46,7 @@ export function CreateAccount() {
         ...alertNotifyConfigs,
         type: 'error',
         text: 'Senha não informada',
-        open: 'true',
+        open: true,
       })
       return
     }
@@ -56,7 +56,7 @@ export function CreateAccount() {
         ...alertNotifyConfigs,
         type: 'error',
         text: 'Nome não informada',
-        open: 'true',
+        open: true,
       })
       return
     }

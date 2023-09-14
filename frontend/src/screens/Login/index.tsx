@@ -29,7 +29,7 @@ export function Login() {
         ...alertNotifyConfigs,
         type: 'error',
         text: 'E-mail não informado',
-        open: 'true',
+        open: true,
       })
       return
     }
@@ -39,7 +39,7 @@ export function Login() {
         ...alertNotifyConfigs,
         type: 'error',
         text: 'Senha não informada',
-        open: 'true',
+        open: true,
       })
       return
     }
@@ -52,7 +52,7 @@ export function Login() {
           ...alertNotifyConfigs,
           type: 'success',
           text: 'Usuário autenticado com sucesso',
-          open: 'true',
+          open: true,
         })
         usersService.saveUser(res.data)
         router.push('/')
@@ -65,7 +65,7 @@ export function Login() {
           text:
             'Erro ao tentar realizar autenticação do usuário ' +
             `(${err.response.data.message})`,
-          open: 'true',
+          open: true,
         })
       })
       .finally(() => {

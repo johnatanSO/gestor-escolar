@@ -11,7 +11,7 @@ http.interceptors.request.use(
     if (token) {
       config.headers = {
         ...config.headers,
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       }
     }
     return config

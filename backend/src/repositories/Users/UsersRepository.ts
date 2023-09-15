@@ -27,4 +27,8 @@ export class UsersRepository implements IUsersRepository {
   async findByEmail(email: string): Promise<User> {
     return await this.model.findOne({ email })
   }
+
+  async findById(_id: string): Promise<User> {
+    return await this.model.findOne({ _id })
+  }
 }

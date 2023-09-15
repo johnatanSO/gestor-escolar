@@ -10,4 +10,5 @@ export interface INewUserDTO {
 export interface IUsersRepository {
   create: (newUserData: INewUserDTO) => Promise<User>
   findByEmail: (email: string) => Promise<User>
+  findById: (_id: string) => Promise<User>
 }

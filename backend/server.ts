@@ -1,12 +1,12 @@
 import 'reflect-metadata'
-import express, { Express, NextFunction, Request, Response } from 'express'
+import express, { Express, Request, Response } from 'express'
 import 'express-async-errors'
 import dbConnection from './src/database/mongoConfigs'
 import cors from 'cors'
 import { routes } from './src/routes'
 import './src/shared/containers'
 import { Mongoose } from 'mongoose'
-import { AppError } from './src/errors/AppError'
+import { handleError } from './src/middlewares/handleError'
 
 interface CustomExpress extends Express {
   mongo?: Mongoose
@@ -21,20 +21,7 @@ app.use(cors())
 
 app.use(routes)
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  if (err instanceof AppError) {
-    return res.status(err.statusCode).json({
-      success: false,
-      message: err.message,
-    })
-  }
-
-  return res.status(500).json({
-    success: false,
-    status: 'error',
-    message: `Erro interno do servidor - ${err.message}`,
-  })
-})
+app.use(handleError)
 
 app.listen(PORT, () => console.log(`SERVIDOR RODANDO NA PORTA ${PORT}!`))
 

@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
 import { User } from '../../entities/user'
 dotenv.config()
-const saltRounds = 10
+const saltRounds = process.env.CRYPT_SALT_ROUNDS
 
 @injectable()
 export class CreateNewUserService {
@@ -28,7 +28,7 @@ export class CreateNewUserService {
       throw new Error('Já existe um usuário cadastrado com este e-mail!')
     }
 
-    const encryptedPassword: string = await bcrypt.hash(password, saltRounds)
+    const encryptedPassword = await bcrypt.hash(password, saltRounds)
     const newUser = await this.usersRepository.create({
       name,
       email,

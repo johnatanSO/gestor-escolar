@@ -1,5 +1,5 @@
 import { faGraduationCap, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { ActionButtons } from '../../../../../src/components/ActionButtons'
+import { ActionButtons } from '../../../../components/ActionButtons'
 import { Subject } from '..'
 import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
 

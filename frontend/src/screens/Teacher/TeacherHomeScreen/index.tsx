@@ -6,6 +6,7 @@ import notesImage from '../../../../public/assets/notepad.png'
 import warningImage from '../../../../public/assets/warning.png'
 import timetableImage from '../../../../public/assets/timetable.png'
 import registerImage from '../../../../public/assets/register.png'
+import studentImage from '../../../../public/assets/student.png'
 import { usersService } from '../../../services/usersService'
 import { ButtonComponent } from '../../../components/ButtonComponent'
 import { useRouter } from 'next/router'
@@ -49,6 +50,14 @@ export function TeacherHomeScreen() {
       title: 'Disciplinas',
       onClickCallback: () => {
         router.push('/teacher/subjects')
+      },
+    },
+    {
+      image: studentImage,
+      alt: 'Botão de alunos',
+      title: 'Alunos',
+      onClickCallback: () => {
+        router.push('/teacher/students')
       },
     },
   ]

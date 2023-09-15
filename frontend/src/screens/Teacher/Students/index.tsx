@@ -1,13 +1,12 @@
 import { subjectsService } from '../../../services/subjectsService'
 import { HeaderPage } from '../../../components/HeaderPage'
 import { useContext, useEffect, useState } from 'react'
-import { ModalCreateNewSubject } from './ModalCreateNewSubject'
-import { TableComponent } from '../../../../src/components/TableComponent'
+import { ModalCreateNewStudent } from './ModalCreateNewStudent'
+import { TableComponent } from '../../../components/TableComponent'
 import { useColumns } from './hooks/useColumns'
-import { EmptyItems } from '../../../../src/components/EmptyItems'
+import { EmptyItems } from '../../../components/EmptyItems'
 import { useRouter } from 'next/router'
-import { AlertContext } from '../../../../src/contexts/alertContext'
-import { ModalAddStudents } from './ModalAddStudents'
+import { AlertContext } from '../../../contexts/alertContext'
 import { Loading } from '../../../components/Loading'
 
 export interface Subject {
@@ -16,7 +15,7 @@ export interface Subject {
   students: string[]
 }
 
-export function Subjects() {
+export function Students() {
   const {
     alertDialogConfirmConfigs,
     setAlertDialogConfirmConfigs,
@@ -24,11 +23,6 @@ export function Subjects() {
     setAlertNotifyConfigs,
   } = useContext(AlertContext)
   const [subjects, setSubjects] = useState<Subject[]>([])
-  const [selectedSubject, setSelectedSubject] = useState<Subject | undefined>(
-    undefined,
-  )
-  const [modalAddStudentsOpened, setModalAddStudentsOpened] =
-    useState<boolean>(true)
   const [loadingSubjects, setLoadingSubjects] = useState<boolean>(true)
   const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
   const router = useRouter()
@@ -84,10 +78,7 @@ export function Subjects() {
       },
     })
   }
-  function handleAddStudents(subject: Subject) {
-    setModalAddStudentsOpened(true)
-    setSelectedSubject(subject)
-  }
+  function handleAddStudents(subject: Subject) {}
 
   const columns = useColumns({
     handleDeleteSubject,
@@ -121,22 +112,11 @@ export function Subjects() {
       )}
 
       {formModalOpened && (
-        <ModalCreateNewSubject
+        <ModalCreateNewStudent
           subjectDataToEdit={undefined}
           open={formModalOpened}
           handleClose={() => {
             setFormModalOpened(false)
-          }}
-        />
-      )}
-
-      {modalAddStudentsOpened && selectedSubject && (
-        <ModalAddStudents
-          subjectData={selectedSubject}
-          open={modalAddStudentsOpened}
-          handleClose={() => {
-            setModalAddStudentsOpened(false)
-            setSelectedSubject(undefined)
           }}
         />
       )}

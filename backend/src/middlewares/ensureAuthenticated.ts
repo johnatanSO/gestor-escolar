@@ -20,5 +20,9 @@ export async function ensureAuthenticated(
   const user = await usersRepository.findById(userId.toString())
   if (!user) throw new AppError('Usuário inválido')
 
+  req.user = {
+    _id: userId.toString(),
+  }
+
   next()
 }

@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
 import { User } from '../../entities/user'
 dotenv.config()
-const saltRounds = process.env.CRYPT_SALT_ROUNDS
+const saltRounds = 10
 
 @injectable()
 export class CreateNewUserService {

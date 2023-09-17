@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import { CreateNewUserService } from '../useCases/User/CreateNewUserService.service'
+import { UpdateUserAvatarService } from '../useCases/User/UpdateUserAvatarService.service'
 
 export class UserController {
   async createNewUser(req: Request, res: Response): Promise<Response> {
@@ -30,5 +31,17 @@ export class UserController {
         message: err.message,
       })
     }
+  }
+
+  async updateUserAvatar(req: Request, res: Response): Promise<Response> {
+    const avatarFile = req.file.filename
+
+    const updateUserAvatarService = container.resolve(UpdateUserAvatarService)
+    await updateUserAvatarService.execute({ userId: req.user._id, avatarFile })
+
+    return res.status(200).json({
+      success: true,
+      message: 'Avatar atualizado com sucesso',
+    })
   }
 }

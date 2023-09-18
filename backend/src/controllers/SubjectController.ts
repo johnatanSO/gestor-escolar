@@ -7,10 +7,11 @@ import { InsertStudentInSubjectService } from '../useCases/Subject/InsertStudent
 import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
 
 export class SubjectController {
-  async listAllSubjectsService(req: Request, res: Response): Promise<Response> {
+  async listAllSubjects(req: Request, res: Response): Promise<Response> {
     try {
+      const idTeacher = req.user._id
       const listAllSubjectsService = container.resolve(ListAllSubjectsService)
-      const subjects = await listAllSubjectsService.execute()
+      const subjects = await listAllSubjectsService.execute({ idTeacher })
 
       return res.status(200).json({
         success: true,
@@ -31,9 +32,11 @@ export class SubjectController {
   async createNewSubject(req: Request, res: Response): Promise<Response> {
     try {
       const { name } = req.body
+      const idTeacher = req.user._id
       const createNewSubjectService = container.resolve(CreateNewSubjectService)
       const newSubject = await createNewSubjectService.execute({
         name,
+        idTeacher,
       })
 
       return res.status(201).json({

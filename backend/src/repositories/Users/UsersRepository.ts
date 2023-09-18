@@ -35,4 +35,8 @@ export class UsersRepository implements IUsersRepository {
   async update(filters: any, updateFields: any): Promise<void> {
     await this.model.updateMany(filters, updateFields)
   }
+
+  async delete(idUser: string): Promise<void> {
+    await this.model.deleteOne({ _id: idUser })
+  }
 }

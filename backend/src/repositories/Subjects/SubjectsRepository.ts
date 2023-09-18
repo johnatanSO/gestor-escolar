@@ -41,7 +41,7 @@ export class SubjectsRepository implements ISubjectsRepository {
     )
   }
 
-  async getEntries(): Promise<number> {
-    return await this.model.countDocuments()
+  async getEntries({ idTeacher }): Promise<number> {
+    return await this.model.countDocuments({ idTeacher })
   }
 }

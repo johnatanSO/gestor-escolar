@@ -7,6 +7,7 @@ export interface IStudent {
   absences: any[]
   grades: any[]
   warningsAmount: number
+  idTeacher: Types.ObjectId
 }
 
 const studentSchema = new mongoose.Schema({
@@ -15,6 +16,7 @@ const studentSchema = new mongoose.Schema({
   absences: { type: Array, default: null },
   grades: { type: Array, default: null },
   warningsAmount: { type: Number, default: 0 },
+  idTeacher: { type: 'ObjectId', ref: 'User', default: null },
 })
 
 export const StudentModel = mongoose.model<IStudent>('Student', studentSchema)

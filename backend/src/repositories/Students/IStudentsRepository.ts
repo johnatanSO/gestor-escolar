@@ -5,6 +5,7 @@ export interface INewStudentDTO {
   _id: Types.ObjectId
   code: string
   name: string
+  idTeacher: string
 }
 
 export interface IUpdateGradesDTO {
@@ -24,8 +25,9 @@ export interface IUpdateStudentDTO {
 export interface IStudentsRepository {
   list: (queryList: any) => Promise<IStudent[]>
   create: (newStudentData: INewStudentDTO) => Promise<IStudent>
-  getEntries: () => Promise<number>
+  getEntries: (idTeacher: string) => Promise<number>
   updateGrades: (updateGradesParams: IUpdateGradesDTO) => Promise<void>
   update: (updateParams: IUpdateStudentDTO) => Promise<void>
   findById: (idStudent: string) => Promise<IStudent>
+  delete: (studentId: string) => Promise<void>
 }

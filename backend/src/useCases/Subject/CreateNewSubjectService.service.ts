@@ -4,6 +4,7 @@ import { ISubject } from '../../entities/subject'
 
 interface IRequest {
   name: string
+  idTeacher: string
 }
 
 @injectable()
@@ -15,15 +16,19 @@ export class CreateNewSubjectService {
     this.subjectsRepository = subjectsRepository
   }
 
-  async execute({ name }: IRequest): Promise<ISubject> {
+  async execute({ name, idTeacher }: IRequest): Promise<ISubject> {
     if (!name) {
       throw new Error('O nome da disciplina não foi informado.')
     }
 
-    const entries = await this.subjectsRepository.getEntries()
+    const entries = await this.subjectsRepository.getEntries({ idTeacher })
     const code: string = (entries + 1).toString()
 
-    const newSubject = await this.subjectsRepository.create({ code, name })
+    const newSubject = await this.subjectsRepository.create({
+      code,
+      name,
+      idTeacher,
+    })
     return newSubject
   }
 }

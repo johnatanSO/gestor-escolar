@@ -46,6 +46,13 @@ describe('Getting grades by all students', () => {
     }).rejects.toBeInstanceOf(AppError)
   })
 
+  it('should not be able get grades if subjectId not informed', () => {
+    expect(async () => {
+      const idSubject = ''
+      await listAllStudentsGradesService.execute(idSubject)
+    }).rejects.toBeInstanceOf(AppError)
+  })
+
   it('should be able get grades of all students', async () => {
     const newSubject = await createNewSubjectService.execute({
       name: 'Teste português',

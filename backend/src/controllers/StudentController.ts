@@ -4,12 +4,16 @@ import { ListStudentsService } from '../useCases/Student/ListStudents/ListStuden
 import { ListAllStudentsGradesService } from '../useCases/Student/ListAllStudentsGrades/ListAllStudentsGradesService.service'
 import { ListSingleStudentGrades } from '../useCases/Student/ListSingleStudentGrades/ListSingleStudentGrades.service'
 import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
+import { DeleteStudentService } from '../useCases/Student/DeleteStudentService/DeleteStudentService.service'
+import { CreateNewUserService } from '../useCases/User/CreateNewUserService.service'
+import { CreateNewStudentService } from '../useCases/Student/CreateNewStudent/CreateNewStudentService.service'
 
 export class StudentController {
   async listStudents(req: Request, res: Response): Promise<Response> {
     try {
+      const idTeacher = req.user._id
       const listStudentsService = container.resolve(ListStudentsService)
-      const students = await listStudentsService.execute()
+      const students = await listStudentsService.execute({ idTeacher })
 
       return res.status(200).json({
         items: students,
@@ -86,6 +90,58 @@ export class StudentController {
       return res.status(400).json({
         error: err,
         message: 'Erro ao tentar atualizar notas.',
+      })
+    }
+  }
+
+  async deleteStudent(req: Request, res: Response): Promise<Response> {
+    const { studentId } = req.params
+
+    const deleteStudentService = container.resolve(DeleteStudentService)
+    await deleteStudentService.execute(studentId)
+
+    const deleteUserService = container.resolve(DeleteUserService)
+    await deleteUserService.execute(studentId)
+
+    return res.status(200).json({
+      success: true,
+      message: 'Aluno removido com sucesso',
+    })
+  }
+
+  async createNewStudent(req: Request, res: Response): Promise<Response> {
+    try {
+      const { name, email, password } = req.body
+      const idTeacher = req.user._id
+
+      const createNewUserService = container.resolve(CreateNewUserService)
+      const newUser = await createNewUserService.execute({
+        name,
+        email,
+        password,
+        occupation: 'student',
+      })
+
+      const createNewStudentService = container.resolve(CreateNewStudentService)
+      await createNewStudentService.execute({
+        name: newUser.name,
+        _id: newUser._id,
+        idTeacher,
+      })
+
+      delete newUser.password
+      delete newUser._id
+
+      return res.status(201).json({
+        success: true,
+        title: 'Aluno cadastrado com sucesso',
+        item: newUser,
+      })
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        title: 'Erro ao tentar cadastrar aluno',
+        message: err.message,
       })
     }
   }

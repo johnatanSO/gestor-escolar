@@ -11,6 +11,8 @@ studentsRoutes.use(ensureAuthenticated)
 // Routes
 studentsRoutes.get('/', studentController.listStudents)
 
+studentsRoutes.post('/', studentController.createNewStudent)
+
 studentsRoutes.get(
   '/subjectStudentsGrades/:idSubject',
   studentController.listAllStudentsGrades,
@@ -22,5 +24,7 @@ studentsRoutes.get(
 )
 
 studentsRoutes.put('/updateGrades', studentController.updateGrades)
+
+studentsRoutes.delete('/:studentId', studentController.deleteStudent)
 
 export { studentsRoutes }

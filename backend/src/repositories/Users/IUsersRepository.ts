@@ -12,4 +12,5 @@ export interface IUsersRepository {
   findByEmail: (email: string) => Promise<User>
   findById: (_id: string) => Promise<User>
   update: (filters: any, updateFields: any) => Promise<void>
+  delete: (idUser: string) => Promise<void>
 }

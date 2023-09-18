@@ -4,11 +4,16 @@ import { ISubject } from '../../entities/subject'
 export interface INewSubjectDTO {
   name: string
   code?: string
+  idTeacher: string
 }
 
 export interface IInsertStudentDTO {
   studentsIds: string[]
   subjectId: string
+}
+
+export interface FiltersGetEntries {
+  idTeacher: string
 }
 
 export interface ISubjectsRepository {
@@ -17,5 +22,5 @@ export interface ISubjectsRepository {
   findById: (idSubject: string | Types.ObjectId) => Promise<ISubject>
   delete: (idSubject: string) => Promise<void>
   insertStudent: (insertStudentParams: IInsertStudentDTO) => Promise<void>
-  getEntries: () => Promise<number>
+  getEntries: ({ idTeacher }: FiltersGetEntries) => Promise<number>
 }

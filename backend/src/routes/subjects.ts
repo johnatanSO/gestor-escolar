@@ -9,7 +9,7 @@ const subjectController = new SubjectController()
 subjectsRoutes.use(ensureAuthenticated)
 
 // Routes
-subjectsRoutes.get('/', subjectController.listAllSubjectsService)
+subjectsRoutes.get('/', subjectController.listAllSubjects)
 
 subjectsRoutes.post('/', subjectController.createNewSubject)
 

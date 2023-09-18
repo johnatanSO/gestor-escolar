@@ -17,8 +17,8 @@ export class StudentsRepository implements IStudentsRepository {
     return students
   }
 
-  async getEntries(): Promise<number> {
-    return await this.model.countDocuments()
+  async getEntries(idTeacher: string): Promise<number> {
+    return await this.model.countDocuments({ idTeacher })
   }
 
   async create(newStudentData: INewStudentDTO): Promise<IStudent> {
@@ -75,5 +75,9 @@ export class StudentsRepository implements IStudentsRepository {
 
   async findById(idStudent: string): Promise<IStudent> {
     return await StudentModel.findOne({ _id: idStudent })
+  }
+
+  async delete(studentId: string): Promise<void> {
+    await this.model.deleteOne({ _id: studentId })
   }
 }

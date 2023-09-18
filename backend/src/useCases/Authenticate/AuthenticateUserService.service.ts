@@ -16,6 +16,7 @@ interface IResponse {
     email: string
     occupation: string
     _id: string
+    avatar: string
   }
   token: string
 }
@@ -45,10 +46,11 @@ export class AuthenticateUserService {
 
     return {
       user: {
+        _id: user._id.toString(),
         name: user.name,
         email: user.email,
         occupation: user.occupation,
-        _id: user._id.toString(),
+        avatar: user.avatar,
       },
       token,
     }

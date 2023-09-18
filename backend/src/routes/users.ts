@@ -3,6 +3,7 @@ import express from 'express'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 import multer from 'multer'
 import uploadConfigs from '../config/upload'
+import path from 'path'
 
 const uploadAvatar = multer(uploadConfigs.upload('./tmp/avatar'))
 const usersRoutes = express.Router()
@@ -16,6 +17,10 @@ usersRoutes.patch(
   ensureAuthenticated,
   uploadAvatar.single('avatar'),
   userController.updateUserAvatar,
+)
+usersRoutes.use(
+  '/avatar',
+  express.static(path.join(__dirname, '..', '..', 'tmp', 'avatar')),
 )
 
 export { usersRoutes }

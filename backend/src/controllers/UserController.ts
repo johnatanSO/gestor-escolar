@@ -3,6 +3,7 @@ import { container } from 'tsyringe'
 import { CreateNewUserService } from '../useCases/User/CreateNewUserService.service'
 import { GetUserInfoService } from '../useCases/User/GetUserInfoService.service'
 import { UpdateUserAvatarService } from '../useCases/User/UpdateUserAvatarService.service'
+import { AppError } from '../errors/AppError'
 
 export class UserController {
   async createNewUser(req: Request, res: Response): Promise<Response> {
@@ -35,7 +36,8 @@ export class UserController {
   }
 
   async updateUserAvatar(req: Request, res: Response): Promise<Response> {
-    const avatarFile = req.file.filename
+    const avatarFile = req.file?.filename
+    if (!avatarFile) throw new AppError('Imagem não enviada')
 
     const updateUserAvatarService = container.resolve(UpdateUserAvatarService)
     await updateUserAvatarService.execute({ userId: req.user._id, avatarFile })
@@ -48,6 +50,7 @@ export class UserController {
 
   async getUserInfo(req: Request, res: Response): Promise<Response> {
     const { userId } = req.params
+    const [, token] = req.headers.authorization.split(' ')
 
     const getUserInfoService = container.resolve(GetUserInfoService)
     const userInfo = await getUserInfoService.execute(userId)
@@ -56,6 +59,7 @@ export class UserController {
       success: true,
       message: 'Busca de informaões do usuário concluída com sucesso',
       item: userInfo,
+      token,
     })
   }
 }

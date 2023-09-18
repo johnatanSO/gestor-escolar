@@ -147,7 +147,7 @@ export function ModalWarnings({
           />
         )}
 
-        {warnings?.length === 0 && !loadingWarnings && (
+        {warnings?.length === 0 && !loadingWarnings && !isFormMode && (
           <EmptyItems
             customStyle={{ boxShadow: 'none' }}
             text="Este aluno não possui advertências"

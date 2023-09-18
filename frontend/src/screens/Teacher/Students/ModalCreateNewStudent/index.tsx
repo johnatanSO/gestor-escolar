@@ -2,19 +2,18 @@ import { ModalLayout } from '../../../../components/ModalLayout'
 import { FormEvent, useState, useContext } from 'react'
 import style from './ModalCreateNewStudent.module.scss'
 import { CustomTextField } from '../../../../components/CustomTextField'
-import { subjectsService } from '../../../../services/subjectsService'
 import { AlertContext } from '../../../../contexts/alertContext'
 import { useRouter } from 'next/router'
+import { studentsService } from '../../../../services/studentsService'
 
-export interface NewSubjectData {
+export interface NewStudentData {
   name: string
-  stock: string
-  value: string
-  isDefault: boolean
+  email: string
+  password: string
 }
 
 interface Props {
-  subjectDataToEdit: NewSubjectData | undefined
+  studentDataToEdit: NewStudentData | undefined
   open: boolean
   handleClose: () => void
 }
@@ -22,47 +21,38 @@ interface Props {
 export function ModalCreateNewStudent({
   open,
   handleClose,
-  subjectDataToEdit,
+  studentDataToEdit,
 }: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
-  const defaultNewSubjectValues = {
+  const defaultNewStudentValues = {
     name: '',
-    stock: '0',
-    value: '0',
-    isDefault: false,
+    email: '',
+    password: '',
   }
-  const [newSubjectData, setNewSubjectData] = useState<NewSubjectData>(
-    subjectDataToEdit || defaultNewSubjectValues,
+  const [newStudentData, setNewStudentData] = useState<NewStudentData>(
+    studentDataToEdit || defaultNewStudentValues,
   )
-  const [loadingCreateNewSubject, setLoadingCreateNewSubject] =
+  const [loadingCreateNewStudent, setLoadingCreateNewStudent] =
     useState<boolean>(false)
   const router = useRouter()
 
-  function onCreateNewSubject(event: FormEvent<HTMLFormElement>) {
+  function onCreateNewStudent(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!newSubjectData?.name) {
-      setAlertNotifyConfigs({
-        ...alertNotifyConfigs,
-        open: true,
-        type: 'error',
-        text: 'Nenhum nome foi informado',
-      })
-      return
-    }
-    subjectsService
-      .create({ newSubjectData })
+    setLoadingCreateNewStudent(true)
+    studentsService
+      .create({ newStudentData })
       .then(() => {
         router.push({
           pathname: router.route,
           query: router.query,
         })
-        setNewSubjectData(defaultNewSubjectValues)
+        setNewStudentData(defaultNewStudentValues)
         handleClose()
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
-          text: 'Disciplina cadastrado com sucesso',
+          text: 'Aluno cadastrado com sucesso',
         })
       })
       .catch((err) => {
@@ -71,40 +61,32 @@ export function ModalCreateNewStudent({
           open: true,
           type: 'error',
           text:
-            'Erro ao tentar cadastrar disciplina ' +
+            'Erro ao tentar cadastrar aluno ' +
             `(${err.response.data.message})`,
         })
       })
       .finally(() => {
-        setLoadingCreateNewSubject(false)
+        setLoadingCreateNewStudent(false)
       })
   }
 
-  function onEditSubject(event: FormEvent<HTMLFormElement>) {
+  function onEditStudent(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!newSubjectData?.name) {
-      setAlertNotifyConfigs({
-        ...alertNotifyConfigs,
-        open: true,
-        type: 'error',
-        text: 'Nenhum nome foi informado',
-      })
-      return
-    }
-    subjectsService
-      .update({ subjectData: newSubjectData })
+    setLoadingCreateNewStudent(true)
+    studentsService
+      .update({ studentData: newStudentData })
       .then(() => {
         router.push({
           pathname: router.route,
           query: router.query,
         })
-        setNewSubjectData(defaultNewSubjectValues)
+        setNewStudentData(defaultNewStudentValues)
         handleClose()
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
-          text: 'Dados da disciplina atualizados com sucesso',
+          text: 'Dados do aluno atualizados com sucesso',
         })
       })
       .catch((err) => {
@@ -113,12 +95,12 @@ export function ModalCreateNewStudent({
           open: true,
           type: 'error',
           text:
-            'Erro ao tentar atualizar dados da disciplina ' +
+            'Erro ao tentar atualizar dados do aluno ' +
             `(${err.response.data.message})`,
         })
       })
       .finally(() => {
-        setLoadingCreateNewSubject(false)
+        setLoadingCreateNewStudent(false)
       })
   }
 
@@ -126,10 +108,10 @@ export function ModalCreateNewStudent({
     <ModalLayout
       open={open}
       handleClose={handleClose}
-      onSubmit={subjectDataToEdit ? onEditSubject : onCreateNewSubject}
-      title="Cadastro de disciplina"
+      onSubmit={studentDataToEdit ? onEditStudent : onCreateNewStudent}
+      title="Cadastro de aluno"
       submitButtonText="Cadastrar"
-      loading={loadingCreateNewSubject}
+      loading={loadingCreateNewStudent}
     >
       <div className={style.fieldsContainer}>
         <CustomTextField
@@ -138,11 +120,39 @@ export function ModalCreateNewStudent({
           label="Nome"
           type="text"
           placeholder="Digite o nome"
-          value={newSubjectData?.name}
+          value={newStudentData?.name}
           onChange={(event) => {
-            setNewSubjectData({
-              ...newSubjectData,
+            setNewStudentData({
+              ...newStudentData,
               name: event.target.value,
+            })
+          }}
+        />
+        <CustomTextField
+          size="small"
+          required
+          label="E-mail"
+          type="email"
+          placeholder="Digite o email"
+          value={newStudentData?.email}
+          onChange={(event) => {
+            setNewStudentData({
+              ...newStudentData,
+              email: event.target.value,
+            })
+          }}
+        />
+        <CustomTextField
+          size="small"
+          required
+          label="Senha"
+          type="password"
+          placeholder="Digite a senha"
+          value={newStudentData?.password}
+          onChange={(event) => {
+            setNewStudentData({
+              ...newStudentData,
+              password: event.target.value,
             })
           }}
         />

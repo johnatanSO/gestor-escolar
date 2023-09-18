@@ -1,4 +1,3 @@
-import { subjectsService } from '../../../services/subjectsService'
 import { HeaderPage } from '../../../components/HeaderPage'
 import { useContext, useEffect, useState } from 'react'
 import { ModalCreateNewStudent } from './ModalCreateNewStudent'
@@ -8,11 +7,12 @@ import { EmptyItems } from '../../../components/EmptyItems'
 import { useRouter } from 'next/router'
 import { AlertContext } from '../../../contexts/alertContext'
 import { Loading } from '../../../components/Loading'
+import { studentsService } from '../../../services/studentsService'
 
-export interface Subject {
+export interface Student {
   _id: string
   name: string
-  students: string[]
+  code: string
 }
 
 export function Students() {
@@ -22,45 +22,45 @@ export function Students() {
     alertNotifyConfigs,
     setAlertNotifyConfigs,
   } = useContext(AlertContext)
-  const [subjects, setSubjects] = useState<Subject[]>([])
-  const [loadingSubjects, setLoadingSubjects] = useState<boolean>(true)
+  const [students, setStudents] = useState<Student[]>([])
+  const [loadingStudents, setLoadingStudents] = useState<boolean>(true)
   const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
   const router = useRouter()
 
-  function getSubjects() {
-    setLoadingSubjects(true)
-    subjectsService
+  function getStudents() {
+    setLoadingStudents(true)
+    studentsService
       .getAll()
       .then((res) => {
-        setSubjects(res.data.items)
+        setStudents(res.data.items)
       })
       .catch((err) => {
         console.log('ERRO AO BUSCAR DISCIPLINAS, ', err)
       })
       .finally(() => {
-        setLoadingSubjects(false)
+        setLoadingStudents(false)
       })
   }
 
   useEffect(() => {
-    getSubjects()
+    getStudents()
   }, [router.query])
 
-  function handleDeleteSubject(subject: Subject) {
+  function handleDeleteStudent(student: Student) {
     setAlertDialogConfirmConfigs({
       ...alertDialogConfirmConfigs,
       open: true,
       title: 'Alerta de confirmação',
-      text: 'Deseja realmente excluir esta disciplina?',
+      text: 'Deseja realmente excluir este aluno do sistema?',
       onClickAgree: () => {
-        subjectsService
-          .delete({ idSubject: subject?._id })
+        studentsService
+          .delete({ studentId: student?._id })
           .then(() => {
             setAlertNotifyConfigs({
               ...alertNotifyConfigs,
               open: true,
               type: 'success',
-              text: 'Disciplina excluída com sucesso',
+              text: 'Aluno excluído com sucesso',
             })
             router.push({
               pathname: router.route,
@@ -72,17 +72,15 @@ export function Students() {
               ...alertNotifyConfigs,
               open: true,
               type: 'error',
-              text: `Erro ao tentar excluir disciplina (${err.response.data.error})`,
+              text: `Erro ao tentar excluir aluno (${err.response.data.error})`,
             })
           })
       },
     })
   }
-  function handleAddStudents(subject: Subject) {}
 
   const columns = useColumns({
-    handleDeleteSubject,
-    handleAddStudents,
+    handleDeleteStudent,
   })
 
   return (
@@ -91,24 +89,24 @@ export function Students() {
         onClickFunction={() => {
           setFormModalOpened(true)
         }}
-        buttonText="Nova disciplina"
-        InputFilter={<h3>Disciplinas</h3>}
+        buttonText="Novo aluno"
+        InputFilter={<h3>Alunos</h3>}
       />
 
-      {subjects?.length === 0 && loadingSubjects && (
+      {students?.length === 0 && loadingStudents && (
         <Loading size={30} color="#cd1414" />
       )}
 
-      {subjects?.length > 0 && (
+      {students?.length > 0 && (
         <TableComponent
-          loading={loadingSubjects}
+          loading={loadingStudents}
           columns={columns}
-          rows={subjects}
+          rows={students}
         />
       )}
 
-      {subjects?.length === 0 && !loadingSubjects && (
-        <EmptyItems text="Nenhuma disciplina foi encontrada" />
+      {students?.length === 0 && !loadingStudents && (
+        <EmptyItems text="Nenhum aluno cadastrado no sistema" />
       )}
 
       {formModalOpened && (

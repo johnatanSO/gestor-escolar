@@ -1,29 +1,19 @@
-import { faGraduationCap, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ActionButtons } from '../../../../components/ActionButtons'
-import { Subject } from '..'
+import { Student } from '..'
 import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
 
 interface UseColumnsParams {
-  handleDeleteSubject: (subject: Subject) => void
-  handleAddStudents: (subject: Subject) => void
+  handleDeleteStudent: (student: Student) => void
 }
 
-export function useColumns({
-  handleDeleteSubject,
-  handleAddStudents,
-}: UseColumnsParams) {
+export function useColumns({ handleDeleteStudent }: UseColumnsParams) {
   const actions = [
-    {
-      icon: faGraduationCap,
-      title: 'Associar alunos',
-      color: '#31a2ff',
-      onClickFunction: handleAddStudents,
-    },
     {
       icon: faTrash,
       title: 'Excluir',
       color: '#ed4252',
-      onClickFunction: handleDeleteSubject,
+      onClickFunction: handleDeleteStudent,
     },
   ]
 
@@ -34,15 +24,9 @@ export function useColumns({
       valueFormatter: (params: CellFunctionParams) => params.value || '--',
     },
     {
-      headerName: 'Nome da disciplina',
+      headerName: 'Nome do aluno',
       field: 'name',
       valueFormatter: (params: CellFunctionParams) => params.value || '--',
-    },
-    {
-      headerName: 'Quantidade de alunos',
-      field: 'students',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.length || 0,
     },
     {
       headerName: '',

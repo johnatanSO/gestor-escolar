@@ -1,9 +1,8 @@
-import { UpdateWarningsAmount } from '../Student/UpdateWarningsAmount/UpdateWarningsAmount.service'
 import {
   IWarningsRepository,
   INewWarningDTO,
 } from '../../repositories/Warnings/IWarningsRepository'
-import { container, inject, injectable } from 'tsyringe'
+import { inject, injectable } from 'tsyringe'
 import { Warning } from '../../entities/warning'
 
 @injectable()
@@ -33,9 +32,6 @@ export class CreateNewWarningService {
       title,
       description,
     })
-
-    const updateWarningsAmount = container.resolve(UpdateWarningsAmount)
-    await updateWarningsAmount.execute(idStudent)
 
     return newWarning
   }

@@ -2,6 +2,7 @@ import { ListWarningsService } from './../useCases/Warning/ListWarningsService.s
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import { CreateNewWarningService } from '../useCases/Warning/CreateNewWarningService.service'
+import { UpdateWarningsAmount } from '../useCases/Student/UpdateWarningsAmount/UpdateWarningsAmount.service'
 
 export class WarningController {
   async createNewWarning(req: Request, res: Response): Promise<Response> {
@@ -14,6 +15,9 @@ export class WarningController {
         title,
         description,
       })
+
+      const updateWarningsAmount = container.resolve(UpdateWarningsAmount)
+      await updateWarningsAmount.execute(idStudent)
 
       return res.status(201).json({
         item: warning,

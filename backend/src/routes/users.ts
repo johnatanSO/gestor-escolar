@@ -10,6 +10,7 @@ const userController = new UserController()
 
 // Routes
 usersRoutes.post('/', userController.createNewUser)
+usersRoutes.get('/:userId', userController.getUserInfo)
 usersRoutes.patch(
   '/avatar',
   ensureAuthenticated,

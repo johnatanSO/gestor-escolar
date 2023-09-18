@@ -1,7 +1,7 @@
 import 'reflect-metadata'
-import { INewUserDTO } from './../../repositories/Users/IUsersRepository'
-import { CreateNewUserService } from './../User/CreateNewUserService.service'
-import { MockUsersRepository } from '../../repositories/Users/MockUsersRepository'
+import { INewUserDTO } from './../../../repositories/Users/IUsersRepository'
+import { CreateNewUserService } from './../../User/CreateNewUserService.service'
+import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 import { AuthenticateUserService } from './AuthenticateUserService.service'
 
 let mockUsersRepository: MockUsersRepository
@@ -42,7 +42,7 @@ describe('Authenticate user', () => {
     }).rejects.toThrow()
   })
 
-  it('should not be able authenticate a incorrect password', () => {
+  it('should not be able authenticate a user with incorrect password', () => {
     expect(async () => {
       const user = {
         name: 'John Doe',

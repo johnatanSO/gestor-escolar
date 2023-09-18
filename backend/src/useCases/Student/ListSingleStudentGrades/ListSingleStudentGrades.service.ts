@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
-import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
-import { ISubjectsRepository } from '../../repositories/Subjects/ISubjectsRepository'
+import { IStudentsRepository } from '../../../repositories/Students/IStudentsRepository'
+import { ISubjectsRepository } from '../../../repositories/Subjects/ISubjectsRepository'
 
 interface IResponse {
   subjectGrades: {

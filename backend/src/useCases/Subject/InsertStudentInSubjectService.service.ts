@@ -1,5 +1,4 @@
-import { UpdateGradesService } from './../Student/UpdateGradesService.service'
-import { container, inject, injectable } from 'tsyringe'
+import { inject, injectable } from 'tsyringe'
 import {
   ISubjectsRepository,
   IInsertStudentDTO,
@@ -22,17 +21,6 @@ export class InsertStudentInSubjectService {
     await this.subjectsRepository.insertStudent({
       studentsIds,
       subjectId,
-    })
-
-    // Definindo nota inicial do aluno como zero.
-    const updateGradesService = container.resolve(UpdateGradesService)
-    await updateGradesService.execute({
-      studentsIds,
-      subjectId,
-      grades: {
-        firstGrade: 0,
-        secondGrade: 0,
-      },
     })
   }
 }

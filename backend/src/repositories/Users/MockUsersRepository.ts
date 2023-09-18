@@ -8,6 +8,7 @@ export class MockUsersRepository implements IUsersRepository {
     const newUser = {
       ...newUserData,
       _id: new Types.ObjectId(),
+      avatar: null,
     }
     this.users.push(newUser)
 

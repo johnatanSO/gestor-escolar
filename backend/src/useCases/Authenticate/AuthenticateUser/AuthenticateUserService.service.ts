@@ -1,4 +1,4 @@
-import { IUsersRepository } from '../../repositories/Users/IUsersRepository'
+import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv'

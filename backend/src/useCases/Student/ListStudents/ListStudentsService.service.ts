@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
-import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
-import { IStudent } from '../../entities/student'
+import { IStudentsRepository } from '../../../repositories/Students/IStudentsRepository'
+import { IStudent } from '../../../entities/student'
 
 @injectable()
 export class ListStudentsService {

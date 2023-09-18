@@ -1,5 +1,4 @@
-import { CreateNewStudentService } from './../Student/CreateNewStudentService.service'
-import { container, inject, injectable } from 'tsyringe'
+import { inject, injectable } from 'tsyringe'
 import {
   INewUserDTO,
   IUsersRepository,
@@ -35,11 +34,6 @@ export class CreateNewUserService {
       password: encryptedPassword,
       occupation,
     })
-
-    if (newUser.occupation === 'student') {
-      const createNewStudentService = container.resolve(CreateNewStudentService)
-      await createNewStudentService.execute(newUser)
-    }
 
     return newUser
   }

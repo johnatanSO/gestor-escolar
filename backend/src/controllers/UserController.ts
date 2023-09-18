@@ -4,6 +4,7 @@ import { CreateNewUserService } from '../useCases/User/CreateNewUserService.serv
 import { GetUserInfoService } from '../useCases/User/GetUserInfoService.service'
 import { UpdateUserAvatarService } from '../useCases/User/UpdateUserAvatarService.service'
 import { AppError } from '../errors/AppError'
+import { CreateNewStudentService } from '../useCases/Student/CreateNewStudent/CreateNewStudentService.service'
 
 export class UserController {
   async createNewUser(req: Request, res: Response): Promise<Response> {
@@ -17,6 +18,13 @@ export class UserController {
         password,
         occupation,
       })
+
+      if (newUser.occupation === 'student') {
+        const createNewStudentService = container.resolve(
+          CreateNewStudentService,
+        )
+        await createNewStudentService.execute(newUser)
+      }
 
       delete newUser.password
       delete newUser._id

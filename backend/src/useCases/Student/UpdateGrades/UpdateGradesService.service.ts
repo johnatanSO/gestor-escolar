@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe'
 import {
   IStudentsRepository,
   IUpdateGradesDTO,
-} from '../../repositories/Students/IStudentsRepository'
+} from '../../../repositories/Students/IStudentsRepository'
 
 @injectable()
 export class UpdateGradesService {

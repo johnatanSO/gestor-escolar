@@ -21,9 +21,11 @@ export class StudentsRepository implements IStudentsRepository {
     return await this.model.countDocuments()
   }
 
-  async create(newStudentData: INewStudentDTO): Promise<void> {
+  async create(newStudentData: INewStudentDTO): Promise<IStudent> {
     const newStudent = await this.model.create(newStudentData)
     await newStudent.save()
+
+    return newStudent
   }
 
   async updateGrades({ studentsIds, subjectId, grades }: IUpdateGradesDTO) {

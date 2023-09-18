@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe'
-import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
+import { IStudentsRepository } from '../../../repositories/Students/IStudentsRepository'
 import { Types } from 'mongoose'
+import { IStudent } from '../../../entities/student'
 
 interface IRequest {
   name: string
@@ -16,14 +17,16 @@ export class CreateNewStudentService {
     this.studentsRepository = studentsRepository
   }
 
-  async execute({ name, _id }: IRequest): Promise<void> {
+  async execute({ name, _id }: IRequest): Promise<IStudent> {
     const entries = await this.studentsRepository.getEntries()
     const code = (entries + 1).toString()
 
-    await this.studentsRepository.create({
+    const studentCreated = await this.studentsRepository.create({
       code,
       name,
       _id,
     })
+
+    return studentCreated
   }
 }

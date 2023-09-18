@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe'
-import { IStudentsRepository } from '../../repositories/Students/IStudentsRepository'
+import { IStudentsRepository } from '../../../repositories/Students/IStudentsRepository'
 
 @injectable()
 export class UpdateWarningsAmount {

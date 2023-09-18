@@ -4,6 +4,7 @@ import { ListAllSubjectsService } from '../useCases/Subject/ListAllSubjectsServi
 import { CreateNewSubjectService } from '../useCases/Subject/CreateNewSubjectService.service'
 import { DeleteSubjectService } from '../useCases/Subject/DeleteSubjectService.service'
 import { InsertStudentInSubjectService } from '../useCases/Subject/InsertStudentInSubjectService.service'
+import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
 
 export class SubjectController {
   async listAllSubjectsService(req: Request, res: Response): Promise<Response> {
@@ -71,6 +72,17 @@ export class SubjectController {
       await insertStudentInSubjectService.execute({
         studentsIds,
         subjectId,
+      })
+
+      // Definindo nota inicial do aluno como zero.
+      const updateGradesService = container.resolve(UpdateGradesService)
+      await updateGradesService.execute({
+        studentsIds,
+        subjectId,
+        grades: {
+          firstGrade: 0,
+          secondGrade: 0,
+        },
       })
 
       return res.status(202).json({

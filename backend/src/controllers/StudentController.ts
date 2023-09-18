@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { ListStudentsService } from '../useCases/Student/ListStudentsService.service'
-import { ListAllStudentsGradesService } from '../useCases/Student/ListAllStudentsGradesService.service'
-import { ListSingleStudentGrades } from '../useCases/Student/ListSingleStudentGrades.service'
-import { UpdateGradesService } from '../useCases/Student/UpdateGradesService.service'
+import { ListStudentsService } from '../useCases/Student/ListStudents/ListStudentsService.service'
+import { ListAllStudentsGradesService } from '../useCases/Student/ListAllStudentsGrades/ListAllStudentsGradesService.service'
+import { ListSingleStudentGrades } from '../useCases/Student/ListSingleStudentGrades/ListSingleStudentGrades.service'
+import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
 
 export class StudentController {
   async listStudents(req: Request, res: Response): Promise<Response> {

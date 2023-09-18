@@ -23,7 +23,7 @@ export interface IUpdateStudentDTO {
 
 export interface IStudentsRepository {
   list: (queryList: any) => Promise<IStudent[]>
-  create: (newStudentData: INewStudentDTO) => Promise<void>
+  create: (newStudentData: INewStudentDTO) => Promise<IStudent>
   getEntries: () => Promise<number>
   updateGrades: (updateGradesParams: IUpdateGradesDTO) => Promise<void>
   update: (updateParams: IUpdateStudentDTO) => Promise<void>

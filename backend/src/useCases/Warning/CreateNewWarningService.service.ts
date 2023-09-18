@@ -1,4 +1,4 @@
-import { UpdateWarningsAmount } from './../Student/UpdateWarningsAmount.service'
+import { UpdateWarningsAmount } from '../Student/UpdateWarningsAmount/UpdateWarningsAmount.service'
 import {
   IWarningsRepository,
   INewWarningDTO,

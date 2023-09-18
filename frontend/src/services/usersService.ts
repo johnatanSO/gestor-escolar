@@ -108,4 +108,16 @@ export const usersService = {
       }
     }
   },
+
+  async updateAvatarImage({ avatarImage }: any) {
+    const formData = new FormData()
+
+    formData.append('avatar', avatarImage)
+
+    return await http.patch('/users/avatar', formData)
+  },
+
+  async getCurrentUserInfo() {
+    return await http.get('/users/' + this.getUserInfo()._id)
+  },
 }

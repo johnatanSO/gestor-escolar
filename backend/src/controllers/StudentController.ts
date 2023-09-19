@@ -7,6 +7,8 @@ import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGrad
 import { DeleteStudentService } from '../useCases/Student/DeleteStudentService/DeleteStudentService.service'
 import { CreateNewUserService } from '../useCases/User/CreateNewUserService.service'
 import { CreateNewStudentService } from '../useCases/Student/CreateNewStudent/CreateNewStudentService.service'
+import { DeleteUserService } from '../useCases/User/DeleteUserService/DeleteUserService.service'
+import { UpdateStudentService } from '../useCases/Student/UpdateStudent/UpdateStudentService.service'
 
 export class StudentController {
   async listStudents(req: Request, res: Response): Promise<Response> {
@@ -124,7 +126,6 @@ export class StudentController {
 
       const createNewStudentService = container.resolve(CreateNewStudentService)
       await createNewStudentService.execute({
-        name: newUser.name,
         _id: newUser._id,
         idTeacher,
       })
@@ -144,5 +145,17 @@ export class StudentController {
         message: err.message,
       })
     }
+  }
+
+  async updateStudent(req: Request, res: Response): Promise<Response> {
+    const { _id, name, email, password } = req.body
+
+    const updateStudentService = container.resolve(UpdateStudentService)
+    await updateStudentService.execute({ _id, name, email, password })
+
+    return res.status(201).json({
+      success: true,
+      message: 'Dados do aluno atualizados com sucesso',
+    })
   }
 }

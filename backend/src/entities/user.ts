@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, default: null },
   occupation: { type: String, default: null },
   avatar: { type: String, default: null },
+  idTeacher: { type: 'ObjectId', ref: 'User' },
 })
 
 export const UserModel = mongoose.model<User>('User', userSchema)

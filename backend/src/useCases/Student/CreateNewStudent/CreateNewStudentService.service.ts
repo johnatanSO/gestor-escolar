@@ -4,7 +4,6 @@ import { Types } from 'mongoose'
 import { IStudent } from '../../../entities/student'
 
 interface IRequest {
-  name: string
   _id: Types.ObjectId
   idTeacher: string
 }
@@ -18,13 +17,13 @@ export class CreateNewStudentService {
     this.studentsRepository = studentsRepository
   }
 
-  async execute({ name, _id, idTeacher }: IRequest): Promise<IStudent> {
+  async execute({ _id, idTeacher }: IRequest): Promise<IStudent> {
     const entries = await this.studentsRepository.getEntries(idTeacher)
     const code = (entries + 1).toString()
 
     const studentCreated = await this.studentsRepository.create({
       code,
-      name,
+      user: _id,
       _id,
       idTeacher,
     })

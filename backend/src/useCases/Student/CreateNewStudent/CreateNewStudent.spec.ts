@@ -17,7 +17,7 @@ describe('Creating new student', () => {
   it('Should be able create a new student', async () => {
     const newStudent = await createNewStudentService.execute({
       _id: new Types.ObjectId(),
-      name: 'user 1',
+      idTeacher: new Types.ObjectId().toString(),
     })
 
     expect(newStudent).toHaveProperty('_id')

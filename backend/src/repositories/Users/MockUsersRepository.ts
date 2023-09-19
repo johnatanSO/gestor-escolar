@@ -34,4 +34,8 @@ export class MockUsersRepository implements IUsersRepository {
       }
     })
   }
+
+  async delete(idUser: string): Promise<void> {
+    this.users = this.users.filter((user) => user._id.toString() !== idUser)
+  }
 }

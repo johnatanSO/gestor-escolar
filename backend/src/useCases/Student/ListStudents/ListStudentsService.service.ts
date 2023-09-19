@@ -16,6 +16,7 @@ export class ListStudentsService {
   }
 
   async execute({ idTeacher }: IRequest): Promise<IStudent[]> {
-    return await this.studentsRepository.list({ idTeacher })
+    const students = await this.studentsRepository.list({ idTeacher })
+    return students
   }
 }

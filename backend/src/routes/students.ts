@@ -13,6 +13,8 @@ studentsRoutes.get('/', studentController.listStudents)
 
 studentsRoutes.post('/', studentController.createNewStudent)
 
+studentsRoutes.put('/', studentController.updateStudent)
+
 studentsRoutes.get(
   '/subjectStudentsGrades/:idSubject',
   studentController.listAllStudentsGrades,

@@ -13,7 +13,10 @@ export class StudentsRepository implements IStudentsRepository {
   }
 
   async list(queryList?: any): Promise<IStudent[]> {
-    const students = await this.model.find(queryList || {})
+    const students = await this.model.find(queryList || {}).populate({
+      path: 'user',
+      select: '-password',
+    })
     return students
   }
 

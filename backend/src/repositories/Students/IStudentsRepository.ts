@@ -4,7 +4,7 @@ import { IStudent } from '../../entities/student'
 export interface INewStudentDTO {
   _id: Types.ObjectId
   code: string
-  name: string
+  user: Types.ObjectId | string
   idTeacher: string
 }
 

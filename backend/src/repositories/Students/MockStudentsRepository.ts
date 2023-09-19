@@ -10,7 +10,7 @@ export class MockStudentsRepository implements IStudentsRepository {
   students: IStudent[] = []
 
   async list(queryList: any): Promise<IStudent[]> {
-    return this.students
+    return this.students // Fazer o populate do user aqui no mock de dados.
   }
 
   async create(newStudentData: INewStudentDTO): Promise<IStudent> {
@@ -66,5 +66,11 @@ export class MockStudentsRepository implements IStudentsRepository {
 
   async findById(idStudent: string): Promise<IStudent> {
     return this.students.find((student) => student._id.toString() === idStudent)
+  }
+
+  async delete(studentId: string): Promise<void> {
+    this.students = this.students.filter(
+      (student) => student._id.toString() !== studentId,
+    )
   }
 }

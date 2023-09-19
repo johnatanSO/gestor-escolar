@@ -39,9 +39,11 @@ export class ListAllStudentsGradesService {
     const studentsGradesFormated = students.map((student) => {
       const grades = student?.grades?.find((grade) => grade?._id === idSubject)
 
+      console.log('Student', student)
+
       return {
         code: student.code,
-        name: student.name,
+        name: student.user.name,
         grades,
       }
     })

@@ -54,18 +54,20 @@ describe('Getting grades by all students', () => {
   })
 
   it('should be able get grades of all students', async () => {
+    // TO-DO: Create a valid User and Student to tests.
     const newSubject = await createNewSubjectService.execute({
       name: 'Teste português',
+      idTeacher: new Types.ObjectId().toString(),
     })
 
     const newStudent1 = await createNewStudentService.execute({
       _id: new Types.ObjectId(),
-      name: 'user 1',
+      idTeacher: new Types.ObjectId().toString(),
     })
 
     const newStudent2 = await createNewStudentService.execute({
       _id: new Types.ObjectId(),
-      name: 'user 2',
+      idTeacher: new Types.ObjectId().toString(),
     })
 
     const studentsIds = [newStudent1._id.toString(), newStudent2._id.toString()]

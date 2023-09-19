@@ -10,10 +10,15 @@ export interface NewStudentData {
   name: string
   email: string
   password: string
+  user?: any
+}
+
+export interface StudentDataToEdit {
+  user: NewStudentData
 }
 
 interface Props {
-  studentDataToEdit: NewStudentData | undefined
+  studentDataToEdit: StudentDataToEdit | undefined
   open: boolean
   handleClose: () => void
 }
@@ -30,7 +35,7 @@ export function ModalCreateNewStudent({
     password: '',
   }
   const [newStudentData, setNewStudentData] = useState<NewStudentData>(
-    studentDataToEdit || defaultNewStudentValues,
+    studentDataToEdit ? studentDataToEdit.user : defaultNewStudentValues,
   )
   const [loadingCreateNewStudent, setLoadingCreateNewStudent] =
     useState<boolean>(false)
@@ -74,7 +79,7 @@ export function ModalCreateNewStudent({
     event.preventDefault()
     setLoadingCreateNewStudent(true)
     studentsService
-      .update({ studentData: newStudentData })
+      .updateStudent({ studentData: newStudentData })
       .then(() => {
         router.push({
           pathname: router.route,
@@ -109,8 +114,8 @@ export function ModalCreateNewStudent({
       open={open}
       handleClose={handleClose}
       onSubmit={studentDataToEdit ? onEditStudent : onCreateNewStudent}
-      title="Cadastro de aluno"
-      submitButtonText="Cadastrar"
+      title={studentDataToEdit ? 'Editar aluno ' : 'Cadastro de aluno'}
+      submitButtonText={studentDataToEdit ? 'Atualizar' : 'Cadastrar'}
       loading={loadingCreateNewStudent}
     >
       <div className={style.fieldsContainer}>
@@ -142,20 +147,22 @@ export function ModalCreateNewStudent({
             })
           }}
         />
-        <CustomTextField
-          size="small"
-          required
-          label="Senha"
-          type="password"
-          placeholder="Digite a senha"
-          value={newStudentData?.password}
-          onChange={(event) => {
-            setNewStudentData({
-              ...newStudentData,
-              password: event.target.value,
-            })
-          }}
-        />
+        {!studentDataToEdit && (
+          <CustomTextField
+            size="small"
+            required
+            label="Senha"
+            type="password"
+            placeholder="Digite a senha"
+            value={newStudentData?.password}
+            onChange={(event) => {
+              setNewStudentData({
+                ...newStudentData,
+                password: event.target.value,
+              })
+            }}
+          />
+        )}
       </div>
     </ModalLayout>
   )

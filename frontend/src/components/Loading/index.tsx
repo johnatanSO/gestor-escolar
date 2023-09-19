@@ -8,7 +8,7 @@ type Props = {
 export function Loading({ size, color }: Props) {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <CircularProgress style={{ color: color || 'white' }} size={size || 10} />
+      <CircularProgress style={{ color: color || 'white' }} size={size || 15} />
     </Box>
   )
 }

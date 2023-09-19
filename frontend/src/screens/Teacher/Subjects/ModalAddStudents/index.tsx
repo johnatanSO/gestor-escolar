@@ -24,6 +24,9 @@ export interface Student {
   _id: string
   name: string
   checked?: boolean
+  user: {
+    name: string
+  }
 }
 
 export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
@@ -143,7 +146,7 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
                     }}
                   />
                 }
-                label={student?.name || '--'}
+                label={student?.user?.name || '--'}
               />
             </li>
           )

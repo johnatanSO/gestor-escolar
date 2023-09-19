@@ -61,7 +61,7 @@ export function StudentsGrades() {
       )}
 
       {subjects?.length === 0 && !loadingSubjects && (
-        <EmptyItems text="Nenhuma disciplina encontrado" />
+        <EmptyItems text="Nenhuma disciplina encontrada" />
       )}
 
       {subjectData && modalStudentsOpened && (

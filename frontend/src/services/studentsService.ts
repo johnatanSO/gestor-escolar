@@ -1,3 +1,4 @@
+import { NewStudentData } from './../screens/Teacher/Students/ModalCreateNewStudent/index'
 import http from '../api/http'
 import { usersService } from './usersService'
 
@@ -12,8 +13,11 @@ interface DeleteStudentParams {
 }
 
 interface CreateParams {
-  // newStudentData: NewStudentData
-  newStudentData: any
+  newStudentData: NewStudentData
+}
+
+interface UpdateStudentParams {
+  studentData: NewStudentData
 }
 
 export const studentsService = {
@@ -55,6 +59,12 @@ export const studentsService = {
 
     return http.post('/students/', {
       ...body,
+    })
+  },
+
+  async updateStudent({ studentData }: UpdateStudentParams) {
+    return await http.put('/students/', {
+      ...studentData,
     })
   },
 }

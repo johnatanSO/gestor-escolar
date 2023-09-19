@@ -14,10 +14,16 @@
   align-items: center;
   gap: 25px;
 
+  max-width: 90%;
+
   color: white;
   line-height: 0;
 
   animation: slideUp 0.2s;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   .alertIcon {
     height: 1.2rem;
@@ -31,6 +37,8 @@
     color: white;
     cursor: pointer;
     transition: filter 0.2s;
+
+    margin-left: auto;
 
     &:hover {
       filter: brightness(0.8);

@@ -1,6 +1,9 @@
 import { HeaderPage } from '../../../components/HeaderPage'
 import { useContext, useEffect, useState } from 'react'
-import { ModalCreateNewStudent } from './ModalCreateNewStudent'
+import {
+  ModalCreateNewStudent,
+  StudentDataToEdit,
+} from './ModalCreateNewStudent'
 import { TableComponent } from '../../../components/TableComponent'
 import { useColumns } from './hooks/useColumns'
 import { EmptyItems } from '../../../components/EmptyItems'
@@ -12,6 +15,8 @@ import { studentsService } from '../../../services/studentsService'
 export interface Student {
   _id: string
   name: string
+  email: string
+  password: string
   code: string
 }
 
@@ -25,6 +30,9 @@ export function Students() {
   const [students, setStudents] = useState<Student[]>([])
   const [loadingStudents, setLoadingStudents] = useState<boolean>(true)
   const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
+  const [studentDataToEdit, setStudentDataToEdit] = useState<
+    StudentDataToEdit | undefined
+  >(undefined)
   const router = useRouter()
 
   function getStudents() {
@@ -79,8 +87,14 @@ export function Students() {
     })
   }
 
+  function handleEditStudent(student: StudentDataToEdit) {
+    setFormModalOpened(true)
+    setStudentDataToEdit(student)
+  }
+
   const columns = useColumns({
     handleDeleteStudent,
+    handleEditStudent,
   })
 
   return (
@@ -111,7 +125,7 @@ export function Students() {
 
       {formModalOpened && (
         <ModalCreateNewStudent
-          subjectDataToEdit={undefined}
+          studentDataToEdit={studentDataToEdit}
           open={formModalOpened}
           handleClose={() => {
             setFormModalOpened(false)

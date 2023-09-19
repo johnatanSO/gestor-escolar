@@ -85,6 +85,7 @@ export function Subjects() {
       },
     })
   }
+
   function handleAddStudents(subject: Subject) {
     setModalAddStudentsOpened(true)
     setSelectedSubject(subject)

@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import { IStudentsRepository } from '../../../repositories/Students/IStudentsRepository'
 import { ISubjectsRepository } from '../../../repositories/Subjects/ISubjectsRepository'
+import { AppError } from '../../../errors/AppError'
 
 interface IResponse {
   subjectGrades: {
@@ -25,7 +26,11 @@ export class ListSingleStudentGrades {
   }
 
   async execute(idStudent: string): Promise<IResponse[]> {
+    if (!idStudent) throw new AppError('_id do aluno não informado')
+
     const student = await this.studentsRepository.findById(idStudent)
+
+    if (!student) throw new AppError('Aluno não encontrado ')
 
     const queryListSubjects = {
       students: { $elemMatch: { $eq: idStudent } },

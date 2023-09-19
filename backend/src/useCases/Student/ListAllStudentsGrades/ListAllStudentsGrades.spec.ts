@@ -1,4 +1,3 @@
-import 'reflect-metadata'
 import { InsertStudentInSubjectService } from './../../Subject/InsertStudentInSubjectService.service'
 import { Types } from 'mongoose'
 import { MockSubjectsRepository } from '../../../repositories/Subjects/MockSubjectsRepository'
@@ -8,6 +7,8 @@ import { AppError } from '../../../errors/AppError'
 import { CreateNewSubjectService } from '../../Subject/CreateNewSubjectService.service'
 import { CreateNewStudentService } from '../CreateNewStudent/CreateNewStudentService.service'
 import { UpdateGradesService } from '../UpdateGrades/UpdateGradesService.service'
+import { CreateNewUserService } from '../../User/CreateNewUserService.service'
+import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 
 let mockStudentsRepository: MockStudentsRepository
 let mockSubjectsRepository: MockSubjectsRepository
@@ -17,15 +18,18 @@ let createNewSubjectService: CreateNewSubjectService
 let insertStudentInSubjectService: InsertStudentInSubjectService
 let createNewStudentService: CreateNewStudentService
 let updateGradesService: UpdateGradesService
+let createNewUserService: CreateNewUserService
+let mockUsersRepository: MockUsersRepository
 
 describe('Getting grades by all students', () => {
   beforeEach(() => {
     mockSubjectsRepository = new MockSubjectsRepository()
+    mockUsersRepository = new MockUsersRepository()
+    mockStudentsRepository = new MockStudentsRepository(mockUsersRepository)
+
     createNewSubjectService = new CreateNewSubjectService(
       mockSubjectsRepository,
     )
-
-    mockStudentsRepository = new MockStudentsRepository()
     listAllStudentsGradesService = new ListAllStudentsGradesService(
       mockSubjectsRepository,
       mockStudentsRepository,
@@ -37,6 +41,7 @@ describe('Getting grades by all students', () => {
       mockStudentsRepository,
     )
     updateGradesService = new UpdateGradesService(mockStudentsRepository)
+    createNewUserService = new CreateNewUserService(mockUsersRepository)
   })
 
   it('should not be able get grades if subject is not registered', () => {
@@ -54,19 +59,32 @@ describe('Getting grades by all students', () => {
   })
 
   it('should be able get grades of all students', async () => {
-    // TO-DO: Create a valid User and Student to tests.
     const newSubject = await createNewSubjectService.execute({
       name: 'Teste português',
       idTeacher: new Types.ObjectId().toString(),
     })
 
+    const newUser = await createNewUserService.execute({
+      name: 'Teste user',
+      email: 'teste@teste.com',
+      password: 'teste',
+      occupation: 'student',
+    })
+
     const newStudent1 = await createNewStudentService.execute({
-      _id: new Types.ObjectId(),
+      _id: newUser._id,
       idTeacher: new Types.ObjectId().toString(),
     })
 
+    const newUser2 = await createNewUserService.execute({
+      name: 'Teste user 2',
+      email: 'teste2@teste.com',
+      password: 'teste2',
+      occupation: 'student',
+    })
+
     const newStudent2 = await createNewStudentService.execute({
-      _id: new Types.ObjectId(),
+      _id: newUser2._id,
       idTeacher: new Types.ObjectId().toString(),
     })
 

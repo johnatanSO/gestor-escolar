@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import { IStudentsRepository } from '../../../repositories/Students/IStudentsRepository'
+import { AppError } from '../../../errors/AppError'
 
 @injectable()
 export class DeleteStudentService {
@@ -14,7 +15,7 @@ export class DeleteStudentService {
     const studentNotFound = await this.studentsRepository.findById(idStudent)
 
     if (!studentNotFound) {
-      throw new Error('Aluno não encontrado')
+      throw new AppError('Aluno não encontrado')
     }
 
     await this.studentsRepository.delete(idStudent)

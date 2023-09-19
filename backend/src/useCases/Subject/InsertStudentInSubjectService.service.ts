@@ -3,6 +3,7 @@ import {
   ISubjectsRepository,
   IInsertStudentDTO,
 } from '../../repositories/Subjects/ISubjectsRepository'
+import { AppError } from '../../errors/AppError'
 
 @injectable()
 export class InsertStudentInSubjectService {
@@ -15,7 +16,7 @@ export class InsertStudentInSubjectService {
 
   async execute({ studentsIds, subjectId }: IInsertStudentDTO): Promise<void> {
     if (!subjectId) {
-      throw new Error('Nenhuma disciplina selecionada.')
+      throw new AppError('Nenhuma disciplina selecionada.')
     }
 
     await this.subjectsRepository.insertStudent({

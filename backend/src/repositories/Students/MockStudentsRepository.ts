@@ -5,12 +5,29 @@ import {
   IUpdateGradesDTO,
   IUpdateStudentDTO,
 } from './IStudentsRepository'
+import { IUsersRepository } from '../Users/IUsersRepository'
 
 export class MockStudentsRepository implements IStudentsRepository {
   students: IStudent[] = []
+  mockUsersRepository: IUsersRepository
+  constructor(mockUsersRepository: IUsersRepository) {
+    this.mockUsersRepository = mockUsersRepository
+  }
 
   async list(queryList: any): Promise<IStudent[]> {
-    return this.students // Fazer o populate do user aqui no mock de dados.
+    const students = await Promise.all(
+      this.students.map(async (student) => {
+        const userData = await this.mockUsersRepository.findById(
+          student.user.toString(),
+        )
+
+        student.user = userData
+
+        return student
+      }),
+    )
+
+    return students
   }
 
   async create(newStudentData: INewStudentDTO): Promise<IStudent> {
@@ -65,7 +82,17 @@ export class MockStudentsRepository implements IStudentsRepository {
   async update(updateParams: IUpdateStudentDTO): Promise<void> {}
 
   async findById(idStudent: string): Promise<IStudent> {
-    return this.students.find((student) => student._id.toString() === idStudent)
+    const student = this.students.find(
+      (student) => student._id.toString() === idStudent,
+    )
+
+    if (student) {
+      student.user = await this.mockUsersRepository.findById(
+        student.user.toString(),
+      )
+    }
+
+    return student
   }
 
   async delete(studentId: string): Promise<void> {

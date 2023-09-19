@@ -1,8 +1,8 @@
-import 'reflect-metadata'
 import { INewUserDTO } from './../../../repositories/Users/IUsersRepository'
 import { CreateNewUserService } from './../../User/CreateNewUserService.service'
 import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 import { AuthenticateUserService } from './AuthenticateUserService.service'
+import { AppError } from '../../../errors/AppError'
 
 let mockUsersRepository: MockUsersRepository
 let authenticateUserService: AuthenticateUserService
@@ -39,7 +39,7 @@ describe('Authenticate user', () => {
         email: 'unexist@gmail.com',
         password: 'unexist',
       })
-    }).rejects.toThrow()
+    }).rejects.toBeInstanceOf(AppError)
   })
 
   it('should not be able authenticate a user with incorrect password', () => {
@@ -57,6 +57,6 @@ describe('Authenticate user', () => {
         email: user.email,
         password: 'incorrect_password',
       })
-    }).rejects.toThrow()
+    }).rejects.toBeInstanceOf(AppError)
   })
 })

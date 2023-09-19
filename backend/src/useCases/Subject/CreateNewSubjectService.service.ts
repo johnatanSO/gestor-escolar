@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import { ISubjectsRepository } from '../../repositories/Subjects/ISubjectsRepository'
 import { ISubject } from '../../entities/subject'
+import { AppError } from '../../errors/AppError'
 
 interface IRequest {
   name: string
@@ -18,7 +19,7 @@ export class CreateNewSubjectService {
 
   async execute({ name, idTeacher }: IRequest): Promise<ISubject> {
     if (!name) {
-      throw new Error('O nome da disciplina não foi informado.')
+      throw new AppError('O nome da disciplina não foi informado.')
     }
 
     const entries = await this.subjectsRepository.getEntries({ idTeacher })

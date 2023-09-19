@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv'
 import { inject, injectable } from 'tsyringe'
+import { AppError } from '../../../errors/AppError'
 dotenv.config()
 
 interface IRequest {
@@ -31,12 +32,12 @@ export class AuthenticateUserService {
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email)
     if (!user) {
-      throw new Error('E-mail ou senha incorreto')
+      throw new AppError('E-mail ou senha incorreto')
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password)
     if (!passwordMatch) {
-      throw new Error('E-mail ou senha incorreto')
+      throw new AppError('E-mail ou senha incorreto')
     }
 
     const token = jwt.sign({}, process.env.SECRET, {

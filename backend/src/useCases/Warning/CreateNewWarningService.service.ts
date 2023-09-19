@@ -4,6 +4,7 @@ import {
 } from '../../repositories/Warnings/IWarningsRepository'
 import { inject, injectable } from 'tsyringe'
 import { Warning } from '../../entities/warning'
+import { AppError } from '../../errors/AppError'
 
 @injectable()
 export class CreateNewWarningService {
@@ -20,7 +21,7 @@ export class CreateNewWarningService {
     description,
   }: INewWarningDTO): Promise<Warning> {
     if (!title) {
-      throw new Error('Título não foi informado')
+      throw new AppError('Título não foi informado')
     }
 
     const entries = await this.warningsRepository.getEntries(idStudent)

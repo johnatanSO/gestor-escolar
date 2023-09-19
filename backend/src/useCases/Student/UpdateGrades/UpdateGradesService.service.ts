@@ -3,6 +3,7 @@ import {
   IStudentsRepository,
   IUpdateGradesDTO,
 } from '../../../repositories/Students/IStudentsRepository'
+import { AppError } from '../../../errors/AppError'
 
 @injectable()
 export class UpdateGradesService {
@@ -19,10 +20,10 @@ export class UpdateGradesService {
     grades,
   }: IUpdateGradesDTO): Promise<void> {
     if (!subjectId) {
-      throw new Error('Nenhuma disciplina selecionada.')
+      throw new AppError('Nenhuma disciplina selecionada.')
     }
     if (!studentsIds || studentsIds?.length === 0) {
-      throw new Error('Nenhuma aluno selecionado.')
+      throw new AppError('Nenhuma aluno selecionado.')
     }
 
     await this.studentsRepository.updateGrades({

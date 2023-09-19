@@ -25,14 +25,17 @@ export class MockUsersRepository implements IUsersRepository {
 
   async update(filters: any, updateFields: any): Promise<void> {
     const fields = updateFields.$set
-    this.users.forEach((user) => {
-      if (user._id === filters._id) {
-        user = {
-          ...user,
-          ...fields,
-        }
+
+    const indexToUpdate = this.users.findIndex(
+      (user) => user._id.toString() === filters._id,
+    )
+
+    if (indexToUpdate !== -1) {
+      this.users[indexToUpdate] = {
+        ...this.users[indexToUpdate],
+        ...fields,
       }
-    })
+    }
   }
 
   async delete(idUser: string): Promise<void> {

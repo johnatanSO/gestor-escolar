@@ -6,6 +6,7 @@ import {
 import bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
 import { User } from '../../entities/user'
+import { AppError } from '../../errors/AppError'
 dotenv.config()
 const saltRounds = 10
 
@@ -24,7 +25,7 @@ export class CreateNewUserService {
   }: INewUserDTO): Promise<User> {
     const alreadExistUser = await this.usersRepository.findByEmail(email)
     if (alreadExistUser) {
-      throw new Error('Já existe um usuário cadastrado com este e-mail!')
+      throw new AppError('Já existe um usuário cadastrado com este e-mail!')
     }
 
     const encryptedPassword = await bcrypt.hash(password, saltRounds)

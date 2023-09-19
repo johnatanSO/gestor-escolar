@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import { IStudentsRepository } from '../../../repositories/Students/IStudentsRepository'
+import { AppError } from '../../../errors/AppError'
 
 @injectable()
 export class UpdateWarningsAmount {
@@ -11,6 +12,8 @@ export class UpdateWarningsAmount {
   }
 
   async execute(idStudent: string): Promise<void> {
+    if (!idStudent) throw new AppError('_id do aluno não foi informado')
+
     const filters = {
       idStudent,
     }

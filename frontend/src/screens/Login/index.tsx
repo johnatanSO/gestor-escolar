@@ -58,13 +58,11 @@ export function Login() {
         router.push('/')
       })
       .catch((err) => {
-        console.log('ERRO AO TENTAR REALIZAR LOGIN,', err)
+        console.log('ERRO AO TENTAR REALIZAR LOGIN,', err?.response?.data)
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           type: 'error',
-          text:
-            'Erro ao tentar realizar autenticação do usuário ' +
-            `(${err.response.data.message})`,
+          text: `Erro ao tentar realizar login - ${err?.response?.data?.message}`,
           open: true,
         })
       })

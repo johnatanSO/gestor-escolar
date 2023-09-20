@@ -63,10 +63,22 @@ export function CreateAccount() {
     usersService
       .register({ newUser })
       .then((res) => {
+        setAlertNotifyConfigs({
+          ...alertNotifyConfigs,
+          type: 'success',
+          text: 'Usuário cadastrado com sucesso',
+          open: true,
+        })
         router.push('/login')
       })
       .catch((err) => {
-        console.log('ERRO AO TENTAR CADASTRAR USUÁRIO, ', err)
+        console.log('ERRO AO TENTAR CADASTRAR USUÁRIO, ', err?.response?.data)
+        setAlertNotifyConfigs({
+          ...alertNotifyConfigs,
+          type: 'error',
+          text: `Erro ao tentar cadastrar usuário - ${err?.response?.data?.message}`,
+          open: true,
+        })
       })
       .finally(() => {
         setLoading(false)

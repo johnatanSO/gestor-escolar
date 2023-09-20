@@ -36,8 +36,8 @@ describe('List all subjects', () => {
     )
   })
 
-  it('should not be able list subjects if idTeacher not sent', () => {
-    expect(async () => {
+  it('should not be able list subjects if idTeacher not sent', async () => {
+    await expect(async () => {
       const idTeacher = new Types.ObjectId().toString()
 
       await createNewSubjectService.execute({

@@ -1,7 +1,7 @@
 import { AppError } from '../../../errors/AppError'
 import { MockStudentsRepository } from '../../../repositories/Students/MockStudentsRepository'
 import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
-import { CreateNewUserService } from '../../User/CreateNewUserService.service'
+import { CreateNewUserService } from '../../User/CreateNewUser/CreateNewUserService.service'
 import { CreateNewStudentService } from '../CreateNewStudent/CreateNewStudentService.service'
 import { ListStudentsService } from './ListStudentsService.service'
 
@@ -24,8 +24,8 @@ describe('List all students', () => {
     )
   })
 
-  it('should not be able list students if the teacher _id is not sent', () => {
-    expect(async () => {
+  it('should not be able list students if the teacher _id is not sent', async () => {
+    await expect(async () => {
       await listStudentsService.execute({ idTeacher: undefined })
     }).rejects.toBeInstanceOf(AppError)
   })

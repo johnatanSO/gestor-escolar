@@ -36,8 +36,8 @@ describe('Delete a student', () => {
     expect(studentNotFound).toBeUndefined()
   })
 
-  it('should not be able delete a student without _id', () => {
-    expect(async () => {
+  it('should not be able delete a student without _id', async () => {
+    await expect(async () => {
       await deleteStudentService.execute('')
     }).rejects.toBeInstanceOf(AppError)
   })

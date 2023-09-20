@@ -56,7 +56,7 @@ describe('Insert student in subject', () => {
   })
 
   it('should not be able insert student in subject if idSubject not sent', async () => {
-    expect(async () => {
+    await expect(async () => {
       const student = await createNewStudentService.execute({
         _id: new Types.ObjectId(),
         idTeacher: new Types.ObjectId().toString(),

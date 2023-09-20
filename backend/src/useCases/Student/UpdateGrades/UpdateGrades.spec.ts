@@ -2,7 +2,7 @@ import { Types } from 'mongoose'
 import { MockStudentsRepository } from '../../../repositories/Students/MockStudentsRepository'
 import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 import { UpdateGradesService } from './UpdateGradesService.service'
-import { CreateNewUserService } from '../../User/CreateNewUserService.service'
+import { CreateNewUserService } from '../../User/CreateNewUser/CreateNewUserService.service'
 import { CreateNewStudentService } from '../CreateNewStudent/CreateNewStudentService.service'
 import { AppError } from '../../../errors/AppError'
 
@@ -58,8 +58,8 @@ describe('Update student grades', () => {
     )
   })
 
-  it('should not be able update grades if none idSubject is sent', () => {
-    expect(async () => {
+  it('should not be able update grades if none idSubject is sent', async () => {
+    await expect(async () => {
       const grades = {
         firstGrade: 1,
         secondGrade: 1,
@@ -73,8 +73,8 @@ describe('Update student grades', () => {
     }).rejects.toBeInstanceOf(AppError)
   })
 
-  it('should not be able update grades if none idStudent is sent', () => {
-    expect(async () => {
+  it('should not be able update grades if none idStudent is sent', async () => {
+    await expect(async () => {
       const grades = {
         firstGrade: 1,
         secondGrade: 1,

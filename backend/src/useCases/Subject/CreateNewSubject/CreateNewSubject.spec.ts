@@ -29,8 +29,8 @@ describe('Create new subject', () => {
     expect(createdSubject).toBeDefined()
   })
 
-  it('should not be able create a new subject if name not sent', () => {
-    expect(async () => {
+  it('should not be able create a new subject if name not sent', async () => {
+    await expect(async () => {
       await createNewSubjcetService.execute({
         name: undefined,
         idTeacher: new Types.ObjectId().toString(),
@@ -38,8 +38,8 @@ describe('Create new subject', () => {
     }).rejects.toBeInstanceOf(AppError)
   })
 
-  it('should not be able create a new subject if idTeacher not sent', () => {
-    expect(async () => {
+  it('should not be able create a new subject if idTeacher not sent', async () => {
+    await expect(async () => {
       await createNewSubjcetService.execute({
         name: 'Nome de teste',
         idTeacher: undefined,

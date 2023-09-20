@@ -1,5 +1,5 @@
 import { INewUserDTO } from './../../../repositories/Users/IUsersRepository'
-import { CreateNewUserService } from './../../User/CreateNewUserService.service'
+import { CreateNewUserService } from './../../User/CreateNewUser/CreateNewUserService.service'
 import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 import { AuthenticateUserService } from './AuthenticateUserService.service'
 import { AppError } from '../../../errors/AppError'
@@ -33,8 +33,8 @@ describe('Authenticate user', () => {
     expect(authInfos).toHaveProperty('token')
   })
 
-  it('should not be able authenticate a none exists user', () => {
-    expect(async () => {
+  it('should not be able authenticate a none exists user', async () => {
+    await expect(async () => {
       await authenticateUserService.execute({
         email: 'unexist@gmail.com',
         password: 'unexist',
@@ -42,8 +42,8 @@ describe('Authenticate user', () => {
     }).rejects.toBeInstanceOf(AppError)
   })
 
-  it('should not be able authenticate a user with incorrect password', () => {
-    expect(async () => {
+  it('should not be able authenticate a user with incorrect password', async () => {
+    await expect(async () => {
       const user = {
         name: 'John Doe',
         email: 'johndoe@gmail.com',

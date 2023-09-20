@@ -7,7 +7,7 @@ import { AppError } from '../../../errors/AppError'
 import { CreateNewSubjectService } from '../../Subject/CreateNewSubject/CreateNewSubjectService.service'
 import { CreateNewStudentService } from '../CreateNewStudent/CreateNewStudentService.service'
 import { UpdateGradesService } from '../UpdateGrades/UpdateGradesService.service'
-import { CreateNewUserService } from '../../User/CreateNewUserService.service'
+import { CreateNewUserService } from '../../User/CreateNewUser/CreateNewUserService.service'
 import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 
 let mockStudentsRepository: MockStudentsRepository
@@ -44,15 +44,15 @@ describe('Getting grades by all students', () => {
     createNewUserService = new CreateNewUserService(mockUsersRepository)
   })
 
-  it('should not be able get grades if subject is not registered', () => {
-    expect(async () => {
+  it('should not be able get grades if subject is not registered', async () => {
+    await expect(async () => {
       const idSubject = new Types.ObjectId().toString()
       await listAllStudentsGradesService.execute(idSubject)
     }).rejects.toBeInstanceOf(AppError)
   })
 
-  it('should not be able get grades if subjectId not informed', () => {
-    expect(async () => {
+  it('should not be able get grades if subjectId not informed', async () => {
+    await expect(async () => {
       const idSubject = ''
       await listAllStudentsGradesService.execute(idSubject)
     }).rejects.toBeInstanceOf(AppError)

@@ -5,7 +5,7 @@ import { MockUsersRepository } from '../../../repositories/Users/MockUsersReposi
 import { AppError } from '../../../errors/AppError'
 import { Types } from 'mongoose'
 import { CreateNewSubjectService } from '../../Subject/CreateNewSubject/CreateNewSubjectService.service'
-import { CreateNewUserService } from '../../User/CreateNewUserService.service'
+import { CreateNewUserService } from '../../User/CreateNewUser/CreateNewUserService.service'
 import { CreateNewStudentService } from '../CreateNewStudent/CreateNewStudentService.service'
 import { InsertStudentInSubjectService } from '../../Subject/InsertStudentInSubject/InsertStudentInSubjectService.service'
 import { UpdateGradesService } from '../UpdateGrades/UpdateGradesService.service'
@@ -44,14 +44,14 @@ describe('List single student grades', () => {
     updateGradesService = new UpdateGradesService(mockStudentsRepository)
   })
 
-  it('should not be able get grades if _id not informed', () => {
-    expect(async () => {
+  it('should not be able get grades if _id not informed', async () => {
+    await expect(async () => {
       await listSingleStudentGrades.execute(undefined)
     }).rejects.toBeInstanceOf(AppError)
   })
 
-  it('should not be able get grades if idStudent is from an invalid student', () => {
-    expect(async () => {
+  it('should not be able get grades if idStudent is from an invalid student', async () => {
+    await expect(async () => {
       const idStudent = new Types.ObjectId()
       await listSingleStudentGrades.execute(idStudent.toString())
     }).rejects.toBeInstanceOf(AppError)

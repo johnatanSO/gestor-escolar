@@ -10,11 +10,10 @@ export class DeleteUserService {
   }
 
   async execute(idUser: string): Promise<void> {
+    if (!idUser) throw new AppError('_id do usuário não foi informado')
     const userNotFound = await this.usersRepository.findById(idUser)
 
-    if (!userNotFound) {
-      throw new AppError('Usuário não encontrado')
-    }
+    if (!userNotFound) throw new AppError('Usuário não encontrado')
 
     await this.usersRepository.delete(idUser)
   }

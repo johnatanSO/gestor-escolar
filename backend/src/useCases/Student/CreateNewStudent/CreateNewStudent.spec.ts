@@ -26,8 +26,8 @@ describe('Creating new student', () => {
     expect(newStudent).toHaveProperty('_id')
   })
 
-  it('Should not be able create a new student if the _id of the user is not provided', () => {
-    expect(async () => {
+  it('Should not be able create a new student if the _id of the user is not provided', async () => {
+    await expect(async () => {
       await createNewStudentService.execute({
         _id: undefined,
         idTeacher: new Types.ObjectId().toString(),

@@ -3,7 +3,7 @@ import { MockUsersRepository } from '../../../repositories/Users/MockUsersReposi
 import { CreateNewStudentService } from '../CreateNewStudent/CreateNewStudentService.service'
 import { UpdateStudentService } from './UpdateStudentService.service'
 import { Types } from 'mongoose'
-import { CreateNewUserService } from '../../User/CreateNewUserService.service'
+import { CreateNewUserService } from '../../User/CreateNewUser/CreateNewUserService.service'
 
 let mockUsersRepository: MockUsersRepository
 let mockStudentsRepository: MockStudentsRepository

@@ -34,14 +34,14 @@ describe('Delete a subject', () => {
     expect(notFoundSubject).toBeUndefined()
   })
 
-  it('should not be able delete a subject if idSubject is from a invalid subject', () => {
-    expect(async () => {
+  it('should not be able delete a subject if idSubject is from a invalid subject', async () => {
+    await expect(async () => {
       await deleteSubjectService.execute(new Types.ObjectId().toString())
     }).rejects.toBeInstanceOf(AppError)
   })
 
-  it('should not be able delete a subject if idSubject not sent', () => {
-    expect(async () => {
+  it('should not be able delete a subject if idSubject not sent', async () => {
+    await expect(async () => {
       await deleteSubjectService.execute(undefined)
     }).rejects.toBeInstanceOf(AppError)
   })

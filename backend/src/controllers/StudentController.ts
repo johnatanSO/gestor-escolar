@@ -5,7 +5,7 @@ import { ListAllStudentsGradesService } from '../useCases/Student/ListAllStudent
 import { ListSingleStudentGrades } from '../useCases/Student/ListSingleStudentGrades/ListSingleStudentGrades.service'
 import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
 import { DeleteStudentService } from '../useCases/Student/DeleteStudentService/DeleteStudentService.service'
-import { CreateNewUserService } from '../useCases/User/CreateNewUserService.service'
+import { CreateNewUserService } from '../useCases/User/CreateNewUser/CreateNewUserService.service'
 import { CreateNewStudentService } from '../useCases/Student/CreateNewStudent/CreateNewStudentService.service'
 import { DeleteUserService } from '../useCases/User/DeleteUserService/DeleteUserService.service'
 import { UpdateStudentService } from '../useCases/Student/UpdateStudent/UpdateStudentService.service'

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { CreateNewUserService } from '../useCases/User/CreateNewUserService.service'
-import { GetUserInfoService } from '../useCases/User/GetUserInfoService.service'
+import { CreateNewUserService } from '../useCases/User/CreateNewUser/CreateNewUserService.service'
+import { GetUserInfoService } from '../useCases/User/GetUserInfo/GetUserInfoService.service'
 import { UpdateUserAvatarService } from '../useCases/User/UpdateUserAvatarService.service'
 import { AppError } from '../errors/AppError'
 

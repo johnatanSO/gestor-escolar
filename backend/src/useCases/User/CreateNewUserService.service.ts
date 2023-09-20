@@ -25,7 +25,7 @@ export class CreateNewUserService {
   }: INewUserDTO): Promise<User> {
     const alreadExistUser = await this.usersRepository.findByEmail(email)
     if (alreadExistUser) {
-      throw new AppError('Já existe um usuário cadastrado com este e-mail!')
+      throw new AppError('Já existe um usuário cadastrado com este e-mail.')
     }
 
     const encryptedPassword = await bcrypt.hash(password, saltRounds)

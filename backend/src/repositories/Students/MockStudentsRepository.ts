@@ -81,7 +81,7 @@ export class MockStudentsRepository implements IStudentsRepository {
 
   async update({ filters, updateFields }: IUpdateStudentDTO): Promise<void> {
     const indexStudentToUpdate = this.students.findIndex(
-      (student) => student._id.toString() === filters.idStudent.toString(),
+      (student) => student._id.toString() === filters._id.toString(),
     )
 
     if (indexStudentToUpdate !== -1) {

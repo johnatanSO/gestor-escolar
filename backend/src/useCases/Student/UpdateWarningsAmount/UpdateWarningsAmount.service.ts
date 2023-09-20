@@ -15,7 +15,7 @@ export class UpdateWarningsAmount {
     if (!idStudent) throw new AppError('_id do aluno não foi informado')
 
     const filters = {
-      idStudent,
+      _id: idStudent,
     }
 
     const updateFields = {

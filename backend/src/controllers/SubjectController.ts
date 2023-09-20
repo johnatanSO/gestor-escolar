@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { ListAllSubjectsService } from '../useCases/Subject/ListAllSubjectsService.service'
-import { CreateNewSubjectService } from '../useCases/Subject/CreateNewSubjectService.service'
-import { DeleteSubjectService } from '../useCases/Subject/DeleteSubjectService.service'
-import { InsertStudentInSubjectService } from '../useCases/Subject/InsertStudentInSubjectService.service'
+import { ListAllSubjectsService } from '../useCases/Subject/ListAllSubjects/ListAllSubjectsService.service'
+import { CreateNewSubjectService } from '../useCases/Subject/CreateNewSubject/CreateNewSubjectService.service'
+import { DeleteSubjectService } from '../useCases/Subject/DeleteSubject/DeleteSubjectService.service'
+import { InsertStudentInSubjectService } from '../useCases/Subject/InsertStudentInSubject/InsertStudentInSubjectService.service'
 import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
 
 export class SubjectController {

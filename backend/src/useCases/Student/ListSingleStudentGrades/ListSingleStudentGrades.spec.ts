@@ -4,10 +4,10 @@ import { ListSingleStudentGrades } from './ListSingleStudentGrades.service'
 import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 import { AppError } from '../../../errors/AppError'
 import { Types } from 'mongoose'
-import { CreateNewSubjectService } from '../../Subject/CreateNewSubjectService.service'
+import { CreateNewSubjectService } from '../../Subject/CreateNewSubject/CreateNewSubjectService.service'
 import { CreateNewUserService } from '../../User/CreateNewUserService.service'
 import { CreateNewStudentService } from '../CreateNewStudent/CreateNewStudentService.service'
-import { InsertStudentInSubjectService } from '../../Subject/InsertStudentInSubjectService.service'
+import { InsertStudentInSubjectService } from '../../Subject/InsertStudentInSubject/InsertStudentInSubjectService.service'
 import { UpdateGradesService } from '../UpdateGrades/UpdateGradesService.service'
 
 let mockUsersRepository: MockUsersRepository

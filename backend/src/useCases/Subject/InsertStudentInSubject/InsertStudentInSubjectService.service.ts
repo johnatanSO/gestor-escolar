@@ -2,8 +2,8 @@ import { inject, injectable } from 'tsyringe'
 import {
   ISubjectsRepository,
   IInsertStudentDTO,
-} from '../../repositories/Subjects/ISubjectsRepository'
-import { AppError } from '../../errors/AppError'
+} from '../../../repositories/Subjects/ISubjectsRepository'
+import { AppError } from '../../../errors/AppError'
 
 @injectable()
 export class InsertStudentInSubjectService {
@@ -15,9 +15,7 @@ export class InsertStudentInSubjectService {
   }
 
   async execute({ studentsIds, subjectId }: IInsertStudentDTO): Promise<void> {
-    if (!subjectId) {
-      throw new AppError('Nenhuma disciplina selecionada.')
-    }
+    if (!subjectId) throw new AppError('_id da disciplina não foi informado')
 
     await this.subjectsRepository.insertStudent({
       studentsIds,

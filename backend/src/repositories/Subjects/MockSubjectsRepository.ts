@@ -39,11 +39,13 @@ export class MockSubjectsRepository implements ISubjectsRepository {
     studentsIds,
     subjectId,
   }: IInsertStudentDTO): Promise<void> {
-    this.subjects.forEach((subject) => {
-      if (subject._id.toString() === subjectId) {
-        subject.students = studentsIds
-      }
-    })
+    const indexSubject = this.subjects.findIndex(
+      (subject) => subject._id.toString() === subjectId,
+    )
+
+    if (indexSubject !== -1) {
+      this.subjects[indexSubject].students = studentsIds
+    }
   }
 
   async getEntries(): Promise<number> {

@@ -52,7 +52,6 @@ export const usersService = {
   },
 
   async saveUser(userResponse: any) {
-    console.log('userResponse', userResponse.token)
     globalThis?.localStorage?.setItem(
       USER_INFO,
       JSON.stringify(userResponse.item),

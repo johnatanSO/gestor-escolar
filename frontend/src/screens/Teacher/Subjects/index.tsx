@@ -39,7 +39,6 @@ export function Subjects() {
       .getAll()
       .then((res) => {
         setSubjects(res.data.items)
-        console.log('res.data.items', res.data.items)
       })
       .catch((err) => {
         console.log('ERRO AO BUSCAR DISCIPLINAS, ', err)

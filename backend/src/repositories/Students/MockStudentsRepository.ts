@@ -79,7 +79,18 @@ export class MockStudentsRepository implements IStudentsRepository {
     })
   }
 
-  async update(updateParams: IUpdateStudentDTO): Promise<void> {}
+  async update({ filters, updateFields }: IUpdateStudentDTO): Promise<void> {
+    const indexStudentToUpdate = this.students.findIndex(
+      (student) => student._id.toString() === filters.idStudent.toString(),
+    )
+
+    if (indexStudentToUpdate !== -1) {
+      this.students[indexStudentToUpdate] = {
+        ...this.students[indexStudentToUpdate],
+        warningsAmount: this.students[indexStudentToUpdate].warningsAmount + 1,
+      }
+    }
+  }
 
   async findById(idStudent: string): Promise<IStudent> {
     const student = this.students.find(

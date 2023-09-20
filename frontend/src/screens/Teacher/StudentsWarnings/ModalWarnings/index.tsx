@@ -15,6 +15,7 @@ import { AlertContext } from '../../../../contexts/alertContext'
 import { FormNewWarning } from './FormNewWarning'
 import { Loading } from '../../../../components/Loading'
 import { Collapse, List, ListItem } from '@mui/material'
+import { useRouter } from 'next/router'
 
 interface Props {
   studentData: Student
@@ -57,6 +58,7 @@ export function ModalWarnings({
   const [loadingCreateWarning, setLoadingCrateWarning] =
     useState<boolean>(false)
   const [itemOpened, setItemOpened] = useState<any>({})
+  const router = useRouter()
 
   function onCreateNewWarning(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -73,6 +75,10 @@ export function ModalWarnings({
         getWarnings()
         setIsFormMode(false)
         setNewWarningData(defaultValuesNewWarning)
+        router.push({
+          pathname: router.route,
+          query: router.query,
+        })
       })
       .catch((err) => {
         setAlertNotifyConfigs({

@@ -25,8 +25,9 @@ export function useColumns({ handleOpenWarnings }: UseColumnsParams) {
     },
     {
       headerName: 'Nome do aluno',
-      field: 'name',
-      valueFormatter: (params: CellFunctionParams) => params.value || '--',
+      field: 'user',
+      valueFormatter: (params: CellFunctionParams) =>
+        params?.value?.name || '--',
     },
     {
       headerName: 'Quantidade de advertências',

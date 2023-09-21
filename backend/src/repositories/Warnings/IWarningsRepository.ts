@@ -11,6 +11,6 @@ export interface INewWarningDTO {
 export interface IWarningsRepository {
   list: (idStudent?: string) => Promise<Warning[]>
   create: (newWarningData: INewWarningDTO) => Promise<Warning>
-  findById: (idSubject: string | Types.ObjectId) => Promise<Warning>
+  findById: (idWarning: string | Types.ObjectId) => Promise<Warning>
   getEntries: (idStudent: string) => Promise<number>
 }

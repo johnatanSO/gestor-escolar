@@ -1,6 +1,7 @@
-import { IUsersRepository } from '../../repositories/Users/IUsersRepository'
+import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import { inject, injectable } from 'tsyringe'
-import { deleteFile } from '../../utils/file'
+import { deleteFile } from '../../../utils/file'
+import { AppError } from '../../../errors/AppError'
 
 interface IRequest {
   userId: string
@@ -15,7 +16,12 @@ export class UpdateUserAvatarService {
   }
 
   async execute({ userId, avatarFile }: IRequest): Promise<void> {
+    if (!userId) throw new AppError('_id do usuário não informado')
+    if (!avatarFile) throw new AppError('Avatar não informado')
+
     const user = await this.usersRepository.findById(userId)
+
+    if (!user) throw new AppError('Usuário inválido')
 
     if (user.avatar) {
       await deleteFile(`./tmp/avatar/${user.avatar}`)

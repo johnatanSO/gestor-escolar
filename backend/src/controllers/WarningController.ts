@@ -1,7 +1,7 @@
-import { ListWarningsService } from './../useCases/Warning/ListWarningsService.service'
+import { ListWarningsService } from '../useCases/Warning/ListWarnings/ListWarningsService.service'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { CreateNewWarningService } from '../useCases/Warning/CreateNewWarningService.service'
+import { CreateNewWarningService } from '../useCases/Warning/CreateNewWarning/CreateNewWarningService.service'
 import { UpdateWarningsAmount } from '../useCases/Student/UpdateWarningsAmount/UpdateWarningsAmount.service'
 
 export class WarningController {

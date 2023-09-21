@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import { CreateNewUserService } from '../useCases/User/CreateNewUser/CreateNewUserService.service'
 import { GetUserInfoService } from '../useCases/User/GetUserInfo/GetUserInfoService.service'
-import { UpdateUserAvatarService } from '../useCases/User/UpdateUserAvatarService.service'
+import { UpdateUserAvatarService } from '../useCases/User/UpdateUserAvatar/UpdateUserAvatarService.service'
 import { AppError } from '../errors/AppError'
 
 export class UserController {

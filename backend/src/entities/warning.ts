@@ -1,11 +1,11 @@
 import mongoose, { Types } from 'mongoose'
 
 export interface Warning {
-  _id: Types.ObjectId
+  _id: Types.ObjectId | string
   code: string
   title: string
   description: string
-  idStudent: Types.ObjectId
+  idStudent: Types.ObjectId | string
   date: Date
 }
 

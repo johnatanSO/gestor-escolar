@@ -20,14 +20,7 @@ export const usersService = {
 
     if (!token) return false
 
-    return await this.verifyToken(token)
-  },
-
-  async verifyToken(token: String) {
-    if (token) return true
-    return false
-    // Implementar verificação de token com o back-end
-    // return token
+    return true
   },
 
   async login({ userData }: LoginParams) {

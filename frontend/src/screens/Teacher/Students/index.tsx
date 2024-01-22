@@ -6,11 +6,12 @@ import {
 } from './ModalCreateNewStudent'
 import { TableComponent } from '../../../components/TableComponent'
 import { useColumns } from './hooks/useColumns'
-import { EmptyItems } from '../../../components/EmptyItems'
 import { useRouter } from 'next/router'
 import { AlertContext } from '../../../contexts/alertContext'
-import { Loading } from '../../../components/Loading'
 import { studentsService } from '../../../services/studentsService'
+import { ListMobile } from '../../../components/ListMobile'
+import style from './Students.module.scss'
+import { useFieldsMobile } from './hooks/useFieldsMobile'
 
 export interface Student {
   _id: string
@@ -18,6 +19,10 @@ export interface Student {
   email: string
   password: string
   code: string
+  user: {
+    name: string
+    email: string
+  }
 }
 
 export function Students() {
@@ -97,6 +102,8 @@ export function Students() {
     handleEditStudent,
   })
 
+  const fieldsMobile = useFieldsMobile()
+
   return (
     <>
       <HeaderPage
@@ -107,21 +114,20 @@ export function Students() {
         InputFilter={<h3>Alunos</h3>}
       />
 
-      {students?.length === 0 && loadingStudents && (
-        <Loading size={30} color="#cd1414" />
-      )}
-
-      {students?.length > 0 && (
+      <div className={style.viewDesktop}>
         <TableComponent
           loading={loadingStudents}
           columns={columns}
           rows={students}
         />
-      )}
-
-      {students?.length === 0 && !loadingStudents && (
-        <EmptyItems text="Nenhum aluno cadastrado no sistema" />
-      )}
+      </div>
+      <div className={style.viewMobile}>
+        <ListMobile
+          itemFields={fieldsMobile}
+          collapseItems={[]}
+          items={students}
+        />
+      </div>
 
       {formModalOpened && (
         <ModalCreateNewStudent

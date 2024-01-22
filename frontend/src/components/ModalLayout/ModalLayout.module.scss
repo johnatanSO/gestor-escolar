@@ -10,8 +10,8 @@
     box-shadow: 1px 7px 15px rgb(0 0 0 / 0.3);
     outline: none;
 
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 20px;
+    padding: 2rem;
 
     max-width: 80%;
     min-width: 45%;
@@ -20,6 +20,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    animation: fadeIn 0.2s;
 
     .header {
       display: flex;
@@ -41,17 +43,15 @@
     }
 
     .mainContent {
-      background: $gray-color-200;
       border-radius: 10px;
-      padding: 15px;
     }
 
     .footer {
       button {
         width: 100%;
         text-align: center;
-        border-radius: 8px;
-        padding: 0.9rem;
+        border-radius: 20px;
+        padding: 1.35rem;
         font-weight: 500;
         font-size: 0.8rem;
 
@@ -72,6 +72,15 @@
         }
       }
     }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

@@ -9,7 +9,7 @@ import { studentsService } from '../../../../services/studentsService'
 export interface NewStudentData {
   name: string
   email: string
-  password: string
+  password?: string
   user?: any
 }
 

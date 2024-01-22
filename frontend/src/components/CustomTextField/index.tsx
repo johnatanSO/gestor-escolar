@@ -7,9 +7,9 @@ import {
 
 export const CustomTextField = styled(TextField)({
   [`& .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]: {
-    borderRadius: '10px',
-    borderColor: '#323238',
-    color: '#323238',
+    borderRadius: '20px',
+    borderColor: '#878798',
+    color: '#8a8a9c',
     fontWeight: '500',
   },
   [`& .Mui-error .${outlinedInputClasses.notchedOutline}`]: {

@@ -12,10 +12,11 @@
     color: white;
 
     border: none;
-    padding: 0.5rem 0.8rem;
+    padding: 0.6rem 1rem;
     line-height: 1;
-    border-radius: 8px;
+    border-radius: 20px;
     font-weight: 500;
+    font-size: 0.8rem;
 
     cursor: pointer;
     transition: filter 0.2s;
@@ -38,10 +39,12 @@
     color: $gray-color-400;
     font-weight: 600;
 
+    font-size: 0.8rem;
+
     border: none;
-    padding: 0.5rem 0.8rem;
+    padding: 0.6rem 1rem;
     line-height: 1;
-    border-radius: 8px;
+    border-radius: 20px;
 
     cursor: pointer;
     transition: filter 0.2s;

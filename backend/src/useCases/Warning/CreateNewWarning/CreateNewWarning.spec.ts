@@ -4,7 +4,7 @@ import { MockWarningsRepository } from '../../../repositories/Warnings/MockWarni
 import { CreateNewStudentService } from '../../Student/CreateNewStudent/CreateNewStudentService.service'
 import { CreateNewWarningService } from './CreateNewWarningService.service'
 import { Types } from 'mongoose'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 let mockWarningsRepository: MockWarningsRepository
 let mockStudentsRepository: MockStudentsRepository

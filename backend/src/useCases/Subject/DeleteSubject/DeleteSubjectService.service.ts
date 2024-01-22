@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import { ISubjectsRepository } from './../../../repositories/Subjects/ISubjectsRepository'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 @injectable()
 export class DeleteSubjectService {

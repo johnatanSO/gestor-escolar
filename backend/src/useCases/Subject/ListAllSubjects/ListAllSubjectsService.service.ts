@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 import { ISubjectsRepository } from '../../../repositories/Subjects/ISubjectsRepository'
 import { ISubject } from '../../../entities/subject'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 interface IRequest {
   idTeacher: string

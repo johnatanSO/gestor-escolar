@@ -1,6 +1,7 @@
 import { User } from '../../entities/user'
 
 export interface INewUserDTO {
+  code: string
   name: string
   email: string
   password: string
@@ -13,4 +14,5 @@ export interface IUsersRepository {
   findById: (_id: string) => Promise<User>
   update: (filters: any, updateFields: any) => Promise<void>
   delete: (idUser: string) => Promise<void>
+  listStudents(idTeacher: string): Promise<User[]>
 }

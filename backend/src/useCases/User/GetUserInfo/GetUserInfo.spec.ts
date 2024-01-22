@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 import { MockUsersRepository } from './../../../repositories/Users/MockUsersRepository'
 import { GetUserInfoService } from './GetUserInfoService.service'
 import { CreateNewUserService } from '../CreateNewUser/CreateNewUserService.service'

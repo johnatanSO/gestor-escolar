@@ -5,7 +5,7 @@ import { CreateNewStudentService } from '../../Student/CreateNewStudent/CreateNe
 import { InsertStudentInSubjectService } from './InsertStudentInSubjectService.service'
 import { MockSubjectsRepository } from '../../../repositories/Subjects/MockSubjectsRepository'
 import { CreateNewSubjectService } from '../CreateNewSubject/CreateNewSubjectService.service'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 let mockUsersRepository: MockUsersRepository
 let mockStudentsRepository: MockStudentsRepository

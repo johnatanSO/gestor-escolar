@@ -9,12 +9,14 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async create({
+    code,
     name,
     password,
     email,
     occupation,
   }: INewUserDTO): Promise<User> {
     const newUser = await this.model.create({
+      code,
       name,
       password,
       email,
@@ -38,5 +40,10 @@ export class UsersRepository implements IUsersRepository {
 
   async delete(idUser: string): Promise<void> {
     await this.model.deleteOne({ _id: idUser })
+  }
+
+  async listStudents(idTeacher: string): Promise<User[]> {
+    const students = await this.model.find({ teacher: idTeacher })
+    return students
   }
 }

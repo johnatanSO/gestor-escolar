@@ -1,11 +1,11 @@
 import { ListWarningsService } from '../useCases/Warning/ListWarnings/ListWarningsService.service'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { CreateNewWarningService } from '../useCases/Warning/CreateNewWarning/CreateNewWarningService.service'
-import { UpdateWarningsAmount } from '../useCases/Student/UpdateWarningsAmount/UpdateWarningsAmount.service'
+// import { CreateNewWarningService } from '../useCases/Warning/CreateNewWarning/CreateNewWarningService.service'
+// import { UpdateWarningsAmount } from '../useCases/Student/UpdateWarningsAmount/UpdateWarningsAmount.service'
 
 export class WarningController {
-  async createNewWarning(req: Request, res: Response): Promise<Response> {
+  /* async createNewWarning(req: Request, res: Response): Promise<Response> {
     try {
       const { idStudent, title, description } = req.body
 
@@ -29,7 +29,7 @@ export class WarningController {
         message: 'Erro ao tentar cadastrar nova advertência',
       })
     }
-  }
+  } */
 
   async listWarnings(req: Request, res: Response): Promise<Response> {
     try {

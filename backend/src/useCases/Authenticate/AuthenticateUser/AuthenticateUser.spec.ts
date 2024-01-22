@@ -2,7 +2,7 @@ import { INewUserDTO } from './../../../repositories/Users/IUsersRepository'
 import { CreateNewUserService } from './../../User/CreateNewUser/CreateNewUserService.service'
 import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 import { AuthenticateUserService } from './AuthenticateUserService.service'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 let mockUsersRepository: MockUsersRepository
 let authenticateUserService: AuthenticateUserService

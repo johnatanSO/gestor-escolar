@@ -1,14 +1,25 @@
 import { inject, injectable } from 'tsyringe'
-import {
-  INewUserDTO,
-  IUsersRepository,
-} from '../../../repositories/Users/IUsersRepository'
+import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import bcrypt from 'bcrypt'
-import * as dotenv from 'dotenv'
-import { User } from '../../../entities/user'
-import { AppError } from '../../../errors/AppError'
-dotenv.config()
+import { AppError } from '../../../shared/errors/AppError'
+import { Types } from 'mongoose'
 const saltRounds = 10
+
+interface IRequest {
+  name: string
+  email: string
+  password: string
+  occupation: string
+}
+
+interface IResponse {
+  _id: Types.ObjectId
+  code: string
+  name: string
+  email: string
+  occupation: string
+  avatar: string
+}
 
 @injectable()
 export class CreateNewUserService {
@@ -22,7 +33,7 @@ export class CreateNewUserService {
     email,
     password,
     occupation,
-  }: INewUserDTO): Promise<User> {
+  }: IRequest): Promise<IResponse> {
     if (!name) throw new AppError('Nome de usuário não informado')
     if (!email) throw new AppError('E-mail do usuário não informado')
     if (!password) throw new AppError('Senha do usuário não informada')
@@ -31,17 +42,25 @@ export class CreateNewUserService {
     const alreadExistUser = await this.usersRepository.findByEmail(email)
 
     if (alreadExistUser) {
-      throw new AppError('Já existe um usuário cadastrado com este e-mail.')
+      throw new AppError('Já existe um usuário cadastrado com este e-mail')
     }
 
     const encryptedPassword = await bcrypt.hash(password, saltRounds)
     const newUser = await this.usersRepository.create({
+      code: '1',
       name,
       email,
       password: encryptedPassword,
       occupation,
     })
 
-    return newUser
+    return {
+      _id: newUser._id,
+      code: newUser.code,
+      name: newUser.name,
+      email: newUser.email,
+      occupation: newUser.occupation,
+      avatar: newUser.avatar,
+    }
   }
 }

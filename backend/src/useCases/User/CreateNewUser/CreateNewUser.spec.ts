@@ -1,4 +1,4 @@
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 import { MockUsersRepository } from '../../../repositories/Users/MockUsersRepository'
 import { CreateNewUserService } from './CreateNewUserService.service'
 

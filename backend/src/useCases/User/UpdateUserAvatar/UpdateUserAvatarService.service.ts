@@ -1,7 +1,7 @@
 import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import { inject, injectable } from 'tsyringe'
 import { deleteFile } from '../../../utils/file'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 interface IRequest {
   userId: string

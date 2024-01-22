@@ -3,8 +3,6 @@ import { container } from 'tsyringe'
 import { ListAllSubjectsService } from '../useCases/Subject/ListAllSubjects/ListAllSubjectsService.service'
 import { CreateNewSubjectService } from '../useCases/Subject/CreateNewSubject/CreateNewSubjectService.service'
 import { DeleteSubjectService } from '../useCases/Subject/DeleteSubject/DeleteSubjectService.service'
-import { InsertStudentInSubjectService } from '../useCases/Subject/InsertStudentInSubject/InsertStudentInSubjectService.service'
-import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
 
 export class SubjectController {
   async listAllSubjects(req: Request, res: Response): Promise<Response> {
@@ -66,36 +64,29 @@ export class SubjectController {
     }
   }
 
-  async insertStudents(req: Request, res: Response): Promise<Response> {
-    try {
-      const { studentsIds, subjectId } = req.body
-      const insertStudentInSubjectService = container.resolve(
-        InsertStudentInSubjectService,
-      )
-      await insertStudentInSubjectService.execute({
-        studentsIds,
-        subjectId,
-      })
+  /* async insertStudents(req: Request, res: Response): Promise<Response> {
+    const { studentsIds, subjectId } = req.body
+    const insertStudentInSubjectService = container.resolve(
+      InsertStudentInSubjectService,
+    )
+    await insertStudentInSubjectService.execute({
+      studentsIds,
+      subjectId,
+    })
 
-      // Definindo nota inicial do aluno como zero.
-      const updateGradesService = container.resolve(UpdateGradesService)
-      await updateGradesService.execute({
-        studentsIds,
-        subjectId,
-        grades: {
-          firstGrade: 0,
-          secondGrade: 0,
-        },
-      })
+    // Definindo nota inicial do aluno como zero.
+    const updateGradesService = container.resolve(UpdateGradesService)
+    await updateGradesService.execute({
+      studentsIds,
+      subjectId,
+      grades: {
+        firstGrade: 0,
+        secondGrade: 0,
+      },
+    })
 
-      return res.status(202).json({
-        message: 'Estudante(s) foram inseridos na disciplina com sucesso.',
-      })
-    } catch (err) {
-      return res.status(400).json({
-        error: err,
-        message: 'Erro ao tentar inserir estudantes na discuplina.',
-      })
-    }
-  }
+    return res.status(202).json({
+      message: 'Estudante(s) foram inseridos na disciplina com sucesso.',
+    })
+  } */
 }

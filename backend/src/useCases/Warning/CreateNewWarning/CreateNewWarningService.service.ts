@@ -4,7 +4,7 @@ import {
 } from '../../../repositories/Warnings/IWarningsRepository'
 import { inject, injectable } from 'tsyringe'
 import { Warning } from '../../../entities/warning'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 @injectable()
 export class CreateNewWarningService {

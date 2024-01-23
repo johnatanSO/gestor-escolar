@@ -93,8 +93,6 @@ export function Subjects() {
 
   const fieldsMobile = useFieldsMobile()
 
-  console.log('Subjects', subjects)
-
   return (
     <>
       <HeaderPage
@@ -118,6 +116,7 @@ export function Subjects() {
           collapseItems={[]}
           itemFields={fieldsMobile}
           items={subjects}
+          emptyText="Nenhuma disciplina cadastrada"
         />
       </div>
 
@@ -125,6 +124,7 @@ export function Subjects() {
         <ModalCreateNewSubject
           subjectDataToEdit={undefined}
           open={formModalOpened}
+          getSubjects={getSubjects}
           handleClose={() => {
             setFormModalOpened(false)
           }}

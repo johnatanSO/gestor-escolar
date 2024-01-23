@@ -4,7 +4,6 @@ import style from './ModalCreateNewSubject.module.scss'
 import { CustomTextField } from '../../../../components/CustomTextField'
 import { subjectsService } from '../../../../services/subjectsService'
 import { AlertContext } from '../../../../contexts/alertContext'
-import { useRouter } from 'next/router'
 
 export interface NewSubjectData {
   name: string
@@ -17,12 +16,14 @@ interface Props {
   subjectDataToEdit: NewSubjectData | undefined
   open: boolean
   handleClose: () => void
+  getSubjects: () => void
 }
 
 export function ModalCreateNewSubject({
   open,
   handleClose,
   subjectDataToEdit,
+  getSubjects,
 }: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
   const defaultNewSubjectValues = {
@@ -36,7 +37,6 @@ export function ModalCreateNewSubject({
   )
   const [loadingCreateNewSubject, setLoadingCreateNewSubject] =
     useState<boolean>(false)
-  const router = useRouter()
 
   function onCreateNewSubject(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -52,18 +52,16 @@ export function ModalCreateNewSubject({
     subjectsService
       .create({ newSubjectData })
       .then(() => {
-        router.push({
-          pathname: router.route,
-          query: router.query,
-        })
-        setNewSubjectData(defaultNewSubjectValues)
-        handleClose()
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
-          text: 'Disciplina cadastrado com sucesso',
+          text: 'Disciplina cadastrada com sucesso',
         })
+
+        setNewSubjectData(defaultNewSubjectValues)
+        handleClose()
+        getSubjects()
       })
       .catch((err) => {
         setAlertNotifyConfigs({
@@ -72,7 +70,7 @@ export function ModalCreateNewSubject({
           type: 'error',
           text:
             'Erro ao tentar cadastrar disciplina ' +
-            `(${err.response.data.message})`,
+            `(${err?.response?.data?.message || err?.message})`,
         })
       })
       .finally(() => {
@@ -94,18 +92,15 @@ export function ModalCreateNewSubject({
     subjectsService
       .update({ subjectData: newSubjectData })
       .then(() => {
-        router.push({
-          pathname: router.route,
-          query: router.query,
-        })
-        setNewSubjectData(defaultNewSubjectValues)
-        handleClose()
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
           text: 'Dados da disciplina atualizados com sucesso',
         })
+        setNewSubjectData(defaultNewSubjectValues)
+        handleClose()
+        getSubjects()
       })
       .catch((err) => {
         setAlertNotifyConfigs({
@@ -114,7 +109,7 @@ export function ModalCreateNewSubject({
           type: 'error',
           text:
             'Erro ao tentar atualizar dados da disciplina ' +
-            `(${err.response.data.message})`,
+            `(${err?.response?.data?.message || err?.message})`,
         })
       })
       .finally(() => {

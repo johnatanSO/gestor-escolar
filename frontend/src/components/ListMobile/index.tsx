@@ -15,9 +15,15 @@ type Props = {
   items: any[]
   itemFields: Field[]
   collapseItems: CollapseItem[]
+  emptyText?: string
 }
 
-export function ListMobile({ items, itemFields, collapseItems }: Props) {
+export function ListMobile({
+  items,
+  itemFields,
+  collapseItems,
+  emptyText,
+}: Props) {
   const [itemOpened, setItemOpened] = useState<ItemStatus>({})
 
   function handleOpenItem(itemId: string) {
@@ -114,7 +120,7 @@ export function ListMobile({ items, itemFields, collapseItems }: Props) {
       })}
 
       {(items.length === 0 || !items) && (
-        <EmptyItems text="Nenhum aluguel encontrado" />
+        <EmptyItems text={emptyText || 'Nenhum item encontrado'} />
       )}
     </List>
   )

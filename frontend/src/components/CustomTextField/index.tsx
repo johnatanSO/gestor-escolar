@@ -14,7 +14,7 @@ export const CustomTextField = styled(TextField)({
   },
   [`& .Mui-error .${outlinedInputClasses.notchedOutline}`]: {
     // Style da borda do input quando tem um erro
-    borderRadius: '0.7rem',
+    borderRadius: '20px',
     border: '2px solid #ff4646',
   },
   [`&:hover .${outlinedInputClasses.root} .${outlinedInputClasses.notchedOutline}`]:
@@ -42,7 +42,7 @@ export const CustomTextField = styled(TextField)({
   [`& .${outlinedInputClasses.root}.${outlinedInputClasses.focused} .${outlinedInputClasses.input}`]:
     {
       // Style do placeholder quando estiver em foco
-      color: '#323238',
+      color: '#5c5c65',
     },
   [`& .${inputLabelClasses.outlined}`]: {
     // Style da label

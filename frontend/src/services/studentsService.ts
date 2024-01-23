@@ -35,9 +35,9 @@ export const studentsService = {
       secondGrade: Number(grades?.secondGrade || 0),
     }
     const body = {
+      ...formatedGrades,
       studentId,
       subjectId,
-      grades: formatedGrades,
     }
 
     return http.put('/students/updateGrades', {
@@ -51,7 +51,7 @@ export const studentsService = {
   },
 
   delete({ studentId }: DeleteStudentParams) {
-    return http.delete('/students/' + studentId)
+    return http.delete(`/students/${studentId}`)
   },
 
   create({ newStudentData }: CreateParams) {
@@ -62,8 +62,8 @@ export const studentsService = {
     })
   },
 
-  async updateStudent({ studentData }: UpdateStudentParams) {
-    return await http.put('/students/', {
+  updateStudent({ studentData }: UpdateStudentParams) {
+    return http.put('/users/', {
       ...studentData,
     })
   },

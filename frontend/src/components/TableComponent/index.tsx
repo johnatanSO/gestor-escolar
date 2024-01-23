@@ -10,8 +10,6 @@ interface Props {
 }
 
 export function TableComponent({ columns, rows, loading, emptyText }: Props) {
-  console.log('ROWS', rows)
-  console.log('columns', columns)
   return (
     <table style={loading ? { opacity: 0.5 } : {}} className={style.table}>
       <thead>
@@ -39,7 +37,6 @@ export function TableComponent({ columns, rows, loading, emptyText }: Props) {
                         data: row,
                       })}
                       key={column.field}
-                      style={{ flex: 1 }}
                     >
                       {column?.valueFormatter?.({
                         value: row[column.field],
@@ -58,7 +55,7 @@ export function TableComponent({ columns, rows, loading, emptyText }: Props) {
           })}
 
         {rows.length === 0 && !loading && (
-          <tr>
+          <tr className={style.emptyRow}>
             <td className={style.emptyCell} colSpan={columns.length}>
               <p>{emptyText || 'Nenhum item encontrado'}</p>
             </td>

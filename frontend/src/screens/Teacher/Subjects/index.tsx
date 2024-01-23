@@ -4,11 +4,11 @@ import { useContext, useEffect, useState } from 'react'
 import { ModalCreateNewSubject } from './ModalCreateNewSubject'
 import { TableComponent } from '../../../components/TableComponent'
 import { useColumns } from './hooks/useColumns'
-import { EmptyItems } from '../../../components/EmptyItems'
-import { useRouter } from 'next/router'
 import { AlertContext } from '../../../contexts/alertContext'
 import { ModalAddStudents } from './ModalAddStudents'
-import { Loading } from '../../../components/Loading'
+import style from './InsertStudents.module.scss'
+import { ListMobile } from '../../../components/ListMobile'
+import { useFieldsMobile } from './hooks/useFieldsMobile'
 
 export interface Subject {
   _id: string
@@ -31,7 +31,6 @@ export function Subjects() {
     useState<boolean>(true)
   const [loadingSubjects, setLoadingSubjects] = useState<boolean>(true)
   const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
-  const router = useRouter()
 
   function getSubjects() {
     setLoadingSubjects(true)
@@ -50,7 +49,7 @@ export function Subjects() {
 
   useEffect(() => {
     getSubjects()
-  }, [router.query])
+  }, [])
 
   function handleDeleteSubject(subject: Subject) {
     setAlertDialogConfirmConfigs({
@@ -68,17 +67,14 @@ export function Subjects() {
               type: 'success',
               text: 'Disciplina excluída com sucesso',
             })
-            router.push({
-              pathname: router.route,
-              query: router.query,
-            })
+            getSubjects()
           })
           .catch((err) => {
             setAlertNotifyConfigs({
               ...alertNotifyConfigs,
               open: true,
               type: 'error',
-              text: `Erro ao tentar excluir disciplina (${err.response.data.error})`,
+              text: `Erro ao tentar excluir disciplina (${err.response.data.message})`,
             })
           })
       },
@@ -95,31 +91,35 @@ export function Subjects() {
     handleAddStudents,
   })
 
+  const fieldsMobile = useFieldsMobile()
+
+  console.log('Subjects', subjects)
+
   return (
     <>
       <HeaderPage
+        buttonText="Nova disciplina"
+        InputFilter={<h3>Disciplinas</h3>}
         onClickFunction={() => {
           setFormModalOpened(true)
         }}
-        buttonText="Nova disciplina"
-        InputFilter={<h3>Disciplinas</h3>}
       />
 
-      {subjects?.length === 0 && loadingSubjects && (
-        <Loading size={30} color="#cd1414" />
-      )}
-
-      {subjects?.length > 0 && (
+      <div className={style.viewDesktop}>
         <TableComponent
           loading={loadingSubjects}
           columns={columns}
           rows={subjects}
+          emptyText="Nenhuma disciplina cadastrada"
         />
-      )}
-
-      {subjects?.length === 0 && !loadingSubjects && (
-        <EmptyItems text="Nenhuma disciplina foi encontrada" />
-      )}
+      </div>
+      <div className={style.viewMobile}>
+        <ListMobile
+          collapseItems={[]}
+          itemFields={fieldsMobile}
+          items={subjects}
+        />
+      </div>
 
       {formModalOpened && (
         <ModalCreateNewSubject

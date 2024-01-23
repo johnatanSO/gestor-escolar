@@ -26,9 +26,7 @@ export function HeaderMenu({ title, showBackButton }: Props) {
         <button
           className={style.backButton}
           type="button"
-          onClick={() => {
-            router.back()
-          }}
+          onClick={router.back}
         >
           <FontAwesomeIcon className={style.icon} icon={faAngleLeft} />
           Voltar

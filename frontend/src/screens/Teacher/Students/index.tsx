@@ -1,12 +1,9 @@
 import { HeaderPage } from '../../../components/HeaderPage'
 import { useContext, useEffect, useState } from 'react'
-import {
-  ModalCreateNewStudent,
-  StudentDataToEdit,
-} from './ModalCreateNewStudent'
+import { ModalCreateNewStudent } from './ModalCreateNewStudent'
 import { TableComponent } from '../../../components/TableComponent'
 import { useColumns } from './hooks/useColumns'
-import { useRouter } from 'next/router'
+
 import { AlertContext } from '../../../contexts/alertContext'
 import { studentsService } from '../../../services/studentsService'
 import { ListMobile } from '../../../components/ListMobile'
@@ -15,14 +12,10 @@ import { useFieldsMobile } from './hooks/useFieldsMobile'
 
 export interface Student {
   _id: string
+  code: string
   name: string
   email: string
   password: string
-  code: string
-  user: {
-    name: string
-    email: string
-  }
 }
 
 export function Students() {
@@ -32,13 +25,13 @@ export function Students() {
     alertNotifyConfigs,
     setAlertNotifyConfigs,
   } = useContext(AlertContext)
+
   const [students, setStudents] = useState<Student[]>([])
   const [loadingStudents, setLoadingStudents] = useState<boolean>(true)
   const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
   const [studentDataToEdit, setStudentDataToEdit] = useState<
-    StudentDataToEdit | undefined
+    Student | undefined
   >(undefined)
-  const router = useRouter()
 
   function getStudents() {
     setLoadingStudents(true)
@@ -57,7 +50,7 @@ export function Students() {
 
   useEffect(() => {
     getStudents()
-  }, [router.query])
+  }, [])
 
   function handleDeleteStudent(student: Student) {
     setAlertDialogConfirmConfigs({
@@ -75,24 +68,23 @@ export function Students() {
               type: 'success',
               text: 'Aluno excluído com sucesso',
             })
-            router.push({
-              pathname: router.route,
-              query: router.query,
-            })
+            getStudents()
           })
           .catch((err) => {
             setAlertNotifyConfigs({
               ...alertNotifyConfigs,
               open: true,
               type: 'error',
-              text: `Erro ao tentar excluir aluno (${err.response.data.error})`,
+              text: `Erro ao tentar excluir aluno (${
+                err?.response?.data?.message || err?.message
+              })`,
             })
           })
       },
     })
   }
 
-  function handleEditStudent(student: StudentDataToEdit) {
+  function handleEditStudent(student: Student) {
     setFormModalOpened(true)
     setStudentDataToEdit(student)
   }
@@ -119,6 +111,7 @@ export function Students() {
           loading={loadingStudents}
           columns={columns}
           rows={students}
+          emptyText="Nenhum aluno cadastrado"
         />
       </div>
       <div className={style.viewMobile}>
@@ -132,9 +125,11 @@ export function Students() {
       {formModalOpened && (
         <ModalCreateNewStudent
           studentDataToEdit={studentDataToEdit}
+          getStudents={getStudents}
           open={formModalOpened}
           handleClose={() => {
             setFormModalOpened(false)
+            setStudentDataToEdit(undefined)
           }}
         />
       )}

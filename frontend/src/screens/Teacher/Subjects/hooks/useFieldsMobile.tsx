@@ -7,8 +7,8 @@ export function useFieldsMobile(): Field[] {
       valueFormatter: (params: any) => params?.value || '--',
     },
     {
-      field: 'email',
-      valueFormatter: (params: any) => params?.value || '--',
+      field: 'students',
+      valueFormatter: (params: any) => params?.value?.length || '--',
     },
   ]
 }

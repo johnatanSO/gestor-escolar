@@ -1,13 +1,12 @@
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Student } from '..'
 import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
-import { StudentDataToEdit } from '../ModalCreateNewStudent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import style from '../Students.module.scss'
 
 interface UseColumnsParams {
   handleDeleteStudent: (student: Student) => void
-  handleEditStudent: (student: StudentDataToEdit) => void
+  handleEditStudent: (student: Student) => void
 }
 
 export function useColumns({
@@ -23,15 +22,15 @@ export function useColumns({
     },
     {
       headerName: 'Nome do aluno',
-      field: 'user',
+      field: 'name',
       valueFormatter: (params: CellFunctionParams<Student>) =>
-        params.value.name || '--',
+        params.value || '--',
     },
     {
       headerName: 'E-mail',
-      field: 'user',
+      field: 'email',
       valueFormatter: (params: CellFunctionParams<Student>) =>
-        params.value.email || '--',
+        params.value || '--',
     },
     {
       headerName: '',

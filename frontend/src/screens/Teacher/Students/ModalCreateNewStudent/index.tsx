@@ -3,22 +3,17 @@ import { FormEvent, useState, useContext } from 'react'
 import style from './ModalCreateNewStudent.module.scss'
 import { CustomTextField } from '../../../../components/CustomTextField'
 import { AlertContext } from '../../../../contexts/alertContext'
-import { useRouter } from 'next/router'
 import { studentsService } from '../../../../services/studentsService'
 
 export interface NewStudentData {
   name: string
   email: string
   password?: string
-  user?: any
-}
-
-export interface StudentDataToEdit {
-  user: NewStudentData
 }
 
 interface Props {
-  studentDataToEdit: StudentDataToEdit | undefined
+  getStudents: () => void
+  studentDataToEdit: NewStudentData | undefined
   open: boolean
   handleClose: () => void
 }
@@ -27,6 +22,7 @@ export function ModalCreateNewStudent({
   open,
   handleClose,
   studentDataToEdit,
+  getStudents,
 }: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
   const defaultNewStudentValues = {
@@ -35,11 +31,10 @@ export function ModalCreateNewStudent({
     password: '',
   }
   const [newStudentData, setNewStudentData] = useState<NewStudentData>(
-    studentDataToEdit ? studentDataToEdit.user : defaultNewStudentValues,
+    studentDataToEdit || defaultNewStudentValues,
   )
   const [loadingCreateNewStudent, setLoadingCreateNewStudent] =
     useState<boolean>(false)
-  const router = useRouter()
 
   function onCreateNewStudent(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -47,18 +42,15 @@ export function ModalCreateNewStudent({
     studentsService
       .create({ newStudentData })
       .then(() => {
-        router.push({
-          pathname: router.route,
-          query: router.query,
-        })
-        setNewStudentData(defaultNewStudentValues)
-        handleClose()
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
           text: 'Aluno cadastrado com sucesso',
         })
+        getStudents()
+        setNewStudentData(defaultNewStudentValues)
+        handleClose()
       })
       .catch((err) => {
         setAlertNotifyConfigs({
@@ -67,7 +59,7 @@ export function ModalCreateNewStudent({
           type: 'error',
           text:
             'Erro ao tentar cadastrar aluno ' +
-            `(${err.response.data.message})`,
+            `(${err?.response?.data?.message || err?.message})`,
         })
       })
       .finally(() => {
@@ -81,27 +73,24 @@ export function ModalCreateNewStudent({
     studentsService
       .updateStudent({ studentData: newStudentData })
       .then(() => {
-        router.push({
-          pathname: router.route,
-          query: router.query,
-        })
-        setNewStudentData(defaultNewStudentValues)
-        handleClose()
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
           text: 'Dados do aluno atualizados com sucesso',
         })
+        setNewStudentData(defaultNewStudentValues)
+        handleClose()
+        getStudents()
       })
       .catch((err) => {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'error',
-          text:
-            'Erro ao tentar atualizar dados do aluno ' +
-            `(${err.response.data.message})`,
+          text: `Erro ao tentar atualizar dados do aluno - (${
+            err?.response?.data?.message || err?.message
+          })`,
         })
       })
       .finally(() => {

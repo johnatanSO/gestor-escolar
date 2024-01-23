@@ -40,7 +40,7 @@ export class SubjectController {
     const { idSubject } = req.params
 
     const deleteSubjectService = container.resolve(DeleteSubjectService)
-    await deleteSubjectService.execute(idSubject.toString())
+    await deleteSubjectService.execute(idSubject)
 
     return res.status(202).json({
       success: true,

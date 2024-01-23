@@ -14,10 +14,10 @@ export class DeleteSubjectService {
   async execute(idSubject: string): Promise<void> {
     if (!idSubject) throw new AppError('_id da disciplina não foi informado')
 
-    const subjectNotFound = await this.subjectsRepository.findById(idSubject)
+    const subject = await this.subjectsRepository.findById(idSubject)
 
-    if (!subjectNotFound) throw new AppError('Disciplina não encontrada')
+    if (!subject) throw new AppError('Disciplina não encontrada')
 
-    await this.subjectsRepository.delete(idSubject)
+    await this.subjectsRepository.delete(subject._id.toString())
   }
 }

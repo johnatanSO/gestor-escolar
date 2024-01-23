@@ -5,16 +5,23 @@ import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
 const subjectsRoutes = express.Router()
 const subjectController = new SubjectController()
 
-subjectsRoutes.use(ensureAuthenticated)
+subjectsRoutes.get('/', ensureAuthenticated, subjectController.listAllSubjects)
 
-subjectsRoutes.get('/', subjectController.listAllSubjects)
+subjectsRoutes.post(
+  '/',
+  ensureAuthenticated,
+  subjectController.createNewSubject,
+)
 
-subjectsRoutes.post('/', subjectController.createNewSubject)
-
-subjectsRoutes.delete('/:idSubject', subjectController.deleteSubject)
+subjectsRoutes.delete(
+  '/:idSubject',
+  ensureAuthenticated,
+  subjectController.deleteSubject,
+)
 
 subjectsRoutes.put(
   '/insertStudents/:idSubject',
+  ensureAuthenticated,
   subjectController.insertStudents,
 )
 

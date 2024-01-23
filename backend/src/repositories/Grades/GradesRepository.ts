@@ -1,6 +1,10 @@
 import { Model } from 'mongoose'
 import { Grade, GradeModel } from '../../entities/grade'
-import { ICreateGradeDTO, IGradesRepository } from './IGradesRepository'
+import {
+  ICreateGradeDTO,
+  IGradesRepository,
+  IUpdate,
+} from './IGradesRepository'
 
 export class GradesRepository implements IGradesRepository {
   model: Model<Grade>
@@ -24,5 +28,9 @@ export class GradesRepository implements IGradesRepository {
     await newGrade.save()
 
     return newGrade
+  }
+
+  async update({ idGrade, fields }: IUpdate): Promise<void> {
+    await this.model.updateOne({ _id: idGrade }, { $set: fields })
   }
 }

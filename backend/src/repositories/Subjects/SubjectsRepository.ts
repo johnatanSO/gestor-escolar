@@ -16,8 +16,8 @@ export class SubjectsRepository implements ISubjectsRepository {
     return await this.model.find({ teacher: idTeacher })
   }
 
-  async findById(subjectId: string): Promise<ISubject> {
-    return await this.model.findOne({ _id: subjectId })
+  async findById(idSubject: string): Promise<ISubject> {
+    return await this.model.findOne({ _id: idSubject }).populate('students')
   }
 
   async delete(idSubject: string): Promise<void> {

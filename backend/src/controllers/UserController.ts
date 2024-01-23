@@ -8,7 +8,6 @@ import { UpdateUserInfosService } from '../useCases/User/UpdateUserInfos/UpdateU
 
 export class UserController {
   async createNewUser(req: Request, res: Response): Promise<Response> {
-    const { _id: idTeacher } = req.user
     const { name, email, password, occupation } = req.body
 
     const createNewUserService = container.resolve(CreateNewUserService)
@@ -17,7 +16,6 @@ export class UserController {
       email,
       password,
       occupation,
-      idTeacher,
     })
 
     return res.status(201).json({
@@ -54,7 +52,7 @@ export class UserController {
   }
 
   async updateUserInfos(req: Request, res: Response): Promise<Response> {
-    const { idUser, name, email, password } = req.body
+    const { _id: idUser, name, email, password } = req.body
 
     const updateUserInfosService = container.resolve(UpdateUserInfosService)
     await updateUserInfosService.execute({

@@ -1,15 +1,17 @@
 import { inject, injectable } from 'tsyringe'
-import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import bcrypt from 'bcrypt'
+
+import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
+import { User } from '../../../entities/user'
 import { AppError } from '../../../shared/errors/AppError'
 import { Types } from 'mongoose'
 const saltRounds = 10
 
 interface IRequest {
+  idTeacher: string
   name: string
   email: string
   password: string
-  occupation: string
 }
 
 interface IResponse {
@@ -19,10 +21,11 @@ interface IResponse {
   email: string
   occupation: string
   avatar: string
+  teacher: Types.ObjectId | User
 }
 
 @injectable()
-export class CreateNewUserService {
+export class CreateStudentService {
   usersRepository: IUsersRepository
   constructor(@inject('UsersRepository') usersRepository: IUsersRepository) {
     this.usersRepository = usersRepository
@@ -32,12 +35,11 @@ export class CreateNewUserService {
     name,
     email,
     password,
-    occupation,
+    idTeacher,
   }: IRequest): Promise<IResponse> {
     if (!name) throw new AppError('Nome de usuário não informado')
     if (!email) throw new AppError('E-mail do usuário não informado')
     if (!password) throw new AppError('Senha do usuário não informada')
-    if (!occupation) throw new AppError('Ocupação do usuário não informada')
 
     const alreadExistUser = await this.usersRepository.findByEmail(email)
 
@@ -46,21 +48,26 @@ export class CreateNewUserService {
     }
 
     const encryptedPassword = await bcrypt.hash(password, saltRounds)
-    const newUser = await this.usersRepository.create({
-      code: '1',
+
+    const code = await this.usersRepository.getStudentsEntries(idTeacher)
+
+    const newStudent = await this.usersRepository.create({
+      code: (code + 1).toString(),
       name,
       email,
       password: encryptedPassword,
-      occupation,
+      occupation: 'student',
+      idTeacher,
     })
 
     return {
-      _id: newUser._id,
-      code: newUser.code,
-      name: newUser.name,
-      email: newUser.email,
-      occupation: newUser.occupation,
-      avatar: newUser.avatar,
+      _id: newStudent._id,
+      code: newStudent.code,
+      name: newStudent.name,
+      email: newStudent.email,
+      occupation: newStudent.occupation,
+      avatar: newStudent.avatar,
+      teacher: newStudent.teacher,
     }
   }
 }

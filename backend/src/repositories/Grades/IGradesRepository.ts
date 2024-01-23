@@ -1,5 +1,10 @@
 import { Grade } from '../../entities/grade'
 
+export interface IUpdate {
+  idGrade: string
+  fields: any
+}
+
 export interface ICreateGradeDTO {
   idStudent: string
   idSubject: string
@@ -14,4 +19,6 @@ export interface IGradesRepository {
     firstGrade,
     secondGrade,
   }: ICreateGradeDTO): Promise<Grade>
+
+  update({ idGrade, fields }: IUpdate): Promise<void>
 }

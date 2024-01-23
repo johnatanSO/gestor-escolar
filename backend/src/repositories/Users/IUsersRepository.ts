@@ -16,4 +16,5 @@ export interface IUsersRepository {
   update: (filters: any, updateFields: any) => Promise<void>
   delete: (idUser: string) => Promise<void>
   listStudents(idTeacher: string): Promise<User[]>
+  getStudentsEntries(idTeacher: string): Promise<number>
 }

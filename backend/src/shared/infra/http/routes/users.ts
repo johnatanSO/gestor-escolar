@@ -11,16 +11,21 @@ const usersRoutes = express.Router()
 const userController = new UserController()
 
 usersRoutes.post('/', userController.createNewUser)
-usersRoutes.get('/:userId', userController.getUserInfo)
+
+usersRoutes.get('/:userId', ensureAuthenticated, userController.getUserInfo)
+
 usersRoutes.patch(
   '/avatar',
   ensureAuthenticated,
   uploadAvatar.single('avatar'),
   userController.updateUserAvatar,
 )
+
 usersRoutes.use(
   '/avatar',
   express.static(path.join(__dirname, '..', '..', 'tmp', 'avatar')),
 )
+
+usersRoutes.put('/', ensureAuthenticated, userController.updateUserInfos)
 
 export { usersRoutes }

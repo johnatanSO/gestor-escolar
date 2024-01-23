@@ -47,4 +47,8 @@ export class UsersRepository implements IUsersRepository {
   async listStudents(idTeacher: string): Promise<User[]> {
     return await this.model.find({ teacher: idTeacher, occupation: 'student' })
   }
+
+  async getStudentsEntries(idTeacher: string): Promise<number> {
+    return await this.model.count({ idTeacher, occupation: 'student' })
+  }
 }

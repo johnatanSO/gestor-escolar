@@ -9,6 +9,7 @@ export interface User {
   occupation: string
   avatar: string
   teacher: Types.ObjectId | User
+  createdAt: Date
 }
 
 const userSchema = new mongoose.Schema({
@@ -19,6 +20,7 @@ const userSchema = new mongoose.Schema({
   occupation: { type: String, default: null, required: true },
   avatar: { type: String, default: null },
   teacher: { type: 'ObjectId', ref: 'User', default: null },
+  createdAt: { type: Date, default: Date.now },
 })
 
 export const UserModel = mongoose.model<User>('User', userSchema)

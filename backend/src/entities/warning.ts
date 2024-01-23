@@ -7,6 +7,7 @@ export interface Warning {
   description: string
   student: Types.ObjectId
   date: Date
+  createdAt: Date
 }
 
 const warningSchema = new mongoose.Schema({
@@ -15,6 +16,7 @@ const warningSchema = new mongoose.Schema({
   description: { type: String, default: null },
   student: { type: 'ObjectId', ref: 'Student', default: null },
   date: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now },
 })
 
 export const WarningModel = mongoose.model<Warning>('Warning', warningSchema)

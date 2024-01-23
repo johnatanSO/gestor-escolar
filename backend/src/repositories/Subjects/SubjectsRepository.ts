@@ -24,8 +24,13 @@ export class SubjectsRepository implements ISubjectsRepository {
     await this.model.deleteOne({ _id: idSubject })
   }
 
-  async create(SubjectData: INewSubjectDTO): Promise<ISubject> {
-    const newSubject = await this.model.create(SubjectData)
+  async create({ name, code, idTeacher }: INewSubjectDTO): Promise<ISubject> {
+    const newSubject = await this.model.create({
+      name,
+      code,
+      teacher: idTeacher,
+    })
+
     await newSubject.save()
 
     return newSubject

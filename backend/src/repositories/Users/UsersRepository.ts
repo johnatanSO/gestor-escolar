@@ -14,6 +14,7 @@ export class UsersRepository implements IUsersRepository {
     password,
     email,
     occupation,
+    idTeacher,
   }: INewUserDTO): Promise<User> {
     const newUser = await this.model.create({
       code,
@@ -21,6 +22,7 @@ export class UsersRepository implements IUsersRepository {
       password,
       email,
       occupation,
+      teacher: idTeacher,
     })
     await newUser.save()
     return newUser
@@ -43,7 +45,6 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async listStudents(idTeacher: string): Promise<User[]> {
-    const students = await this.model.find({ teacher: idTeacher })
-    return students
+    return await this.model.find({ teacher: idTeacher, occupation: 'student' })
   }
 }

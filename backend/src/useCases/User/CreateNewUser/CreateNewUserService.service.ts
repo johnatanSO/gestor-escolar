@@ -3,6 +3,7 @@ import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import bcrypt from 'bcrypt'
 import { AppError } from '../../../shared/errors/AppError'
 import { Types } from 'mongoose'
+import { User } from '../../../entities/user'
 const saltRounds = 10
 
 interface IRequest {
@@ -10,6 +11,7 @@ interface IRequest {
   email: string
   password: string
   occupation: string
+  idTeacher: string
 }
 
 interface IResponse {
@@ -19,6 +21,7 @@ interface IResponse {
   email: string
   occupation: string
   avatar: string
+  teacher: Types.ObjectId | User
 }
 
 @injectable()
@@ -33,6 +36,7 @@ export class CreateNewUserService {
     email,
     password,
     occupation,
+    idTeacher,
   }: IRequest): Promise<IResponse> {
     if (!name) throw new AppError('Nome de usuário não informado')
     if (!email) throw new AppError('E-mail do usuário não informado')
@@ -52,6 +56,7 @@ export class CreateNewUserService {
       email,
       password: encryptedPassword,
       occupation,
+      idTeacher,
     })
 
     return {
@@ -61,6 +66,7 @@ export class CreateNewUserService {
       email: newUser.email,
       occupation: newUser.occupation,
       avatar: newUser.avatar,
+      teacher: newUser.teacher,
     }
   }
 }

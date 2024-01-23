@@ -4,9 +4,11 @@ import { CreateNewUserService } from '../useCases/User/CreateNewUser/CreateNewUs
 import { GetUserInfoService } from '../useCases/User/GetUserInfo/GetUserInfoService.service'
 import { UpdateUserAvatarService } from '../useCases/User/UpdateUserAvatar/UpdateUserAvatarService.service'
 import { AppError } from '../shared/errors/AppError'
+import { UpdateUserInfosService } from '../useCases/User/UpdateUserInfos/UpdateUserInfosService.service'
 
 export class UserController {
   async createNewUser(req: Request, res: Response): Promise<Response> {
+    const { _id: idTeacher } = req.user
     const { name, email, password, occupation } = req.body
 
     const createNewUserService = container.resolve(CreateNewUserService)
@@ -15,6 +17,7 @@ export class UserController {
       email,
       password,
       occupation,
+      idTeacher,
     })
 
     return res.status(201).json({
@@ -47,6 +50,23 @@ export class UserController {
       success: true,
       message: 'Busca de informações do usuário concluída com sucesso',
       item: userInfo,
+    })
+  }
+
+  async updateUserInfos(req: Request, res: Response): Promise<Response> {
+    const { idUser, name, email, password } = req.body
+
+    const updateUserInfosService = container.resolve(UpdateUserInfosService)
+    await updateUserInfosService.execute({
+      name,
+      email,
+      password,
+      idUser,
+    })
+
+    return res.status(200).json({
+      success: true,
+      message: 'Dados do usuário atualizados com sucesso',
     })
   }
 }

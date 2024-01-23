@@ -11,8 +11,11 @@ subjectsRoutes.get('/', subjectController.listAllSubjects)
 
 subjectsRoutes.post('/', subjectController.createNewSubject)
 
-subjectsRoutes.delete('/', subjectController.deleteSubject)
+subjectsRoutes.delete('/:idSubject', subjectController.deleteSubject)
 
-// subjectsRoutes.put('/insertStudents', subjectController.insertStudents)
+subjectsRoutes.put(
+  '/insertStudents/:idSubject',
+  subjectController.insertStudents,
+)
 
 export { subjectsRoutes }

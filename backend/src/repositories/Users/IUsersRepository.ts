@@ -6,6 +6,7 @@ export interface INewUserDTO {
   email: string
   password: string
   occupation: string
+  idTeacher?: string
 }
 
 export interface IUsersRepository {

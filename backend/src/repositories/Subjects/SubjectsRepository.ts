@@ -2,8 +2,8 @@ import { Model } from 'mongoose'
 import { ISubject, SubjectModel } from '../../entities/subject'
 import {
   ISubjectsRepository,
-  IInsertStudentDTO,
   INewSubjectDTO,
+  IUpdate,
 } from './ISubjectsRepository'
 
 export class SubjectsRepository implements ISubjectsRepository {
@@ -12,8 +12,8 @@ export class SubjectsRepository implements ISubjectsRepository {
     this.model = SubjectModel
   }
 
-  async list(queryList = {}): Promise<ISubject[]> {
-    return await this.model.find(queryList)
+  async list(idTeacher: string): Promise<ISubject[]> {
+    return await this.model.find({ teacher: idTeacher })
   }
 
   async findById(subjectId: string): Promise<ISubject> {
@@ -31,14 +31,8 @@ export class SubjectsRepository implements ISubjectsRepository {
     return newSubject
   }
 
-  async insertStudent({
-    studentsIds,
-    subjectId,
-  }: IInsertStudentDTO): Promise<void> {
-    await this.model.updateOne(
-      { _id: subjectId },
-      { $set: { students: studentsIds } },
-    )
+  async update({ fields, idSubject }: IUpdate): Promise<void> {
+    await this.model.updateOne({ _id: idSubject }, { $set: fields })
   }
 
   async getEntries({ idTeacher }): Promise<number> {

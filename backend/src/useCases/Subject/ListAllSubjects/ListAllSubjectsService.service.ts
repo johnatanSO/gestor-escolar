@@ -19,6 +19,6 @@ export class ListAllSubjectsService {
   async execute({ idTeacher }: IRequest): Promise<ISubject[]> {
     if (!idTeacher) throw new AppError('_id do professor não foi informado.')
 
-    return await this.subjectsRepository.list({ idTeacher })
+    return await this.subjectsRepository.list(idTeacher)
   }
 }

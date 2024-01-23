@@ -21,15 +21,15 @@ interface UpdateStudentParams {
 }
 
 export const studentsService = {
-  async getAll() {
-    return await http.get('/students/')
+  getAll() {
+    return http.get('/students/')
   },
 
-  async getBySubject(idSubject: string) {
-    return await http.get('/students/subjectStudentsGrades/' + idSubject)
+  getBySubject(idSubject: string) {
+    return http.get('/students/subjectStudentsGrades/' + idSubject)
   },
 
-  async updateGrades({ studentId, subjectId, grades }: UpdateParams) {
+  updateGrades({ studentId, subjectId, grades }: UpdateParams) {
     const formatedGrades = {
       firstGrade: Number(grades?.firstGrade || 0),
       secondGrade: Number(grades?.secondGrade || 0),
@@ -45,16 +45,16 @@ export const studentsService = {
     })
   },
 
-  async getGrades() {
+  getGrades() {
     const idStudent = usersService?.getUserInfo()?._id
-    return await http.get('/students/studentGrades/' + idStudent)
+    return http.get('/students/studentGrades/' + idStudent)
   },
 
-  async delete({ studentId }: DeleteStudentParams) {
-    return await http.delete('/students/' + studentId)
+  delete({ studentId }: DeleteStudentParams) {
+    return http.delete('/students/' + studentId)
   },
 
-  async create({ newStudentData }: CreateParams) {
+  create({ newStudentData }: CreateParams) {
     const body = { ...newStudentData }
 
     return http.post('/students/', {

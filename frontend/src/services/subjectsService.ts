@@ -19,38 +19,32 @@ interface InsertStudentsParams {
 }
 
 export const subjectsService = {
-  async getAll() {
-    return await http.get('/subjects/')
+  getAll() {
+    return http.get('/subjects/')
   },
 
-  async create({ newSubjectData }: CreateParams) {
+  create({ newSubjectData }: CreateParams) {
     const body = {
       ...newSubjectData,
     }
-    return await http.post('/subjects/', {
+    return http.post('/subjects/', {
       ...body,
     })
   },
 
-  async update({ subjectData }: UpdateParams) {
+  update({ subjectData }: UpdateParams) {
     return http.put('/subjects/')
   },
 
-  async delete({ idSubject }: DeleteParams) {
-    return await http.delete('/subjects/', {
-      params: { idSubject },
-    })
+  delete({ idSubject }: DeleteParams) {
+    return http.delete('/subjects/' + idSubject)
   },
 
-  async insertStudents({
-    selectedStudentsIds,
-    subjectId,
-  }: InsertStudentsParams) {
+  insertStudents({ selectedStudentsIds, subjectId }: InsertStudentsParams) {
     const body = {
       studentsIds: selectedStudentsIds,
-      subjectId,
     }
-    return http.put('/subjects/insertStudents', {
+    return http.put(`/subjects/insertStudents/${subjectId}`, {
       ...body,
     })
   },

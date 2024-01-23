@@ -23,7 +23,7 @@ export const usersService = {
     return true
   },
 
-  async login({ userData }: LoginParams) {
+  login({ userData }: LoginParams) {
     const body = { ...userData }
 
     return http.post('/login', {
@@ -31,7 +31,7 @@ export const usersService = {
     })
   },
 
-  async register({ newUser }: RegisterParams) {
+  register({ newUser }: RegisterParams) {
     const body = { ...newUser }
 
     return http.post('/users', {
@@ -102,15 +102,15 @@ export const usersService = {
     }
   },
 
-  async updateAvatarImage({ avatarImage }: any) {
+  updateAvatarImage({ avatarImage }: any) {
     const formData = new FormData()
 
     formData.append('avatar', avatarImage)
 
-    return await http.patch('/users/avatar', formData)
+    return http.patch('/users/avatar', formData)
   },
 
-  async getCurrentUserInfo() {
-    return await http.get('/users/' + this.getUserInfo()._id)
+  getCurrentUserInfo() {
+    return http.get('/users/' + this.getUserInfo()._id)
   },
 }

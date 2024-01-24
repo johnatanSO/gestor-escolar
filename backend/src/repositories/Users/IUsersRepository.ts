@@ -17,4 +17,5 @@ export interface IUsersRepository {
   delete: (idUser: string) => Promise<void>
   listStudents(idTeacher: string): Promise<User[]>
   getStudentsEntries(idTeacher: string): Promise<number>
+  incrementWarningsAmount(idUser: string): Promise<void>
 }

@@ -10,8 +10,7 @@ export interface Grade {
 }
 
 const gradeSchema = new mongoose.Schema({
-  code: { type: String, default: null },
-  student: { type: 'ObjectId', ref: 'Student', default: null },
+  student: { type: 'ObjectId', ref: 'User', default: null },
   subject: { type: 'ObjectId', ref: 'Subject', default: null },
   firstGrade: { type: Number, default: 0 },
   secondGrade: { type: Number, default: 0 },

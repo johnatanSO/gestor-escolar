@@ -1,4 +1,5 @@
 import './Subject'
 import './User'
 import './Warning'
+import './Grade'
 import './providers'

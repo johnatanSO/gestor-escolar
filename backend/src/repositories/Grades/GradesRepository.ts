@@ -33,4 +33,14 @@ export class GradesRepository implements IGradesRepository {
   async update({ idGrade, fields }: IUpdate): Promise<void> {
     await this.model.updateOne({ _id: idGrade }, { $set: fields })
   }
+
+  async listBySubject(idSubject: string): Promise<Grade[]> {
+    return await this.model
+      .find({ subject: idSubject })
+      .populate('student subject')
+  }
+
+  async delete(idGrade: string): Promise<void> {
+    await this.model.deleteOne({ _id: idGrade })
+  }
 }

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import { ListAllStudentsService } from '../useCases/Student/ListAllStudents/ListAllStudentsService.service'
-import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
 import { CreateStudentService } from '../useCases/Student/CreateStudent/CreateStudentService.service'
 import { DeleteStudentService } from '../useCases/Student/DeleteStudent/DeleteStudentService.service'
 
@@ -16,22 +15,6 @@ export class StudentController {
       success: true,
       message: 'Busca de alunos feita com sucesso',
       items: students,
-    })
-  }
-
-  async updateGrades(req: Request, res: Response): Promise<Response> {
-    const { firstGrade, secondGrade, idGrade } = req.body
-
-    const updateGradesService = container.resolve(UpdateGradesService)
-    await updateGradesService.execute({
-      firstGrade,
-      secondGrade,
-      idGrade,
-    })
-
-    return res.status(201).json({
-      success: true,
-      message: 'Notas atualizas com sucesso',
     })
   }
 

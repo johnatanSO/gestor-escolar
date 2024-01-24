@@ -21,4 +21,8 @@ export interface IGradesRepository {
   }: ICreateGradeDTO): Promise<Grade>
 
   update({ idGrade, fields }: IUpdate): Promise<void>
+
+  listBySubject(idSubject: string): Promise<Grade[]>
+
+  delete(idGrade: string): Promise<void>
 }

@@ -5,14 +5,18 @@ import {
 import { inject, injectable } from 'tsyringe'
 import { Warning } from '../../../entities/warning'
 import { AppError } from '../../../shared/errors/AppError'
+import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 
 @injectable()
 export class CreateNewWarningService {
   warningsRepository: IWarningsRepository
+  usersRepository: IUsersRepository
   constructor(
     @inject('WarningsRepository') warningsRepository: IWarningsRepository,
+    @inject('UsersRepository') usersRepository: IUsersRepository,
   ) {
     this.warningsRepository = warningsRepository
+    this.usersRepository = usersRepository
   }
 
   async execute({
@@ -32,6 +36,8 @@ export class CreateNewWarningService {
       title,
       description,
     })
+
+    await this.usersRepository.incrementWarningsAmount(idStudent)
 
     return newWarning
   }

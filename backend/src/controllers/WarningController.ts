@@ -5,7 +5,8 @@ import { CreateNewWarningService } from '../useCases/Warning/CreateNewWarning/Cr
 
 export class WarningController {
   async createNewWarning(req: Request, res: Response): Promise<Response> {
-    const { idStudent, title, description } = req.body
+    const { idStudent } = req.params
+    const { title, description } = req.body
 
     const createNewWarningService = container.resolve(CreateNewWarningService)
     const warning = await createNewWarningService.execute({

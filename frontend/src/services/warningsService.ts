@@ -10,9 +10,9 @@ export const warningsService = {
   create({ idStudent, newWarningData }: CreateParams) {
     const body = {
       ...newWarningData,
-      idStudent,
     }
-    return http.post('/warnings/', {
+
+    return http.post(`/warnings/${idStudent}`, {
       ...body,
     })
   },

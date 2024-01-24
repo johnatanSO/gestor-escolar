@@ -9,7 +9,6 @@ import {
 import style from './ModalAddStudents.module.scss'
 import { subjectsService } from '../../../../services/subjectsService'
 import { AlertContext } from '../../../../contexts/alertContext'
-import { useRouter } from 'next/router'
 import { Subject } from '..'
 import { studentsService } from '../../../../services/studentsService'
 import { Checkbox, FormControlLabel } from '@mui/material'
@@ -18,24 +17,26 @@ interface Props {
   subjectData: Subject
   open: boolean
   handleClose: () => void
+  getSubjects: () => void
 }
 
 export interface Student {
   _id: string
   name: string
   checked?: boolean
-  user: {
-    name: string
-  }
 }
 
-export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
+export function ModalAddStudents({
+  open,
+  handleClose,
+  subjectData,
+  getSubjects,
+}: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
+
   const [loadingAddStudents, setLoadingAddStudents] = useState<boolean>(false)
   const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
   const [students, setStudents] = useState<Student[]>([])
-
-  const router = useRouter()
 
   function onAddStudents(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -48,17 +49,14 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
     subjectsService
       .insertStudents({ selectedStudentsIds, subjectId: subjectData?._id })
       .then(() => {
-        router.push({
-          pathname: router.route,
-          query: router.query,
-        })
-        handleClose()
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
           text: 'Alunos associados com sucesso',
         })
+        getSubjects()
+        handleClose()
       })
       .catch((err) => {
         setAlertNotifyConfigs({
@@ -67,7 +65,7 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
           type: 'error',
           text:
             'Erro ao tentar associar alunos ' +
-            `(${err.response.data.message})`,
+            `(${err?.response?.data?.message || err?.message})`,
         })
       })
       .finally(() => {
@@ -146,7 +144,7 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
                     }}
                   />
                 }
-                label={student?.user?.name || '--'}
+                label={student?.name || '--'}
               />
             </li>
           )

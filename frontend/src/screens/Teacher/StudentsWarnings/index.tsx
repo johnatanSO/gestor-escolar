@@ -2,10 +2,11 @@ import { studentsService } from '../../../services/studentsService'
 import { useEffect, useState } from 'react'
 import { TableComponent } from '../../../../src/components/TableComponent'
 import { useColumns } from './hooks/useColumns'
-import { EmptyItems } from '../../../../src/components/EmptyItems'
 import { useRouter } from 'next/router'
 import { ModalWarnings, Warning } from './ModalWarnings'
-import { Loading } from '../../../components/Loading'
+import style from './StudentsWarnings.module.scss'
+import { ListMobile } from '../../../components/ListMobile'
+import { useFieldsMobile } from './hooks/useFieldsMobile'
 
 export interface Student {
   _id: string
@@ -43,7 +44,6 @@ export function StudentsWarnings() {
 
   function handleOpenWarnings(student: Student) {
     setModalWarningsOpened(true)
-    console.log('student', student)
     setSelectedStudent(student)
   }
 
@@ -51,28 +51,30 @@ export function StudentsWarnings() {
     handleOpenWarnings,
   })
 
+  const fieldsMobile = useFieldsMobile()
+
   return (
     <>
-      {students?.length > 0 && (
+      <div className={style.viewDesktop}>
         <TableComponent
           loading={loadingStudents}
           columns={columns}
           rows={students}
         />
-      )}
-
-      {students?.length === 0 && loadingStudents && (
-        <Loading size={30} color="#cd1414" />
-      )}
-
-      {students?.length === 0 && !loadingStudents && (
-        <EmptyItems text="Nenhum aluno foi encontrado" />
-      )}
+      </div>
+      <div className={style.viewMobile}>
+        <ListMobile
+          loading={loadingStudents}
+          collapseItems={columns}
+          itemFields={fieldsMobile}
+          emptyText="Nenhum aluno encontrado"
+          items={students}
+        />
+      </div>
 
       {modalWarningsOpened && selectedStudent && (
         <ModalWarnings
           studentData={selectedStudent}
-          setStudentData={setSelectedStudent}
           open={modalWarningsOpened}
           handleClose={() => {
             setModalWarningsOpened(false)

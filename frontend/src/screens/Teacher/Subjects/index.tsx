@@ -6,9 +6,10 @@ import { TableComponent } from '../../../components/TableComponent'
 import { useColumns } from './hooks/useColumns'
 import { AlertContext } from '../../../contexts/alertContext'
 import { ModalAddStudents } from './ModalAddStudents'
-import style from './InsertStudents.module.scss'
+import style from './Subjects.module.scss'
 import { ListMobile } from '../../../components/ListMobile'
 import { useFieldsMobile } from './hooks/useFieldsMobile'
+import { ModalGrades } from './ModalGrades'
 
 export interface Subject {
   _id: string
@@ -29,6 +30,7 @@ export function Subjects() {
   )
   const [modalAddStudentsOpened, setModalAddStudentsOpened] =
     useState<boolean>(true)
+  const [modalGradesOpened, setModalGradesOpened] = useState<boolean>(true)
   const [loadingSubjects, setLoadingSubjects] = useState<boolean>(true)
   const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
 
@@ -86,9 +88,15 @@ export function Subjects() {
     setSelectedSubject(subject)
   }
 
+  function handleShowGrades(subject: Subject) {
+    setModalGradesOpened(true)
+    setSelectedSubject(subject)
+  }
+
   const columns = useColumns({
     handleDeleteSubject,
     handleAddStudents,
+    handleShowGrades,
   })
 
   const fieldsMobile = useFieldsMobile()
@@ -113,7 +121,8 @@ export function Subjects() {
       </div>
       <div className={style.viewMobile}>
         <ListMobile
-          collapseItems={[]}
+          loading={loadingSubjects}
+          collapseItems={columns}
           itemFields={fieldsMobile}
           items={subjects}
           emptyText="Nenhuma disciplina cadastrada"
@@ -133,10 +142,22 @@ export function Subjects() {
 
       {modalAddStudentsOpened && selectedSubject && (
         <ModalAddStudents
+          getSubjects={getSubjects}
           subjectData={selectedSubject}
           open={modalAddStudentsOpened}
           handleClose={() => {
             setModalAddStudentsOpened(false)
+            setSelectedSubject(undefined)
+          }}
+        />
+      )}
+
+      {modalGradesOpened && selectedSubject && (
+        <ModalGrades
+          subjectData={selectedSubject}
+          open={modalGradesOpened}
+          handleClose={() => {
+            setModalGradesOpened(false)
             setSelectedSubject(undefined)
           }}
         />

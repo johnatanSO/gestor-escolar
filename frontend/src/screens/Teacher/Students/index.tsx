@@ -48,10 +48,6 @@ export function Students() {
       })
   }
 
-  useEffect(() => {
-    getStudents()
-  }, [])
-
   function handleDeleteStudent(student: Student) {
     setAlertDialogConfirmConfigs({
       ...alertDialogConfirmConfigs,
@@ -96,6 +92,10 @@ export function Students() {
 
   const fieldsMobile = useFieldsMobile()
 
+  useEffect(() => {
+    getStudents()
+  }, [])
+
   return (
     <>
       <HeaderPage
@@ -117,8 +117,9 @@ export function Students() {
       <div className={style.viewMobile}>
         <ListMobile
           itemFields={fieldsMobile}
-          collapseItems={[]}
+          collapseItems={columns}
           items={students}
+          loading={loadingStudents}
         />
       </div>
 

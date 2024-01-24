@@ -35,6 +35,7 @@ export function useColumns({
     {
       headerName: '',
       field: 'acoes',
+      type: 'actions',
       cellRenderer: (params: CellFunctionParams<Student>) => {
         return (
           <div className={style.actionButtonsContainer}>

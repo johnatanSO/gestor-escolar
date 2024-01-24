@@ -3,8 +3,8 @@
 .actionButtonsContainer {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 2rem;
+  justify-content: space-evenly;
+  gap: 1rem;
 
   button {
     background: none;
@@ -22,10 +22,13 @@
       opacity: 0.4;
     }
 
-    &.editStudentButton {
+    &.insertStudentsButton {
       color: $blue-color-700;
     }
-    &.deleteStudentButton {
+    &.showGradesButton {
+      color: $green-color-500;
+    }
+    &.deleteSubjectButton {
       color: $red-color-500;
     }
 
@@ -69,20 +72,28 @@
       justify-content: center;
       gap: 0.7rem;
 
-      &.editStudentButton {
+      &.insertStudentsButton {
         background: $blue-color-700;
         color: $white-color;
 
         &::after {
-          content: "Editar aluno";
+          content: "Inserir alunos";
         }
       }
-      &.deleteStudentButton {
+      &.showGradesButton {
+        background: $green-color-500;
+        color: $white-color;
+
+        &::after {
+          content: "Ver notas";
+        }
+      }
+      &.deleteSubjectButton {
         background: $red-color-500;
         color: $white-color;
 
         &::after {
-          content: "Deletar aluno";
+          content: "Deletar matéria";
         }
       }
     }

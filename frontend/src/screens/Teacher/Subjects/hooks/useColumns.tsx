@@ -1,17 +1,23 @@
-import { faGraduationCap, faTrash } from '@fortawesome/free-solid-svg-icons'
+import {
+  faClipboard,
+  faGraduationCap,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import { Subject } from '..'
-import style from '../InsertStudents.module.scss'
+import style from '../Subjects.module.scss'
 import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface UseColumnsParams {
   handleDeleteSubject: (subject: Subject) => void
   handleAddStudents: (subject: Subject) => void
+  handleShowGrades: (subject: Subject) => void
 }
 
 export function useColumns({
   handleDeleteSubject,
   handleAddStudents,
+  handleShowGrades,
 }: UseColumnsParams) {
   return [
     {
@@ -35,6 +41,7 @@ export function useColumns({
     {
       headerName: '',
       field: 'acoes',
+      type: 'actions',
       cellRenderer: (params: CellFunctionParams<Subject>) => {
         return (
           <div className={style.actionButtonsContainer}>
@@ -42,16 +49,25 @@ export function useColumns({
               onClick={() => {
                 handleAddStudents(params.data)
               }}
-              className={style.editStudentButton}
+              className={style.insertStudentsButton}
               type="button"
             >
               <FontAwesomeIcon icon={faGraduationCap} className={style.icon} />
             </button>
             <button
               onClick={() => {
+                handleShowGrades(params.data)
+              }}
+              className={style.showGradesButton}
+              type="button"
+            >
+              <FontAwesomeIcon icon={faClipboard} className={style.icon} />
+            </button>
+            <button
+              onClick={() => {
                 handleDeleteSubject(params.data)
               }}
-              className={style.deleteStudentButton}
+              className={style.deleteSubjectButton}
               type="button"
             >
               <FontAwesomeIcon icon={faTrash} className={style.icon} />

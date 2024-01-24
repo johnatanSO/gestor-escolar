@@ -8,4 +8,6 @@ const gradeController = new GradeController()
 
 gradesRoutes.get('/:idSubject', ensureAuthenticated, gradeController.list)
 
+gradesRoutes.get('/:idGrade', ensureAuthenticated, gradeController.update)
+
 export { gradesRoutes }

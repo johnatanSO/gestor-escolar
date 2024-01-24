@@ -1,5 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Grade } from '..'
 import { CustomTextField } from '../../../../../components/CustomTextField'
+import style from './FormEditGrade.module.scss'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   gradeToEditData: Grade
@@ -13,7 +16,12 @@ export function FormEditGrade({
   setGradeToEditData,
 }: Props) {
   return (
-    <>
+    <div className={style.inputsContainer}>
+      <button onClick={handleBack} className={style.backButton} type="button">
+        <FontAwesomeIcon className={style.icon} icon={faAngleLeft} />
+        Voltar
+      </button>
+
       <CustomTextField
         label="Nota 1"
         value={gradeToEditData.firstGrade}
@@ -34,6 +42,6 @@ export function FormEditGrade({
           })
         }}
       />
-    </>
+    </div>
   )
 }

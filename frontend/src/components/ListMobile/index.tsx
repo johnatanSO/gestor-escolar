@@ -9,7 +9,7 @@ import style from './ListMobile.module.scss'
 import { useState } from 'react'
 import { EmptyItems } from '../EmptyItems'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import { CollapseItem } from './interfaces/CollapseItem'
 import { Field } from './interfaces/Field'
 
@@ -83,56 +83,60 @@ export function ListMobile({
                     </span>
                   )
                 })}
-                <FontAwesomeIcon
-                  className={style.angleIcon}
-                  icon={faAngleDown}
-                />
+                {collapseItems?.length > 0 && (
+                  <FontAwesomeIcon
+                    className={style.angleIcon}
+                    icon={collapseOpened ? faAngleUp : faAngleDown}
+                  />
+                )}
               </ListItem>
 
-              <Collapse in={collapseOpened} className={style.collapse}>
-                <List className={style.collapseList}>
-                  {collapseItems.map((collapseItem) => {
-                    return (
-                      <ListItemButton
-                        key={collapseItem.field}
-                        className={style.collapseListItem}
-                        disableRipple
-                      >
-                        {collapseItem.type === 'actions' ? (
-                          <>
-                            {collapseItem?.cellRenderer?.({
-                              value: item[collapseItem.field],
-                              data: item,
-                            })}
-                          </>
-                        ) : (
-                          <>
-                            <span style={{ fontWeight: '600' }}>
-                              {collapseItem.headerName}
-                            </span>
-                            <span
-                              className={collapseItem?.cellClass?.({
-                                value: item[collapseItem.field],
-                                data: item,
-                              })}
-                            >
-                              {collapseItem?.valueFormatter?.({
-                                value: item[collapseItem.field],
-                                data: item,
-                              })}
-
+              {collapseItems?.length > 0 && (
+                <Collapse in={collapseOpened} className={style.collapse}>
+                  <List className={style.collapseList}>
+                    {collapseItems.map((collapseItem) => {
+                      return (
+                        <ListItemButton
+                          key={collapseItem.field}
+                          className={style.collapseListItem}
+                          disableRipple
+                        >
+                          {collapseItem.type === 'actions' ? (
+                            <>
                               {collapseItem?.cellRenderer?.({
                                 value: item[collapseItem.field],
                                 data: item,
                               })}
-                            </span>
-                          </>
-                        )}
-                      </ListItemButton>
-                    )
-                  })}
-                </List>
-              </Collapse>
+                            </>
+                          ) : (
+                            <>
+                              <span style={{ fontWeight: '600' }}>
+                                {collapseItem.headerName}
+                              </span>
+                              <span
+                                className={collapseItem?.cellClass?.({
+                                  value: item[collapseItem.field],
+                                  data: item,
+                                })}
+                              >
+                                {collapseItem?.valueFormatter?.({
+                                  value: item[collapseItem.field],
+                                  data: item,
+                                })}
+
+                                {collapseItem?.cellRenderer?.({
+                                  value: item[collapseItem.field],
+                                  data: item,
+                                })}
+                              </span>
+                            </>
+                          )}
+                        </ListItemButton>
+                      )
+                    })}
+                  </List>
+                </Collapse>
+              )}
             </div>
           )
         })}

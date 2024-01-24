@@ -1,17 +1,11 @@
 import { ModalLayout } from '../../../../components/ModalLayout'
-import {
-  FormEvent,
-  useState,
-  useContext,
-  useEffect,
-  SyntheticEvent,
-} from 'react'
-import style from './ModalAddStudents.module.scss'
+import { FormEvent, useState, useContext, useEffect } from 'react'
 import { subjectsService } from '../../../../services/subjectsService'
 import { AlertContext } from '../../../../contexts/alertContext'
 import { Subject } from '..'
 import { studentsService } from '../../../../services/studentsService'
-import { Checkbox, FormControlLabel } from '@mui/material'
+import { ListMobile } from '../../../../components/ListMobile'
+import { useFieldsMobile } from './hooks/useColumns'
 
 interface Props {
   subjectData: Subject
@@ -92,19 +86,14 @@ export function ModalAddStudents({
   function getStudentsInserted(students: Student[]) {
     const newStudents = [...students]
     newStudents.forEach((student) => {
-      const studentInserted = subjectData?.students?.find(
-        (subjectStudentId) => student?._id === subjectStudentId,
-      )
+      const studentInserted = subjectData?.students?.includes(student?._id)
+
       if (studentInserted) student.checked = true
     })
     setStudents(newStudents)
   }
 
-  useEffect(() => {
-    getStudents()
-  }, [])
-
-  function handleSelectStudent(checked: boolean, studentId: string) {
+  /* function handleSelectStudent(checked: boolean, studentId: string) {
     const newStudents = [...students]
     newStudents.forEach((student) => {
       if (student?._id === studentId) {
@@ -112,7 +101,13 @@ export function ModalAddStudents({
       }
     })
     setStudents(newStudents)
-  }
+  } */
+
+  const fieldsMobile = useFieldsMobile()
+
+  useEffect(() => {
+    getStudents()
+  }, [])
 
   return (
     <ModalLayout
@@ -123,33 +118,13 @@ export function ModalAddStudents({
       submitButtonText="Confirmar"
       loading={loadingAddStudents}
     >
-      <ul className={style.fieldsContainer}>
-        {students.length === 0 && loadingGetStudents && 'CARREGANDO...'}
-        {students?.map((student) => {
-          return (
-            <li key={student._id}>
-              <FormControlLabel
-                onChange={(
-                  event: SyntheticEvent<Element>,
-                  checked: boolean,
-                ) => {
-                  handleSelectStudent(checked, student._id)
-                }}
-                sx={{ width: '100%' }}
-                control={
-                  <Checkbox
-                    checked={student?.checked}
-                    sx={{
-                      '&.Mui-checked': { color: '#cd1414' },
-                    }}
-                  />
-                }
-                label={student?.name || '--'}
-              />
-            </li>
-          )
-        })}
-      </ul>
+      <ListMobile
+        collapseItems={[]}
+        itemFields={fieldsMobile}
+        items={students}
+        emptyText="Nenhum aluno encontrado"
+        loading={loadingGetStudents}
+      />
     </ModalLayout>
   )
 }

@@ -110,40 +110,38 @@ export function ModalWarnings({ open, handleClose, studentData }: Props) {
       submitButtonText={isFormMode ? 'Confirmar' : ''}
       loading={loadingCreateWarning}
     >
-      <>
-        {!isFormMode && (
-          <button
-            type="button"
-            className={style.buttonNewWarning}
-            onClick={() => {
-              setIsFormMode(true)
-            }}
-          >
-            <FontAwesomeIcon className={style.icon} icon={faPlus} />
-            Nova advertência
-          </button>
-        )}
+      {!isFormMode && (
+        <button
+          type="button"
+          className={style.buttonNewWarning}
+          onClick={() => {
+            setIsFormMode(true)
+          }}
+        >
+          <FontAwesomeIcon className={style.icon} icon={faPlus} />
+          Nova advertência
+        </button>
+      )}
 
-        {isFormMode && (
-          <FormNewWarning
-            newWarningData={newWarningData}
-            handleBack={() => {
-              setIsFormMode(false)
-            }}
-            setNewWarningData={setNewWarningData}
-          />
-        )}
+      {isFormMode && (
+        <FormNewWarning
+          newWarningData={newWarningData}
+          handleBack={() => {
+            setIsFormMode(false)
+          }}
+          setNewWarningData={setNewWarningData}
+        />
+      )}
 
-        {!isFormMode && !loadingWarnings && (
-          <ListMobile
-            items={warnings}
-            emptyText="Nenhuma advertência encontrada"
-            itemFields={fieldsMobile}
-            collapseItems={collapseItems}
-            loading={loadingWarnings}
-          />
-        )}
-      </>
+      {!isFormMode && (
+        <ListMobile
+          items={warnings}
+          emptyText="Nenhuma advertência encontrada"
+          itemFields={fieldsMobile}
+          collapseItems={collapseItems}
+          loading={loadingWarnings}
+        />
+      )}
     </ModalLayout>
   )
 }

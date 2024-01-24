@@ -1,17 +1,79 @@
-@import '../../../../../styles/colors.scss';
+@import "../../../../../styles/colors.scss";
 
-.fieldsContainer{
+.actionButtonsContainer {
   display: flex;
-  flex-direction: column;
-  gap: 7px;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 1rem;
 
-  list-style-type: none;
+  button {
+    background: none;
+    border: none;
+    line-height: 0;
 
-  li{
-    background: $gray-color-50;
-    box-shadow: 1px 3px 5px rgba(0 0 0 / 0.1);
+    cursor: pointer;
+    transition: filter 0.2s;
 
-    border-radius: 20px;
-    padding: 0 0 0 1rem;
+    &:not(:disabled):hover {
+      filter: brightness(0.7);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+    }
+
+    &.editGradesButton {
+      color: $blue-color-700;
+    }
+
+    .icon {
+      height: 1.2rem;
+    }
+  }
+}
+
+.viewDesktop {
+  display: flex;
+}
+.viewMobile {
+  display: none;
+}
+
+@media (max-width: 620px) {
+  .viewDesktop {
+    display: none;
+  }
+  .viewMobile {
+    display: flex;
+  }
+
+  .actionButtonsContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+
+    width: 100%;
+    margin: 0.5rem 0;
+
+    button {
+      padding: 0.6rem;
+      width: 100%;
+      border-radius: 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+
+      &.editGradesButton {
+        background: $blue-color-700;
+        color: $white-color;
+
+        &::after {
+          content: "Editar notas";
+        }
+      }
+    }
   }
 }

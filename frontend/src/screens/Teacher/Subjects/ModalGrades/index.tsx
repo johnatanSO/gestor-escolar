@@ -1,10 +1,14 @@
 import { ModalLayout } from '../../../../components/ModalLayout'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEvent, useContext } from 'react'
 import { Subject } from '..'
 import { gradesService } from '../../../../services/gradesService'
 import { ListMobile } from '../../../../components/ListMobile'
 import { useFieldsMobile } from './hooks/useFieldsMobile'
 import { useColumns } from './hooks/useColumns'
+import { TableComponent } from '../../../../components/TableComponent'
+import style from './ModalGrades.module.scss'
+import { FormEditGrade } from './FormEditGrade'
+import { AlertContext } from '../../../../contexts/alertContext'
 
 interface Props {
   subjectData: Subject
@@ -14,6 +18,8 @@ interface Props {
 
 export interface Grade {
   _id: string
+  firstGrade: number
+  secondGrade: number
   student: {
     name: string
   }
@@ -23,9 +29,11 @@ export interface Grade {
 }
 
 export function ModalGrades({ open, handleClose, subjectData }: Props) {
-  // const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
+  const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
 
   const [loadingGetGrades, setLoadingGetGrades] = useState<boolean>(true)
+  const [editGradeMode, setEditGradeMode] = useState<boolean>(false)
+  const [gradeToEditData, setGradeToEditData] = useState<Grade | null>(null)
   const [grades, setGrades] = useState<Grade[]>([])
 
   function getGrades() {
@@ -47,30 +55,74 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
       })
   }
 
-  const columns = useColumns()
+  function handleEditGrades(grade: Grade) {
+    setEditGradeMode(true)
+    setGradeToEditData(grade)
+  }
+
+  function onUpdateGrades(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    if (!gradeToEditData) return
+
+    gradesService
+      .update(gradeToEditData)
+      .then(() => {
+        setAlertNotifyConfigs({
+          ...alertNotifyConfigs,
+          open: true,
+          text: 'Notas atualizadas com suceso',
+          type: 'success',
+        })
+      })
+      .catch(() => {})
+      .finally(() => {})
+  }
+
+  const columns = useColumns({ handleEditGrades })
   const fieldsMobile = useFieldsMobile()
 
   useEffect(() => {
     getGrades()
   }, [])
 
-  console.log('grade ', grades)
-
   return (
     <ModalLayout
       open={open}
       handleClose={handleClose}
       title="Notas"
-      submitButtonText="Confirmar"
+      submitButtonText={editGradeMode ? 'Confirmar' : ''}
+      onSubmit={editGradeMode ? onUpdateGrades : undefined}
       loading={loadingGetGrades}
     >
-      <ListMobile
-        emptyText="Nenhum aluno encontrado"
-        itemFields={fieldsMobile}
-        collapseItems={columns}
-        items={grades}
-        loading={loadingGetGrades}
-      />
+      {editGradeMode && gradeToEditData && (
+        <FormEditGrade
+          gradeToEditData={gradeToEditData}
+          setGradeToEditData={setGradeToEditData}
+          handleBack={() => {
+            setEditGradeMode(false)
+            setGradeToEditData(null)
+          }}
+        />
+      )}
+      <div className={style.viewDesktop}>
+        <TableComponent
+          rows={grades}
+          loading={loadingGetGrades}
+          columns={columns}
+          emptyText="Nenhum aluno encontrado"
+        />
+      </div>
+
+      <div className={style.viewMobile}>
+        <ListMobile
+          emptyText="Nenhum aluno encontrado"
+          itemFields={fieldsMobile}
+          collapseItems={columns}
+          items={grades}
+          loading={loadingGetGrades}
+        />
+      </div>
     </ModalLayout>
   )
 }

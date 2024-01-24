@@ -2,12 +2,6 @@ import { NewStudentData } from './../screens/Teacher/Students/ModalCreateNewStud
 import http from '../api/http'
 import { usersService } from './usersService'
 
-interface UpdateParams {
-  studentId: string
-  subjectId: string
-  grades: any
-}
-
 interface DeleteStudentParams {
   studentId: string
 }
@@ -27,22 +21,6 @@ export const studentsService = {
 
   getBySubject(idSubject: string) {
     return http.get('/students/subjectStudentsGrades/' + idSubject)
-  },
-
-  updateGrades({ studentId, subjectId, grades }: UpdateParams) {
-    const formatedGrades = {
-      firstGrade: Number(grades?.firstGrade || 0),
-      secondGrade: Number(grades?.secondGrade || 0),
-    }
-    const body = {
-      ...formatedGrades,
-      studentId,
-      subjectId,
-    }
-
-    return http.put('/students/updateGrades', {
-      ...body,
-    })
   },
 
   getGrades() {

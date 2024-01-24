@@ -54,6 +54,7 @@ export function useColumns({
             >
               <FontAwesomeIcon icon={faGraduationCap} className={style.icon} />
             </button>
+
             <button
               onClick={() => {
                 handleShowGrades(params.data)
@@ -63,6 +64,7 @@ export function useColumns({
             >
               <FontAwesomeIcon icon={faClipboard} className={style.icon} />
             </button>
+
             <button
               onClick={() => {
                 handleDeleteSubject(params.data)

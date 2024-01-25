@@ -25,4 +25,10 @@ subjectsRoutes.put(
   subjectController.insertStudents,
 )
 
+subjectsRoutes.put(
+  '/removeStudents/:idSubject',
+  ensureAuthenticated,
+  subjectController.removeStudents,
+)
+
 export { subjectsRoutes }

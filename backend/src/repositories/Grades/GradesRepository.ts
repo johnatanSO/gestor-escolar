@@ -43,4 +43,16 @@ export class GradesRepository implements IGradesRepository {
   async delete(idGrade: string): Promise<void> {
     await this.model.deleteOne({ _id: idGrade })
   }
+
+  async listBySubjectAndStudent(
+    idStudent: string,
+    idSubject: string,
+  ): Promise<Grade> {
+    const grade = await this.model.findOne({
+      student: idStudent,
+      subject: idSubject,
+    })
+
+    return grade
+  }
 }

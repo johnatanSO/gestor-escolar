@@ -18,7 +18,7 @@ ESTOU DEIXANDO LÁ PARA CASO ALGUÉM QUEIRA CLONAR O REPOSITÓRIO E TESTAR A APL
 @injectable()
 export class FirebaseProvider implements IStorageProvider {
   private STORAGE_URL = 'https://storage.googleapis.com'
-  private BUCKET_URL = 'rentx-7e1d1.appspot.com'
+  private BUCKET_URL = 'gestor-escolar-d0be4.appspot.com'
   private bucket: Bucket
 
   constructor() {

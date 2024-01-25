@@ -21,5 +21,7 @@ export interface ISubjectsRepository {
   findById: (idSubject: string) => Promise<ISubject>
   delete: (idSubject: string) => Promise<void>
   update: ({ fields, idSubject }: IUpdate) => Promise<void>
+  insertStudents: (idSubject: string, studentsIds: string[]) => Promise<void>
+  removeStudents: (idSubject: string, studentsIds: string[]) => Promise<void>
   getEntries: ({ idTeacher }: FiltersGetEntries) => Promise<number>
 }

@@ -9,7 +9,7 @@ interface IRequest {
 }
 
 @injectable()
-export class InsertStudentsInSubjectService {
+export class RemoveStudentsInSubjectService {
   subjectsRepository: ISubjectsRepository
   gradesRepository: IGradesRepository
   constructor(
@@ -23,15 +23,14 @@ export class InsertStudentsInSubjectService {
   async execute({ studentsIds, idSubject }: IRequest): Promise<void> {
     if (!idSubject) throw new AppError('_id da disciplina não foi informado')
 
-    await this.subjectsRepository.insertStudents(idSubject, studentsIds)
+    await this.subjectsRepository.removeStudents(idSubject, studentsIds)
 
     studentsIds.forEach(async (idStudent) => {
-      await this.gradesRepository.create({
+      const grade = await this.gradesRepository.listBySubjectAndStudent(
         idStudent,
         idSubject,
-        firstGrade: 0,
-        secondGrade: 0,
-      })
+      )
+      await this.gradesRepository.delete(grade._id.toString())
     })
   }
 }

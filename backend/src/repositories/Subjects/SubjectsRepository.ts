@@ -43,4 +43,24 @@ export class SubjectsRepository implements ISubjectsRepository {
   async getEntries({ idTeacher }): Promise<number> {
     return await this.model.countDocuments({ teacher: idTeacher })
   }
+
+  async insertStudents(
+    idSubject: string,
+    studentsIds: string[],
+  ): Promise<void> {
+    await this.model.updateOne(
+      { _id: idSubject },
+      { $push: { students: { $each: studentsIds } } },
+    )
+  }
+
+  async removeStudents(
+    idSubject: string,
+    studentsIds: string[],
+  ): Promise<void> {
+    await this.model.updateOne(
+      { _id: idSubject },
+      { $pull: { students: { $in: studentsIds } } },
+    )
+  }
 }

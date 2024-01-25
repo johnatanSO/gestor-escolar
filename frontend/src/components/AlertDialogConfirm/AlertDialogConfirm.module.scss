@@ -17,6 +17,8 @@
   gap: 1.5rem;
 
   background: $gray-color-100;
+
+  animation: fadeIn 0.2s;
 }
 
 .title {
@@ -70,4 +72,13 @@
 
 .textButton {
   color: $white-color;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

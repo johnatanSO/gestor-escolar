@@ -32,6 +32,7 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
 
   const [loadingGetGrades, setLoadingGetGrades] = useState<boolean>(true)
+  const [loadingUpdateGrades, setLoadingUpdateGrade ] = useState<boolean>(false)
   const [editGradeMode, setEditGradeMode] = useState<boolean>(false)
   const [gradeToEditData, setGradeToEditData] = useState<Grade | null>(null)
   const [grades, setGrades] = useState<Grade[]>([])
@@ -65,6 +66,7 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
 
     if (!gradeToEditData) return
 
+    setLoadingUpdateGrade(true)
     gradesService
       .update(gradeToEditData)
       .then(() => {
@@ -74,9 +76,20 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
           text: 'Notas atualizadas com suceso',
           type: 'success',
         })
+        getGrades()
+        setEditGradeMode(false)
       })
-      .catch(() => {})
-      .finally(() => {})
+      .catch((err) => {
+        setAlertNotifyConfigs({
+          ...alertNotifyConfigs,
+          open: true,
+          text: `Erro ao tentar atualizar notas - ${err?.response?.data?.message || err?.message}`,
+          type: 'error',
+        })
+      })
+      .finally(() => {
+        setLoadingUpdateGrade(false)
+      })
   }
 
   const columns = useColumns({ handleEditGrades })
@@ -93,7 +106,7 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
       title="Notas"
       submitButtonText={editGradeMode ? 'Confirmar' : ''}
       onSubmit={editGradeMode ? onUpdateGrades : undefined}
-      loading={loadingGetGrades}
+      loading={loadingUpdateGrades}
     >
       {editGradeMode && gradeToEditData && (
         <FormEditGrade
@@ -105,24 +118,30 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
           }}
         />
       )}
-      <div className={style.viewDesktop}>
-        <TableComponent
-          rows={grades}
-          loading={loadingGetGrades}
-          columns={columns}
-          emptyText="Nenhum aluno encontrado"
-        />
-      </div>
 
-      <div className={style.viewMobile}>
-        <ListMobile
-          emptyText="Nenhum aluno encontrado"
-          itemFields={fieldsMobile}
-          collapseItems={columns}
-          items={grades}
-          loading={loadingGetGrades}
-        />
-      </div>
+      {!editGradeMode && (
+        <>
+        <div className={style.viewDesktop}>
+          <TableComponent
+            rows={grades}
+            loading={loadingGetGrades}
+            columns={columns}
+            emptyText="Nenhum aluno encontrado"
+          />
+        </div>
+
+        <div className={style.viewMobile}>
+          <ListMobile
+            emptyText="Nenhum aluno encontrado"
+            itemFields={fieldsMobile}
+            collapseItems={columns}
+            items={grades}
+            loading={loadingGetGrades}
+          />
+        </div>
+        </>
+
+      )}
     </ModalLayout>
   )
 }

@@ -34,7 +34,7 @@ export function FormEditGrade({
       />
       <CustomTextField
         label="Nota 2"
-        value={gradeToEditData.firstGrade}
+        value={gradeToEditData.secondGrade}
         onChange={(event) => {
           setGradeToEditData({
             ...gradeToEditData,

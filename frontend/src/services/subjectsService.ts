@@ -14,7 +14,7 @@ interface DeleteParams {
 }
 
 interface InsertStudentsParams {
-  selectedStudentsIds: string[]
+  selectedStudentsIdsToAdd: string[]
   subjectId: string
 }
 
@@ -40,9 +40,9 @@ export const subjectsService = {
     return http.delete('/subjects/' + idSubject)
   },
 
-  insertStudents({ selectedStudentsIds, subjectId }: InsertStudentsParams) {
+  insertStudents({ selectedStudentsIdsToAdd, subjectId }: InsertStudentsParams) {
     const body = {
-      studentsIds: selectedStudentsIds,
+      studentsIds: selectedStudentsIdsToAdd,
     }
     return http.put(`/subjects/insertStudents/${subjectId}`, {
       ...body,

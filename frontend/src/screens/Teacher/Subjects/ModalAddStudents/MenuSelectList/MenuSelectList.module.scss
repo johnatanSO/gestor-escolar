@@ -1,0 +1,32 @@
+@import "../../../../../../styles/colors.scss";
+
+.menuContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  margin-bottom: 0.5rem;
+
+  button {
+    background: none;
+    border: none;
+
+    flex: 1;
+
+    color: $gray-color-300;
+    border-bottom: 2px solid $gray-color-200;
+    padding-bottom: 0.3rem;
+    
+    cursor: pointer;
+    transition: color 0.2s, border 0.2s;
+    
+    &:not(:disabled):hover {
+      color: $gray-color-200;
+    }
+
+    &:disabled {
+      color: $primary-color;
+      border-bottom: 2px solid $primary-color;
+    }
+  }
+}

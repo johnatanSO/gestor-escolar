@@ -2,7 +2,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import style from '../ModalAddStudents.module.scss'
 
-export function useFieldsMobile() {
+export function useIncludedFields() {
   return [
     {
       field: 'name',
@@ -12,7 +12,7 @@ export function useFieldsMobile() {
       field: '',
       cellRenderer: (params: any) => {
         return (
-          <button>
+          <button type="button" className={style.removeStudentButton}>
             <FontAwesomeIcon icon={faTrash} className={style.icon} />
           </button>
         )

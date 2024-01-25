@@ -5,7 +5,10 @@ import { AlertContext } from '../../../../contexts/alertContext'
 import { Subject } from '..'
 import { studentsService } from '../../../../services/studentsService'
 import { ListMobile } from '../../../../components/ListMobile'
-import { useFieldsMobile } from './hooks/useColumns'
+import { useIncludedFields } from './hooks/useIncludedFields'
+import { MenuSelectList } from './MenuSelectList'
+import { useOtherFields } from './hooks/useOtherFields'
+import { ListStudent } from './ListSudents'
 
 interface Props {
   subjectData: Subject
@@ -30,18 +33,20 @@ export function ModalAddStudents({
 
   const [loadingAddStudents, setLoadingAddStudents] = useState<boolean>(false)
   const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
-  const [students, setStudents] = useState<Student[]>([])
+  const [registeredStudents, setRegisteredStudents] = useState<Student[]>([])
+  const [otherStudents, setOtherStudents] = useState<Student[]>([])
+  const [menuSelected, setMenuSelected] = useState<string>('included')
 
   function onAddStudents(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setLoadingAddStudents(true)
 
-    const selectedStudentsIds = students
+    const selectedStudentsIdsToAdd = otherStudents
       .filter((student) => student?.checked)
       .map((student) => student._id)
 
     subjectsService
-      .insertStudents({ selectedStudentsIds, subjectId: subjectData?._id })
+      .insertStudents({ selectedStudentsIdsToAdd, subjectId: subjectData?._id })
       .then(() => {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
@@ -72,7 +77,6 @@ export function ModalAddStudents({
     studentsService
       .getAll()
       .then((res) => {
-        setStudents(res.data.items)
         getStudentsInserted(res.data.items)
       })
       .catch((err) => {
@@ -85,25 +89,45 @@ export function ModalAddStudents({
 
   function getStudentsInserted(students: Student[]) {
     const newStudents = [...students]
+    const _registeredStudents: Student[] = []
+    const _otherStudents: Student[] = []
+
     newStudents.forEach((student) => {
       const studentInserted = subjectData?.students?.includes(student?._id)
 
-      if (studentInserted) student.checked = true
-    })
-    setStudents(newStudents)
-  }
-
-  /* function handleSelectStudent(checked: boolean, studentId: string) {
-    const newStudents = [...students]
-    newStudents.forEach((student) => {
-      if (student?._id === studentId) {
-        student.checked = checked
+      if (studentInserted) {
+        _registeredStudents.push(student)
+      } else {
+        _otherStudents.push(student)
       }
     })
-    setStudents(newStudents)
-  } */
+    setRegisteredStudents(_registeredStudents)
+    setOtherStudents(_otherStudents)
+  }
 
-  const fieldsMobile = useFieldsMobile()
+  function handleSelectStudentToAdd(student:Student) {
+    const copyOtherStudent = [...otherStudents]
+
+    copyOtherStudent.forEach(currentStudent => {
+      if(currentStudent._id === student._id) {
+        currentStudent.checked = true
+      }
+    })
+
+    setOtherStudents(copyOtherStudent)
+  } 
+
+  function handleSelectStudentToRemove(student:Student) {
+    const copyRegisteredStudents = [...registeredStudents]
+
+    copyRegisteredStudents.forEach(currentStudent => {
+      if(currentStudent._id === student._id) {
+        currentStudent.checked = true
+      }
+    })
+
+    setRegisteredStudents(copyRegisteredStudents)
+  } 
 
   useEffect(() => {
     getStudents()
@@ -114,17 +138,28 @@ export function ModalAddStudents({
       open={open}
       handleClose={handleClose}
       onSubmit={onAddStudents}
-      title="Adicionar alunos"
-      submitButtonText="Confirmar"
+      title={menuSelected === 'included' ? 'Remover alunos': 'Adicionar alunos'}
+      submitButtonText={menuSelected === 'included' ? 'Remover' : 'Adicionar'}
       loading={loadingAddStudents}
+      customStyleButton={menuSelected === 'other' ? {backgroundColor: "#3264ff"} :{}}
     >
-      <ListMobile
-        collapseItems={[]}
-        itemFields={fieldsMobile}
-        items={students}
-        emptyText="Nenhum aluno encontrado"
-        loading={loadingGetStudents}
-      />
+      <MenuSelectList menuSelected={menuSelected} setMenuSelected={setMenuSelected} />
+
+      {menuSelected === 'included' && (
+        <ListStudent
+          students={registeredStudents}
+          handleSelectItem={handleSelectStudentToRemove}
+          loading={loadingGetStudents}
+        />
+      )}
+
+      {menuSelected === 'other' && (
+        <ListStudent
+          students={otherStudents}
+          handleSelectItem={handleSelectStudentToAdd}
+          loading={loadingGetStudents}
+        />
+      )}
     </ModalLayout>
   )
 }

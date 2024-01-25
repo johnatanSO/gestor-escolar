@@ -29,8 +29,8 @@ export function Subjects() {
     undefined,
   )
   const [modalAddStudentsOpened, setModalAddStudentsOpened] =
-    useState<boolean>(true)
-  const [modalGradesOpened, setModalGradesOpened] = useState<boolean>(true)
+    useState<boolean>(false)
+  const [modalGradesOpened, setModalGradesOpened] = useState<boolean>(false)
   const [loadingSubjects, setLoadingSubjects] = useState<boolean>(true)
   const [formModalOpened, setFormModalOpened] = useState<boolean>(false)
 
@@ -87,7 +87,7 @@ export function Subjects() {
     setModalAddStudentsOpened(true)
     setSelectedSubject(subject)
   }
-
+  
   function handleShowGrades(subject: Subject) {
     setModalGradesOpened(true)
     setSelectedSubject(subject)

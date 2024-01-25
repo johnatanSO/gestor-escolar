@@ -32,7 +32,7 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
 
   const [loadingGetGrades, setLoadingGetGrades] = useState<boolean>(true)
-  const [loadingUpdateGrades, setLoadingUpdateGrade ] = useState<boolean>(false)
+  const [loadingUpdateGrades, setLoadingUpdateGrade] = useState<boolean>(false)
   const [editGradeMode, setEditGradeMode] = useState<boolean>(false)
   const [gradeToEditData, setGradeToEditData] = useState<Grade | null>(null)
   const [grades, setGrades] = useState<Grade[]>([])
@@ -83,7 +83,9 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
-          text: `Erro ao tentar atualizar notas - ${err?.response?.data?.message || err?.message}`,
+          text: `Erro ao tentar atualizar notas - ${
+            err?.response?.data?.message || err?.message
+          }`,
           type: 'error',
         })
       })
@@ -121,26 +123,25 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
 
       {!editGradeMode && (
         <>
-        <div className={style.viewDesktop}>
-          <TableComponent
-            rows={grades}
-            loading={loadingGetGrades}
-            columns={columns}
-            emptyText="Nenhum aluno encontrado"
-          />
-        </div>
+          <div className={style.viewDesktop}>
+            <TableComponent
+              rows={grades}
+              loading={loadingGetGrades}
+              columns={columns}
+              emptyText="Nenhum aluno encontrado"
+            />
+          </div>
 
-        <div className={style.viewMobile}>
-          <ListMobile
-            emptyText="Nenhum aluno encontrado"
-            itemFields={fieldsMobile}
-            collapseItems={columns}
-            items={grades}
-            loading={loadingGetGrades}
-          />
-        </div>
+          <div className={style.viewMobile}>
+            <ListMobile
+              emptyText="Nenhum aluno encontrado"
+              itemFields={fieldsMobile}
+              collapseItems={columns}
+              items={grades}
+              loading={loadingGetGrades}
+            />
+          </div>
         </>
-
       )}
     </ModalLayout>
   )

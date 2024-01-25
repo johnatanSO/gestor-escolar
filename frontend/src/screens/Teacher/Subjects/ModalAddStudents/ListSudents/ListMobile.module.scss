@@ -29,15 +29,6 @@
       &:disabled {
         opacity: 0.4;
       }
-
-      
-
-      span {
-        max-width: 50%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
     }
 
     .collapse {
@@ -59,7 +50,7 @@
           font-weight: 500;
 
           text-align: right;
-          
+
           span {
             max-width: 50%;
             white-space: nowrap;
@@ -74,4 +65,8 @@
       }
     }
   }
+}
+
+.controlLabel {
+  width: 100%;
 }

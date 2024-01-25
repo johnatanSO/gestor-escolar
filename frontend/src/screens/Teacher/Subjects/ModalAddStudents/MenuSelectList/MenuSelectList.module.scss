@@ -24,9 +24,13 @@
       color: $gray-color-200;
     }
 
-    &:disabled {
+    &.included:disabled {
       color: $primary-color;
       border-bottom: 2px solid $primary-color;
+    }
+    &.other:disabled {
+      color: $blue-color-500;
+      border-bottom: 2px solid $blue-color-500;
     }
   }
 }

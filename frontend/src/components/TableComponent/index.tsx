@@ -77,7 +77,7 @@ export function TableComponent({ columns, rows, loading, emptyText }: Props) {
                       <Skeleton
                         variant="rounded"
                         height={20}
-                        sx={{ fontSize: '1rem' }}
+                        sx={{ fontSize: '1rem', borderRadius: 20 }}
                       />
                     </td>
                   )

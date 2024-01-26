@@ -32,7 +32,9 @@ export function useColumns({ handleEditGrades }: Props) {
       headerName: 'Total',
       field: 'total',
       valueFormatter: (params: CellFunctionParams<Grade>) =>
-        (params?.data.firstGrade + params.data.secondGrade || 0).toFixed(2),
+        ((params?.data.firstGrade + params.data.secondGrade || 0) / 2).toFixed(
+          2,
+        ),
     },
     {
       headerName: '',

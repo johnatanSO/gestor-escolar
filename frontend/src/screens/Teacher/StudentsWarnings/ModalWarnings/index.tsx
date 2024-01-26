@@ -15,6 +15,7 @@ interface Props {
   studentData: Student
   open: boolean
   handleClose: () => void
+  getStudents: () => void
 }
 
 export interface Warning {
@@ -31,7 +32,12 @@ export interface NewWarning {
   description: string
 }
 
-export function ModalWarnings({ open, handleClose, studentData }: Props) {
+export function ModalWarnings({
+  open,
+  handleClose,
+  studentData,
+  getStudents,
+}: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
 
   const [loadingWarnings, setLoadingWarnings] = useState<boolean>(true)
@@ -61,6 +67,7 @@ export function ModalWarnings({ open, handleClose, studentData }: Props) {
           text: 'Advertências cadastrada com sucesso',
         })
         getWarnings()
+        getStudents()
         setIsFormMode(false)
         setNewWarningData(defaultValuesNewWarning)
       })

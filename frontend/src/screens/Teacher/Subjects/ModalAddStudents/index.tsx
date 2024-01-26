@@ -165,6 +165,17 @@ export function ModalAddStudents({
     setRegisteredStudents(copyRegisteredStudents)
   }
 
+  function getSubmitFunction() {
+    if (menuSelected === 'included' && registeredStudents.length > 0) {
+      return onRemoveStudents
+    }
+    if (menuSelected === 'other' && otherStudents.length > 0) {
+      return onAddStudents
+    }
+
+    return undefined
+  }
+
   useEffect(() => {
     getStudents()
   }, [])
@@ -173,7 +184,7 @@ export function ModalAddStudents({
     <ModalLayout
       open={open}
       handleClose={handleClose}
-      onSubmit={menuSelected === 'included' ? onRemoveStudents : onAddStudents}
+      onSubmit={getSubmitFunction()}
       title={
         menuSelected === 'included' ? 'Remover alunos' : 'Adicionar alunos'
       }

@@ -128,13 +128,13 @@ export function ModalGrades({ open, handleClose, subjectData }: Props) {
               rows={grades}
               loading={loadingGetGrades}
               columns={columns}
-              emptyText="Nenhum aluno encontrado"
+              emptyText="Nenhum aluno cadastrado na disciplina"
             />
           </div>
 
           <div className={style.viewMobile}>
             <ListMobile
-              emptyText="Nenhum aluno encontrado"
+              emptyText="Nenhum aluno cadastrado na disciplina"
               itemFields={fieldsMobile}
               collapseItems={columns}
               items={grades}

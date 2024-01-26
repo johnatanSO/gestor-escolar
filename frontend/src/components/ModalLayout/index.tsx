@@ -25,7 +25,7 @@ export function ModalLayout({
   onSubmit,
   loading,
   customStyle,
-  customStyleButton
+  customStyleButton,
 }: Props) {
   return (
     <Modal className={style.overlay} open={open} onClose={handleClose}>
@@ -49,7 +49,11 @@ export function ModalLayout({
         </Box>
         {onSubmit && (
           <Box className={style.footer} component="footer">
-            <button style={customStyleButton ?? customStyleButton} disabled={loading} type="submit">
+            <button
+              style={customStyleButton ?? customStyleButton}
+              disabled={loading}
+              type="submit"
+            >
               {loading ? (
                 <Loading size={18} />
               ) : (

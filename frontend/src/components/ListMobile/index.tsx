@@ -49,7 +49,9 @@ export function ListMobile({
 
           return (
             <div
-              style={{ opacity: loading ? 0.5 : 1, border: item.checked ? '2px solid #3264ff' : '2px solid #efeff1'  }}
+              style={{
+                opacity: loading ? 0.5 : 1,
+              }}
               key={item._id}
               className={style.groupItem}
             >
@@ -58,7 +60,6 @@ export function ListMobile({
                   handleOpenItem(item._id)
                 }}
                 className={style.listItem}
-                
               >
                 {itemFields?.map((field, index) => {
                   return (

@@ -1,13 +1,13 @@
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Student } from '..'
 import style from '../ModalAddStudents.module.scss'
 
 type Props = {
-  handleSelectStudentToAdd: (student:Student) => void
+  handleSelectStudentToAdd: (student: Student) => void
 }
 
-export function useOtherFields({handleSelectStudentToAdd}:Props) {
+export function useOtherFields({ handleSelectStudentToAdd }: Props) {
   return [
     {
       field: 'name',
@@ -17,9 +17,13 @@ export function useOtherFields({handleSelectStudentToAdd}:Props) {
       field: '',
       cellRenderer: (params: any) => {
         return (
-          <button onClick={() => {
-            handleSelectStudentToAdd(params.data)
-          }} type="button" className={style.addStudentButton}>
+          <button
+            onClick={() => {
+              handleSelectStudentToAdd(params.data)
+            }}
+            type="button"
+            className={style.addStudentButton}
+          >
             <FontAwesomeIcon icon={faPlus} className={style.icon} />
           </button>
         )

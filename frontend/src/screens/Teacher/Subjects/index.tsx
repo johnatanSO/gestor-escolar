@@ -87,7 +87,7 @@ export function Subjects() {
     setModalAddStudentsOpened(true)
     setSelectedSubject(subject)
   }
-  
+
   function handleShowGrades(subject: Subject) {
     setModalGradesOpened(true)
     setSelectedSubject(subject)

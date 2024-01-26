@@ -20,17 +20,10 @@ export const usersService = {
 
     if (!token) return false
 
-    return await this.verifyToken(token)
+    return true
   },
 
-  async verifyToken(token: String) {
-    if (token) return true
-    return false
-    // Implementar verificação de token com o back-end
-    // return token
-  },
-
-  async login({ userData }: LoginParams) {
+  login({ userData }: LoginParams) {
     const body = { ...userData }
 
     return http.post('/login', {
@@ -38,7 +31,7 @@ export const usersService = {
     })
   },
 
-  async register({ newUser }: RegisterParams) {
+  register({ newUser }: RegisterParams) {
     const body = { ...newUser }
 
     return http.post('/users', {
@@ -83,41 +76,15 @@ export const usersService = {
     return cookies[USER_INFO] ? JSON.parse(cookies[USER_INFO]) : null
   },
 
-  checkPermission(context = null) {
-    const userInfo = usersService.getUserInfoByCookie(context)
-    const isStudent = userInfo?.occupation === 'student'
-    const isTeacher = userInfo?.occupation === 'teacher'
-
-    if (isTeacher) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: '/teacher',
-        },
-        props: {},
-      }
-    }
-
-    if (isStudent) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: '/student',
-        },
-        props: {},
-      }
-    }
-  },
-
-  async updateAvatarImage({ avatarImage }: any) {
+  updateAvatarImage({ avatarImage }: any) {
     const formData = new FormData()
 
     formData.append('avatar', avatarImage)
 
-    return await http.patch('/users/avatar', formData)
+    return http.patch('/users/avatar', formData)
   },
 
-  async getCurrentUserInfo() {
-    return await http.get('/users/' + this.getUserInfo()._id)
+  getCurrentUserInfo() {
+    return http.get('/users/' + this.getUserInfo()._id)
   },
 }

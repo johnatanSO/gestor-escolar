@@ -1,5 +1,4 @@
 import style from './TeacherHomeScreen.module.scss'
-import notesImage from '../../../../public/assets/notepad.png'
 import warningImage from '../../../../public/assets/warning.png'
 import timetableImage from '../../../../public/assets/timetable.png'
 import registerImage from '../../../../public/assets/register.png'
@@ -13,11 +12,19 @@ export function TeacherHomeScreen() {
   const router = useRouter()
   const buttonsList: ButtonHomeScreen[] = [
     {
-      image: notesImage,
-      alt: 'Botão de notas',
-      title: 'Notas',
+      image: registerImage,
+      alt: 'Botão de disciplinas',
+      title: 'Disciplinas',
       onClickCallback: () => {
-        router.push('/teacher/studentsGrades')
+        router.push('/teacher/subjects')
+      },
+    },
+    {
+      image: studentImage,
+      alt: 'Botão de alunos',
+      title: 'Alunos',
+      onClickCallback: () => {
+        router.push('/teacher/students')
       },
     },
     {
@@ -35,22 +42,6 @@ export function TeacherHomeScreen() {
       title: 'Faltas',
       disabled: true,
       onClickCallback: () => {},
-    },
-    {
-      image: registerImage,
-      alt: 'Botão de disciplinas',
-      title: 'Disciplinas',
-      onClickCallback: () => {
-        router.push('/teacher/subjects')
-      },
-    },
-    {
-      image: studentImage,
-      alt: 'Botão de alunos',
-      title: 'Alunos',
-      onClickCallback: () => {
-        router.push('/teacher/students')
-      },
     },
   ]
 

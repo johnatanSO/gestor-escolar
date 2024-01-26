@@ -3,99 +3,85 @@ import { container } from 'tsyringe'
 import { ListAllSubjectsService } from '../useCases/Subject/ListAllSubjects/ListAllSubjectsService.service'
 import { CreateNewSubjectService } from '../useCases/Subject/CreateNewSubject/CreateNewSubjectService.service'
 import { DeleteSubjectService } from '../useCases/Subject/DeleteSubject/DeleteSubjectService.service'
-import { InsertStudentInSubjectService } from '../useCases/Subject/InsertStudentInSubject/InsertStudentInSubjectService.service'
-import { UpdateGradesService } from '../useCases/Student/UpdateGrades/UpdateGradesService.service'
+import { InsertStudentsInSubjectService } from '../useCases/Subject/InsertStudentInSubject/InsertStudentsInSubjectService.service'
+import { RemoveStudentsInSubjectService } from '../useCases/Subject/RemoveStudentInSubject/RemoveStudentsInSubjectService.service'
 
 export class SubjectController {
   async listAllSubjects(req: Request, res: Response): Promise<Response> {
-    try {
-      const idTeacher = req.user._id
-      const listAllSubjectsService = container.resolve(ListAllSubjectsService)
-      const subjects = await listAllSubjectsService.execute({ idTeacher })
+    const { _id: idTeacher } = req.user
 
-      return res.status(200).json({
-        success: true,
-        title: 'Sucesso',
-        message: 'Busca de disciplinas concluída com sucesso',
-        items: subjects,
-      })
-    } catch (err) {
-      return res.status(400).json({
-        success: false,
-        title: 'Erro ao tentar realizar busca disciplinas',
-        message: err.message,
-        error: err,
-      })
-    }
+    const listAllSubjectsService = container.resolve(ListAllSubjectsService)
+    const subjects = await listAllSubjectsService.execute({ idTeacher })
+
+    return res.status(200).json({
+      success: true,
+      message: 'Busca de disciplinas concluída com sucesso',
+      items: subjects,
+    })
   }
 
   async createNewSubject(req: Request, res: Response): Promise<Response> {
-    try {
-      const { name } = req.body
-      const idTeacher = req.user._id
-      const createNewSubjectService = container.resolve(CreateNewSubjectService)
-      const newSubject = await createNewSubjectService.execute({
-        name,
-        idTeacher,
-      })
+    const { name } = req.body
+    const { _id: idTeacher } = req.user
 
-      return res.status(201).json({
-        item: newSubject,
-        message: 'Disciplina cadastrada com sucesso.',
-      })
-    } catch (err) {
-      return res
-        .status(400)
-        .json({ error: err, message: 'Erro ao tentar cadastrar disciplina' })
-    }
+    const createNewSubjectService = container.resolve(CreateNewSubjectService)
+    const newSubject = await createNewSubjectService.execute({
+      name,
+      idTeacher,
+    })
+
+    return res.status(201).json({
+      success: true,
+      item: newSubject,
+      message: 'Disciplina cadastrada com sucesso.',
+    })
   }
 
   async deleteSubject(req: Request, res: Response): Promise<Response> {
-    try {
-      const { idSubject } = req.query
-      const deleteSubjectService = container.resolve(DeleteSubjectService)
-      await deleteSubjectService.execute(idSubject.toString())
+    const { idSubject } = req.params
 
-      return res.status(202).json({
-        message: 'Disciplina excluída com sucesso',
-      })
-    } catch (err) {
-      return res
-        .status(400)
-        .json({ error: err, message: 'Erro ao tentar excluír disciplina' })
-    }
+    const deleteSubjectService = container.resolve(DeleteSubjectService)
+    await deleteSubjectService.execute(idSubject)
+
+    return res.status(202).json({
+      success: true,
+      message: 'Disciplina excluída com sucesso',
+    })
   }
 
   async insertStudents(req: Request, res: Response): Promise<Response> {
-    try {
-      const { studentsIds, subjectId } = req.body
-      const insertStudentInSubjectService = container.resolve(
-        InsertStudentInSubjectService,
-      )
-      await insertStudentInSubjectService.execute({
-        studentsIds,
-        subjectId,
-      })
+    const { idSubject } = req.params
+    const { studentsIds } = req.body
 
-      // Definindo nota inicial do aluno como zero.
-      const updateGradesService = container.resolve(UpdateGradesService)
-      await updateGradesService.execute({
-        studentsIds,
-        subjectId,
-        grades: {
-          firstGrade: 0,
-          secondGrade: 0,
-        },
-      })
+    const insertStudentsInSubjectService = container.resolve(
+      InsertStudentsInSubjectService,
+    )
 
-      return res.status(202).json({
-        message: 'Estudante(s) foram inseridos na disciplina com sucesso.',
-      })
-    } catch (err) {
-      return res.status(400).json({
-        error: err,
-        message: 'Erro ao tentar inserir estudantes na discuplina.',
-      })
-    }
+    await insertStudentsInSubjectService.execute({
+      studentsIds,
+      idSubject,
+    })
+
+    return res.status(202).json({
+      message: 'Estudante(s) foram inseridos na disciplina com sucesso.',
+    })
+  }
+
+  async removeStudents(req: Request, res: Response): Promise<Response> {
+    const { idSubject } = req.params
+    const { studentsIds } = req.body
+
+    const removeStudentsInSubjectService = container.resolve(
+      RemoveStudentsInSubjectService,
+    )
+
+    await removeStudentsInSubjectService.execute({
+      studentsIds,
+      idSubject,
+    })
+
+    return res.status(202).json({
+      message: 'Estudante(s) foram removidos da disciplina com sucesso.',
+    })
   }
 }

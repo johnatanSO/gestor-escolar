@@ -3,7 +3,8 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv'
 import { inject, injectable } from 'tsyringe'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
+import auth from '../../../config/auth'
 dotenv.config()
 
 interface IRequest {
@@ -40,7 +41,7 @@ export class AuthenticateUserService {
       throw new AppError('E-mail ou senha incorreto')
     }
 
-    const token = jwt.sign({}, process.env.SECRET, {
+    const token = jwt.sign({}, auth.secretToken, {
       subject: user._id.toString(),
       expiresIn: '1d',
     })

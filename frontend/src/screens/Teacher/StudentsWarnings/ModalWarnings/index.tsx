@@ -1,27 +1,21 @@
 import { ModalLayout } from '../../../../components/ModalLayout'
 import style from './ModalWarnings.module.scss'
 import { Student } from '..'
-import { EmptyItems } from '../../../../components/EmptyItems'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faAngleDown,
-  faAngleUp,
-  faPlus,
-} from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FormEvent, useContext, useEffect, useState } from 'react'
-import dayjs from 'dayjs'
 import { warningsService } from '../../../../services/warningsService'
 import { AlertContext } from '../../../../contexts/alertContext'
 import { FormNewWarning } from './FormNewWarning'
-import { Loading } from '../../../../components/Loading'
-import { Collapse, List, ListItem } from '@mui/material'
-import { useRouter } from 'next/router'
+import { ListMobile } from '../../../../components/ListMobile'
+import { useFieldsMobile } from './hooks/useFieldsMobile'
+import { useColumns } from './hooks/useColumns'
 
 interface Props {
   studentData: Student
   open: boolean
   handleClose: () => void
-  setStudentData: (values: Student) => void
+  getStudents: () => void
 }
 
 export interface Warning {
@@ -42,9 +36,10 @@ export function ModalWarnings({
   open,
   handleClose,
   studentData,
-  setStudentData,
+  getStudents,
 }: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
+
   const [loadingWarnings, setLoadingWarnings] = useState<boolean>(true)
   const [warnings, setWarnings] = useState<Warning[]>([])
   const [isFormMode, setIsFormMode] = useState<boolean>(false)
@@ -57,12 +52,11 @@ export function ModalWarnings({
   )
   const [loadingCreateWarning, setLoadingCrateWarning] =
     useState<boolean>(false)
-  const [itemOpened, setItemOpened] = useState<any>({})
-  const router = useRouter()
 
   function onCreateNewWarning(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setLoadingCrateWarning(true)
+
     warningsService
       .create({ idStudent: studentData?._id, newWarningData })
       .then((res) => {
@@ -73,12 +67,9 @@ export function ModalWarnings({
           text: 'Advertências cadastrada com sucesso',
         })
         getWarnings()
+        getStudents()
         setIsFormMode(false)
         setNewWarningData(defaultValuesNewWarning)
-        router.push({
-          pathname: router.route,
-          query: router.query,
-        })
       })
       .catch((err) => {
         setAlertNotifyConfigs({
@@ -110,9 +101,8 @@ export function ModalWarnings({
       })
   }
 
-  function handleListItemClick(itemId: string) {
-    setItemOpened({ [itemId]: !itemOpened[itemId] })
-  }
+  const fieldsMobile = useFieldsMobile()
+  const collapseItems = useColumns()
 
   useEffect(() => {
     getWarnings()
@@ -127,73 +117,38 @@ export function ModalWarnings({
       submitButtonText={isFormMode ? 'Confirmar' : ''}
       loading={loadingCreateWarning}
     >
-      <>
-        {!isFormMode && (
-          <button
-            type="button"
-            className={style.buttonNewWarning}
-            onClick={() => {
-              setIsFormMode(true)
-            }}
-          >
-            <FontAwesomeIcon className={style.icon} icon={faPlus} />
-            Nova advertência
-          </button>
-        )}
+      {!isFormMode && (
+        <button
+          type="button"
+          className={style.buttonNewWarning}
+          onClick={() => {
+            setIsFormMode(true)
+          }}
+        >
+          <FontAwesomeIcon className={style.icon} icon={faPlus} />
+          Nova advertência
+        </button>
+      )}
 
-        {loadingWarnings && <Loading size={25} color="#cd1414" />}
+      {isFormMode && (
+        <FormNewWarning
+          newWarningData={newWarningData}
+          handleBack={() => {
+            setIsFormMode(false)
+          }}
+          setNewWarningData={setNewWarningData}
+        />
+      )}
 
-        {isFormMode && (
-          <FormNewWarning
-            newWarningData={newWarningData}
-            handleBack={() => {
-              setIsFormMode(false)
-            }}
-            setNewWarningData={setNewWarningData}
-          />
-        )}
-
-        {warnings?.length === 0 && !loadingWarnings && !isFormMode && (
-          <EmptyItems
-            customStyle={{ boxShadow: 'none' }}
-            text="Este aluno não possui advertências"
-          />
-        )}
-
-        {!isFormMode && !loadingWarnings && (
-          <List className={style.fieldsContainer}>
-            {warnings?.map((warning) => {
-              const isOpened = itemOpened[warning?._id] || false
-              return (
-                <div key={warning?.uniqueId} style={{ width: '100%' }}>
-                  <ListItem
-                    onClick={() => {
-                      handleListItemClick(warning?._id)
-                    }}
-                    className={style.warningItem}
-                  >
-                    <span>{warning?.code}</span>
-                    <span>{warning?.title}</span>
-                    <span style={{ marginLeft: 'auto' }}>
-                      {dayjs(warning?.date).format('DD/MM/YYYY - HH:mm')}
-                    </span>
-                    <FontAwesomeIcon
-                      className={style.arrowIcon}
-                      icon={isOpened ? faAngleUp : faAngleDown}
-                    />
-                  </ListItem>
-                  <Collapse in={isOpened} timeout="auto" unmountOnExit>
-                    <div className={style.descriptionContainer}>
-                      <h4>Descrição</h4>
-                      <p>{warning?.description}</p>
-                    </div>
-                  </Collapse>
-                </div>
-              )
-            })}
-          </List>
-        )}
-      </>
+      {!isFormMode && (
+        <ListMobile
+          items={warnings}
+          emptyText="Nenhuma advertência encontrada"
+          itemFields={fieldsMobile}
+          collapseItems={collapseItems}
+          loading={loadingWarnings}
+        />
+      )}
     </ModalLayout>
   )
 }

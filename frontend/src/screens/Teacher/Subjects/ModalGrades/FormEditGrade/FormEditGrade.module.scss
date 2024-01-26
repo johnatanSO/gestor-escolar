@@ -1,0 +1,36 @@
+@import '../../../../../../styles/colors.scss';
+
+.backButton {
+  align-self: self-start;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  line-height: 1;
+  font-size: 0.875rem;
+
+  padding: 0.5rem 0.6rem;
+  border-radius: 20px;
+  border: none;
+
+  color: $gray-color-300;
+  background: none;
+
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background: $gray-color-200;
+    color: $gray-color-400;
+  }
+
+  .icon {
+    height: 1rem;
+  }
+}
+
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

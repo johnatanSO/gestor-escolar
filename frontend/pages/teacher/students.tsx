@@ -29,7 +29,7 @@ export async function getServerSideProps(context: any) {
     return {
       redirect: {
         permanent: false,
-        destination: '/404',
+        destination: '/login',
       },
       props: {},
     }

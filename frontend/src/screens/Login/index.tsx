@@ -58,11 +58,13 @@ export function Login() {
         router.push('/')
       })
       .catch((err) => {
-        console.log('ERRO AO TENTAR REALIZAR LOGIN,', err?.response?.data)
+        console.log('ERRO AO TENTAR REALIZAR LOGIN,', err)
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           type: 'error',
-          text: `Erro ao tentar realizar login - ${err?.response?.data?.message}`,
+          text: `Erro ao tentar realizar login - ${
+            err?.response?.data?.message || err?.message
+          }`,
           open: true,
         })
       })
@@ -74,6 +76,7 @@ export function Login() {
   return (
     <div className={style.loginContainer}>
       <h2>Entrar com uma conta existente</h2>
+
       <form onSubmit={onLogin} className={style.formContainer}>
         <CustomTextField
           size="medium"

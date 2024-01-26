@@ -7,41 +7,49 @@
   justify-content: space-between;
   align-items: center;
 
-  .logoutButton {
-    background: $red-color-500;
-    color: white;
-
-    border: none;
-    padding: 0.5rem 0.8rem;
-    line-height: 1;
-    border-radius: 8px;
-    font-weight: 500;
-
-    cursor: pointer;
-    transition: filter 0.2s;
-
+  .backButton {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.7rem;
+
+    background: none;
+    color: $gray-color-300;
+    border: none;
+
+    font-weight: 600;
+    font-size: 0.8rem;
+    line-height: 0;
+
+    padding: 0.6rem 1rem;
+    border-radius: 20px;
+
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
 
     .icon {
       height: 1rem;
     }
 
     &:hover {
-      filter: brightness(0.8);
+      background: $gray-color-200;
+      color: $gray-color-400;
     }
   }
 
-  .backButton {
-    background: $gray-color-200;
-    color: $gray-color-400;
+  h2 {
     font-weight: 600;
+  }
+
+  .logoutButton {
+    background: $red-color-500;
+    color: white;
 
     border: none;
-    padding: 0.5rem 0.8rem;
+    padding: 0.6rem 1rem;
     line-height: 1;
-    border-radius: 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.8rem;
 
     cursor: pointer;
     transition: filter 0.2s;

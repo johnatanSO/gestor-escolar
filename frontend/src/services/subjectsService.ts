@@ -14,43 +14,56 @@ interface DeleteParams {
 }
 
 interface InsertStudentsParams {
-  selectedStudentsIds: string[]
+  selectedStudentsIdsToAdd: string[]
+  subjectId: string
+}
+interface RemoveStudentsParams {
+  selectedStudentsIdsToRemove: string[]
   subjectId: string
 }
 
 export const subjectsService = {
-  async getAll() {
-    return await http.get('/subjects/')
+  getAll() {
+    return http.get('/subjects/')
   },
 
-  async create({ newSubjectData }: CreateParams) {
+  create({ newSubjectData }: CreateParams) {
     const body = {
       ...newSubjectData,
     }
-    return await http.post('/subjects/', {
+    return http.post('/subjects/', {
       ...body,
     })
   },
 
-  async update({ subjectData }: UpdateParams) {
+  update({ subjectData }: UpdateParams) {
     return http.put('/subjects/')
   },
 
-  async delete({ idSubject }: DeleteParams) {
-    return await http.delete('/subjects/', {
-      params: { idSubject },
-    })
+  delete({ idSubject }: DeleteParams) {
+    return http.delete('/subjects/' + idSubject)
   },
 
-  async insertStudents({
-    selectedStudentsIds,
+  insertStudents({
+    selectedStudentsIdsToAdd,
     subjectId,
   }: InsertStudentsParams) {
     const body = {
-      studentsIds: selectedStudentsIds,
-      subjectId,
+      studentsIds: selectedStudentsIdsToAdd,
     }
-    return http.put('/subjects/insertStudents', {
+    return http.put(`/subjects/insertStudents/${subjectId}`, {
+      ...body,
+    })
+  },
+  removeStudents({
+    selectedStudentsIdsToRemove,
+    subjectId,
+  }: RemoveStudentsParams) {
+    const body = {
+      studentsIds: selectedStudentsIdsToRemove,
+    }
+
+    return http.put(`/subjects/removeStudents/${subjectId}`, {
       ...body,
     })
   },

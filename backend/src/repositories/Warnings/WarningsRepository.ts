@@ -10,7 +10,7 @@ export class WarningsRepository implements IWarningsRepository {
 
   async list(idStudent?: string): Promise<Warning[]> {
     const query = {
-      ...(idStudent ? { idStudent } : {}),
+      ...(idStudent ? { student: idStudent } : {}),
     }
     return await this.model.find(query).sort({ date: 1 })
   }
@@ -19,8 +19,19 @@ export class WarningsRepository implements IWarningsRepository {
     return await this.model.findOne({ _id: warningId })
   }
 
-  async create(newWarningData: INewWarningDTO): Promise<Warning> {
-    const newWarning = await this.model.create(newWarningData)
+  async create({
+    code,
+    title,
+    description,
+    idStudent,
+  }: INewWarningDTO): Promise<Warning> {
+    const newWarning = await this.model.create({
+      code,
+      title,
+      description,
+      student: idStudent,
+    })
+
     await newWarning.save()
 
     return newWarning

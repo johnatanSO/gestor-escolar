@@ -2,7 +2,7 @@ import { Types } from 'mongoose'
 import { MockSubjectsRepository } from '../../../repositories/Subjects/MockSubjectsRepository'
 import { CreateNewSubjectService } from '../CreateNewSubject/CreateNewSubjectService.service'
 import { DeleteSubjectService } from './DeleteSubjectService.service'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 let mockSubjectsRepository: MockSubjectsRepository
 

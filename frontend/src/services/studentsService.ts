@@ -1,6 +1,5 @@
 import { NewStudentData } from './../screens/Teacher/Students/ModalCreateNewStudent/index'
 import http from '../api/http'
-import { usersService } from './usersService'
 
 interface DeleteStudentParams {
   studentId: string

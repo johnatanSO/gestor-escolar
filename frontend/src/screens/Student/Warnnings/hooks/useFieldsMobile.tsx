@@ -5,7 +5,8 @@ export function useFieldsMobile() {
   return [
     {
       field: 'title',
-      valueFormatter: (params: CellFunctionParams<any>) => params?.value || '--',
+      valueFormatter: (params: CellFunctionParams<any>) =>
+        params?.value || '--',
     },
     {
       field: 'date',

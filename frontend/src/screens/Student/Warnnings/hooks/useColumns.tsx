@@ -6,17 +6,20 @@ export function useColumns() {
     {
       headerName: 'Código',
       field: 'code',
-      valueFormatter: (params: CellFunctionParams<any>) => params?.value || '--',
+      valueFormatter: (params: CellFunctionParams<any>) =>
+        params?.value || '--',
     },
     {
       headerName: 'Título',
       field: 'title',
-      valueFormatter: (params: CellFunctionParams<any>) => params?.value || '--',
+      valueFormatter: (params: CellFunctionParams<any>) =>
+        params?.value || '--',
     },
     {
       headerName: 'Descrição',
       field: 'description',
-      valueFormatter: (params: CellFunctionParams<any>) => params?.value || '--',
+      valueFormatter: (params: CellFunctionParams<any>) =>
+        params?.value || '--',
     },
     {
       headerName: 'Data',

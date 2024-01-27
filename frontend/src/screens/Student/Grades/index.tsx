@@ -51,10 +51,10 @@ export function Grades() {
           emptyText="Você não está cadastrado em nenhuma disciplina"
         />
       </div>
-      <div className={style.viewMobile}> 
-        <ListMobile 
-          collapseItems={columns} 
-          items={grades} 
+      <div className={style.viewMobile}>
+        <ListMobile
+          collapseItems={columns}
+          items={grades}
           emptyText="Você não está cadastrado em nenhuma disciplina"
           loading={loadingGrades}
           itemFields={fieldsMobile}

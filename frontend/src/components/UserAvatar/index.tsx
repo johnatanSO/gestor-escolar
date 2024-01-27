@@ -71,7 +71,7 @@ export function UserAvatar({ occupation }: Props) {
         </div>
 
         <Image
-          loading='lazy'
+          loading="lazy"
           src={getAvatarImage() || ''}
           layout="fill"
           alt="user avatar"

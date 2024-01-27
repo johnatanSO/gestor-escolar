@@ -11,11 +11,11 @@ interface PageProps {
   setShowBackButton: (show: boolean) => void
 }
 
-export default function HomePage({ userInfo, setShowBackButton}: PageProps) {
+export default function HomePage({ userInfo, setShowBackButton }: PageProps) {
   useEffect(() => {
     setShowBackButton(false)
   }, [])
-  
+
   if (userInfo.occupation === 'student') {
     return <StudentHomeScreen />
   }
@@ -23,7 +23,6 @@ export default function HomePage({ userInfo, setShowBackButton}: PageProps) {
     return <TeacherHomeScreen />
   }
 }
-
 
 export async function getServerSideProps(context: any) {
   const hasSession = await tokenService.getSession(context)

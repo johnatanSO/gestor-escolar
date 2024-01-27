@@ -52,10 +52,10 @@ export function Warnings() {
         />
       </div>
       <div className={style.viewMobile}>
-        <ListMobile 
-          collapseItems={columns} 
-          items={warnings} 
-          emptyText="Você não possui advertências" 
+        <ListMobile
+          collapseItems={columns}
+          items={warnings}
+          emptyText="Você não possui advertências"
           loading={loadingWarnings}
           itemFields={fieldsMobile}
         />

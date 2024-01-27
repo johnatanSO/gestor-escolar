@@ -27,5 +27,5 @@ export const gradesService = {
     const studentId = usersService.getUserInfo()._id
 
     return http.get(`/grades/student/${studentId}`)
-  }
+  },
 }

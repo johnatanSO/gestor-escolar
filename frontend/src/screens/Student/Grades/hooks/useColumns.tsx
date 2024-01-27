@@ -12,12 +12,14 @@ export function useColumns() {
     {
       headerName: 'Código',
       field: 'subject',
-      valueFormatter: (params: CellFunctionParams<any>) => params?.value?.code || '--',
+      valueFormatter: (params: CellFunctionParams<any>) =>
+        params?.value?.code || '--',
     },
     {
       headerName: 'Disciplina',
       field: 'subject',
-      valueFormatter: (params: CellFunctionParams<any>) => params?.value?.name || '--',
+      valueFormatter: (params: CellFunctionParams<any>) =>
+        params?.value?.name || '--',
     },
     {
       headerName: 'Nota 1',
@@ -33,7 +35,7 @@ export function useColumns() {
       cellClass: (params: CellFunctionParams<any>) =>
         getAvarageStatus(params?.value || 0),
       valueFormatter: (params: CellFunctionParams<any>) =>
-      (params?.value || 0).toFixed(2),
+        (params?.value || 0).toFixed(2),
     },
     {
       headerName: 'Total',
@@ -45,7 +47,7 @@ export function useColumns() {
       valueFormatter: (params: any) => {
         const total = params?.data?.firstGrade + params?.data?.secondGrade
         return ((total || 0) / 2).toFixed(2)
-      }
+      },
     },
   ]
 }

@@ -2,6 +2,7 @@ import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import { inject, injectable } from 'tsyringe'
 import { AppError } from '../../../shared/errors/AppError'
 import { IStorageProvider } from '../../../shared/containers/providers/StorageProvider/IStorageProvider'
+import { User } from '../../../entities/user'
 
 interface IRequest {
   userId: string
@@ -11,6 +12,9 @@ interface IRequest {
     buffer: Buffer
     mimetype: string
   }
+}
+interface IResponse {
+
 }
 
 @injectable()
@@ -25,7 +29,7 @@ export class UpdateUserAvatarService {
     this.storageProvider = storageProvider
   }
 
-  async execute({ userId, avatarFile }: IRequest): Promise<void> {
+  async execute({ userId, avatarFile }: IRequest): Promise<Omit<User, 'password'>> {
     if (!avatarFile) throw new AppError('Avatar não informado')
 
     const user = await this.usersRepository.findById(userId)
@@ -51,5 +55,9 @@ export class UpdateUserAvatarService {
     }
 
     await this.usersRepository.update(filters, updateFields)
+
+    const updatedUser = await this.usersRepository.findById(userId)
+
+    return updatedUser
   }
 }

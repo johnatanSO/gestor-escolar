@@ -33,7 +33,7 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findById(_id: string): Promise<User> {
-    return await this.model.findOne({ _id })
+    return await this.model.findOne({ _id }).select('-password')
   }
 
   async update(filters: any, updateFields: any): Promise<void> {

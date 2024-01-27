@@ -47,7 +47,7 @@ export function TeacherHomeScreen() {
 
   return (
     <>
-      <UserAvatar />
+      <UserAvatar occupation="teacher" />
 
       <div className={style.buttonsContainer}>
         {buttonsList?.map(

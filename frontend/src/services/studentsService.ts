@@ -1,6 +1,5 @@
 import { NewStudentData } from './../screens/Teacher/Students/ModalCreateNewStudent/index'
 import http from '../api/http'
-import { usersService } from './usersService'
 
 interface DeleteStudentParams {
   studentId: string
@@ -17,15 +16,6 @@ interface UpdateStudentParams {
 export const studentsService = {
   getAll() {
     return http.get('/students/')
-  },
-
-  getBySubject(idSubject: string) {
-    return http.get('/students/subjectStudentsGrades/' + idSubject)
-  },
-
-  getGrades() {
-    const idStudent = usersService?.getUserInfo()?._id
-    return http.get('/students/studentGrades/' + idStudent)
   },
 
   delete({ studentId }: DeleteStudentParams) {

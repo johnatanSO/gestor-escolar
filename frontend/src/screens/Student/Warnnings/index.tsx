@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { TableComponent } from '../../../components/TableComponent'
 import { useColumns } from './hooks/useColumns'
-import { EmptyItems } from '../../../components/EmptyItems'
-import { useRouter } from 'next/router'
-import { Loading } from '../../../components/Loading'
 import { warningsService } from '../../../services/warningsService'
 import { usersService } from '../../../services/usersService'
+import style from './Warnings.module.scss'
+import { ListMobile } from '../../../components/ListMobile'
+import { useFieldsMobile } from './hooks/useFieldsMobile'
 
 export interface Subject {
   _id: string
@@ -16,7 +16,9 @@ export interface Subject {
 export function Warnings() {
   const [warnings, setWarnings] = useState<Subject[]>([])
   const [loadingWarnings, setLoadingWarnings] = useState<boolean>(true)
-  const router = useRouter()
+
+  const columns = useColumns()
+  const fieldsMobile = useFieldsMobile()
 
   function getWarnings() {
     setLoadingWarnings(true)
@@ -37,27 +39,27 @@ export function Warnings() {
 
   useEffect(() => {
     getWarnings()
-  }, [router.query])
-
-  const columns = useColumns()
+  }, [])
 
   return (
     <>
-      {warnings?.length > 0 && (
+      <div className={style.viewDesktop}>
         <TableComponent
           loading={loadingWarnings}
           columns={columns}
           rows={warnings}
+          emptyText="Você não possui advertências"
         />
-      )}
-
-      {warnings?.length === 0 && loadingWarnings && (
-        <Loading size={30} color="#cd1414" />
-      )}
-
-      {warnings?.length === 0 && !loadingWarnings && (
-        <EmptyItems text="Nenhuma advertência encontrada" />
-      )}
+      </div>
+      <div className={style.viewMobile}>
+        <ListMobile
+          collapseItems={columns}
+          items={warnings}
+          emptyText="Você não possui advertências"
+          loading={loadingWarnings}
+          itemFields={fieldsMobile}
+        />
+      </div>
     </>
   )
 }

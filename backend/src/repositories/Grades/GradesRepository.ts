@@ -12,6 +12,7 @@ export class GradesRepository implements IGradesRepository {
     this.model = GradeModel
   }
 
+
   async create({
     idStudent,
     idSubject,
@@ -38,6 +39,12 @@ export class GradesRepository implements IGradesRepository {
     return await this.model
       .find({ subject: idSubject })
       .populate('student subject')
+  }
+
+  async listByStudent(idStudent: string): Promise<Grade[]> {
+    return await this.model
+    .find({ student: idStudent })
+    .populate('student subject')
   }
 
   async delete(idGrade: string): Promise<void> {

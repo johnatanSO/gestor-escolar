@@ -6,7 +6,8 @@
     "start": "next dev -p 3003 ",
     "build": "next build",
     "prod": "next start",
-    "lint": "next lint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx,.ts,.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",

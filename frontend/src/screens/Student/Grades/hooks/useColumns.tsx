@@ -3,44 +3,51 @@ import style from '../Grades.module.scss'
 
 export function useColumns() {
   function getAvarageStatus(grade: number) {
-    if (grade > 5) return style.approved
+    console.log('GRADE', grade)
+    if (grade >= 5) return style.approved
     return style.disapproved
   }
 
   return [
     {
       headerName: 'Código',
-      field: 'subjectCode',
-      valueFormatter: (params: CellFunctionParams<any>) => params.value,
+      field: 'subject',
+      valueFormatter: (params: CellFunctionParams<any>) =>
+        params?.value?.code || '--',
     },
     {
-      headerName: 'Nome da disciplina',
-      field: 'subjectName',
-      valueFormatter: (params: CellFunctionParams<any>) => params.value || '--',
+      headerName: 'Disciplina',
+      field: 'subject',
+      valueFormatter: (params: CellFunctionParams<any>) =>
+        params?.value?.name || '--',
     },
     {
       headerName: 'Nota 1',
-      field: 'subjectGrades',
+      field: 'firstGrade',
       cellClass: (params: CellFunctionParams<any>) =>
-        getAvarageStatus(params.value.firstGrade),
+        getAvarageStatus(params?.value || 0),
       valueFormatter: (params: CellFunctionParams<any>) =>
-        params?.value?.firstGrade?.toFixed(2),
+        (params?.value || 0).toFixed(2),
     },
     {
       headerName: 'Nota 2',
-      field: 'subjectGrades',
+      field: 'secondGrade',
       cellClass: (params: CellFunctionParams<any>) =>
-        getAvarageStatus(params.value.secondGrade),
+        getAvarageStatus(params?.value || 0),
       valueFormatter: (params: CellFunctionParams<any>) =>
-        params?.value?.secondGrade?.toFixed(2),
+        (params?.value || 0).toFixed(2),
     },
     {
       headerName: 'Total',
-      field: 'subjectGrades',
-      cellClass: (params: CellFunctionParams<any>) =>
-        `${style.totalGrade} ${getAvarageStatus(params.value.totalGrades)}`,
-      valueFormatter: (params: CellFunctionParams<any>) =>
-        params?.value?.totalGrades?.toFixed(2),
+      field: 'total',
+      cellClass: (params: CellFunctionParams<any>) => {
+        const total = params?.data?.firstGrade + params?.data?.secondGrade
+        return `${style.totalGrade} ${getAvarageStatus((total || 0) / 2)}`
+      },
+      valueFormatter: (params: any) => {
+        const total = params?.data?.firstGrade + params?.data?.secondGrade
+        return ((total || 0) / 2).toFixed(2)
+      },
     },
   ]
 }

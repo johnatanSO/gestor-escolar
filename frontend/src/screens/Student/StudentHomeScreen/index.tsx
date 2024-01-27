@@ -1,21 +1,13 @@
 import style from './StudentHomeScreen.module.scss'
-import Image from 'next/image'
-import studentImage from '../../../../public/assets/student.png'
 import notesImage from '../../../../public/assets/notepad.png'
 import warningImage from '../../../../public/assets/warning.png'
 import timetableImage from '../../../../public/assets/timetable.png'
-import { usersService } from '../../../services/usersService'
-import { useEffect, useState } from 'react'
 import { ButtonComponent } from '../../../components/ButtonComponent'
 import { useRouter } from 'next/router'
 import { ButtonHomeScreen } from '../../../models/ButtonHomeScreen'
-
-interface Student {
-  name: string
-}
+import { UserAvatar } from '../../../components/UserAvatar'
 
 export function StudentHomeScreen() {
-  const [studentData, setStudentData] = useState<Student | undefined>(undefined)
   const router = useRouter()
   const buttonsList: ButtonHomeScreen[] = [
     {
@@ -43,23 +35,9 @@ export function StudentHomeScreen() {
     },
   ]
 
-  useEffect(() => {
-    const studentData = usersService.getUserInfo()
-    setStudentData(studentData)
-  }, [])
-
   return (
     <>
-      <div className={style.avatarContainer}>
-        <div className={style.imageContainer}>
-          <Image
-            src={studentImage}
-            alt="student icon"
-            className={style.image}
-          />
-        </div>
-        <h3>{studentData?.name || '--'}</h3>
-      </div>
+      <UserAvatar occupation="student" />
 
       <div className={style.buttonsContainer}>
         {buttonsList?.map(

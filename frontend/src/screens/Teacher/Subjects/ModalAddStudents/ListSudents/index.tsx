@@ -75,7 +75,7 @@ export function ListStudent({
                   width={150}
                   sx={{
                     fontSize: '1rem',
-                    borderRadius: 20,
+                    borderRadius: 15,
                   }}
                 />
               </ListItemButton>

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import style from './UserAvatar.module.scss'
 import teacherImage from '../../../public/assets/teacher.png'
+import studentImage from '../../../public/assets/student.png'
 import { usersService } from '../../services/usersService'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
@@ -11,9 +12,19 @@ interface UserData {
   avatar: string
 }
 
-export function UserAvatar() {
-  const [userData, setUserData] = useState<UserData | undefined>(undefined)
+type Props = {
+  occupation: string
+}
+
+export function UserAvatar({ occupation }: Props) {
+  const [userData, setUserData] = useState<UserData | null>(null)
   const [avatarImage, setAvatarImage] = useState<any>(null)
+
+  function getAvatarImage() {
+    if (userData?.avatar) return userData?.avatar
+    if (occupation === 'teacher') return teacherImage
+    if (occupation === 'student') return studentImage
+  }
 
   function getCurrentUserInfo() {
     const newUserData = usersService.getUserInfo()
@@ -38,20 +49,15 @@ export function UserAvatar() {
     if (avatarImage) {
       usersService
         .updateAvatarImage({ avatarImage })
-        .then(async (res) => {
-          const response: any = await usersService.getCurrentUserInfo()
-          usersService.saveUser(response.data)
-          setUserData(response.data.item)
+        .then(({ data: { user } }) => {
+          usersService.saveUser(user)
+          setUserData(user)
         })
         .catch((err) => {
           console.log('err', err.response.data.message)
         })
     }
   }, [avatarImage])
-
-  const avatarUrl = userData?.avatar
-    ? process.env.NEXT_PUBLIC_BASE_URL + userData?.avatar
-    : teacherImage.src
 
   return (
     <div className={style.avatarContainer}>
@@ -65,8 +71,8 @@ export function UserAvatar() {
         </div>
 
         <Image
-          loader={() => avatarUrl}
-          src={avatarUrl}
+          loading="lazy"
+          src={getAvatarImage() || ''}
           layout="fill"
           alt="user avatar"
           width={512}

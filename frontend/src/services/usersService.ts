@@ -4,7 +4,6 @@ import { LoginUserData } from '../screens/Login'
 import nookies from 'nookies'
 
 const USER_INFO = 'userInfo:gestor-escolar'
-const ACCESS_TOKEN_KEY = 'access:gestor-escolar'
 
 interface LoginParams {
   userData: LoginUserData
@@ -15,14 +14,6 @@ interface RegisterParams {
 }
 
 export const usersService = {
-  async getSession(ctx = null) {
-    const token = this.getToken(ctx)
-
-    if (!token) return false
-
-    return true
-  },
-
   login({ userData }: LoginParams) {
     const body = { ...userData }
 
@@ -39,36 +30,27 @@ export const usersService = {
     })
   },
 
-  getToken(ctx = null) {
-    const cookies = nookies.get(ctx)
-    return cookies ? cookies[ACCESS_TOKEN_KEY] : null
-  },
-
-  async saveUser(userResponse: any) {
-    globalThis?.localStorage?.setItem(
-      USER_INFO,
-      JSON.stringify(userResponse.item),
-    )
-    globalThis?.localStorage?.setItem(ACCESS_TOKEN_KEY, userResponse?.token)
-    nookies.set(null, ACCESS_TOKEN_KEY, userResponse?.token, {
-      maxAge: 60 * 60 * 24 * 30,
-      path: '/',
-    })
-    nookies.set(null, USER_INFO, JSON.stringify(userResponse.item), {
+  async saveUser(user: any) {
+    globalThis?.localStorage?.setItem(USER_INFO, JSON.stringify(user))
+    nookies.set(null, USER_INFO, JSON.stringify(user), {
       maxAge: 60 * 60 * 24 * 30,
       path: '/',
     })
   },
 
-  async deleteToken() {
+  deleteUser() {
     globalThis?.localStorage?.removeItem(USER_INFO)
-    globalThis?.localStorage?.removeItem(ACCESS_TOKEN_KEY)
-    nookies.destroy(null, ACCESS_TOKEN_KEY)
     nookies.destroy(null, USER_INFO)
   },
 
   getUserInfo() {
-    return JSON.parse(globalThis?.localStorage?.getItem(USER_INFO) || '{}')
+    const userLocal = JSON.parse(
+      globalThis?.localStorage?.getItem(USER_INFO) || '{}',
+    )
+    if (userLocal) return userLocal
+
+    const cookies = nookies.get(null)
+    return cookies ? cookies[USER_INFO] : null
   },
 
   getUserInfoByCookie(context = null) {
@@ -82,9 +64,5 @@ export const usersService = {
     formData.append('avatar', avatarImage)
 
     return http.patch('/users/avatar', formData)
-  },
-
-  getCurrentUserInfo() {
-    return http.get('/users/' + this.getUserInfo()._id)
   },
 }

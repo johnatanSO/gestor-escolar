@@ -1,26 +1,31 @@
 import { useEffect, useState } from 'react'
 import { TableComponent } from '../../../../src/components/TableComponent'
 import { useColumns } from './hooks/useColumns'
-import { EmptyItems } from '../../../../src/components/EmptyItems'
-import { useRouter } from 'next/router'
-import { Loading } from '../../../components/Loading'
-import { studentsService } from '../../../services/studentsService'
+import { gradesService } from '../../../services/gradesService'
+import style from './Grades.module.scss'
+import { ListMobile } from '../../../components/ListMobile'
+import { useFieldsMobile } from './hooks/useFieldsMobile'
 
-export interface Subject {
+export interface Grade {
   _id: string
-  name: string
-  students: string[]
+  subject: {
+    name: string
+  }
+  firstGrade: number
+  secondGrade: number
 }
 
 export function Grades() {
-  const [grades, setGrades] = useState<Subject[]>([])
+  const [grades, setGrades] = useState<Grade[]>([])
   const [loadingGrades, setLoadingGrades] = useState<boolean>(true)
-  const router = useRouter()
+
+  const columns = useColumns()
+  const fieldsMobile = useFieldsMobile()
 
   function getGrades() {
     setLoadingGrades(true)
-    studentsService
-      .getGrades()
+    gradesService
+      .getGradesByStudent()
       .then((res) => {
         setGrades(res.data.items)
       })
@@ -34,27 +39,27 @@ export function Grades() {
 
   useEffect(() => {
     getGrades()
-  }, [router.query])
-
-  const columns = useColumns()
+  }, [])
 
   return (
     <>
-      {grades?.length > 0 && (
+      <div className={style.viewDesktop}>
         <TableComponent
           loading={loadingGrades}
           columns={columns}
           rows={grades}
+          emptyText="Você não está cadastrado em nenhuma disciplina"
         />
-      )}
-
-      {grades?.length === 0 && loadingGrades && (
-        <Loading size={30} color="#cd1414" />
-      )}
-
-      {grades?.length === 0 && !loadingGrades && (
-        <EmptyItems text="Nenhuma nota encontrada" />
-      )}
+      </div>
+      <div className={style.viewMobile}> 
+        <ListMobile 
+          collapseItems={columns} 
+          items={grades} 
+          emptyText="Você não está cadastrado em nenhuma disciplina"
+          loading={loadingGrades}
+          itemFields={fieldsMobile}
+        />
+      </div>
     </>
   )
 }

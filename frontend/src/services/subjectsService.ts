@@ -55,6 +55,7 @@ export const subjectsService = {
       ...body,
     })
   },
+  
   removeStudents({
     selectedStudentsIdsToRemove,
     subjectId,

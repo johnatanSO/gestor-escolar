@@ -19,15 +19,6 @@ export const studentsService = {
     return http.get('/students/')
   },
 
-  getBySubject(idSubject: string) {
-    return http.get('/students/subjectStudentsGrades/' + idSubject)
-  },
-
-  getGrades() {
-    const idStudent = usersService?.getUserInfo()?._id
-    return http.get('/students/studentGrades/' + idStudent)
-  },
-
   delete({ studentId }: DeleteStudentParams) {
     return http.delete(`/students/${studentId}`)
   },

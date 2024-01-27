@@ -1,13 +1,29 @@
-@import "../../../../styles//colors.scss";
+@import "../../../../styles/colors.scss";
+
+.viewDesktop {
+  display: flex;
+}
+.viewMobile {
+  display: none;
+}
 
 .totalGrade {
   font-weight: 600;
 }
 
 .approved {
-  color: $green-color-500;
+  color: $green-color-500 !important;
 }
 
 .disapproved {
-  color: $red-color-500;
+  color: $red-color-500 !important;
+}
+
+@media (max-width: 670px) {
+  .viewDesktop {
+    display: none;
+  }
+  .viewMobile {
+    display: flex;
+  }
 }

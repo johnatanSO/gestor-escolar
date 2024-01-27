@@ -1,4 +1,5 @@
 import { Subjects } from '../../src/screens/Teacher/Subjects'
+import { tokenService } from '../../src/services/tokenService'
 import { usersService } from '../../src/services/usersService'
 import { PageProps } from './../_app'
 
@@ -12,7 +13,7 @@ export default function SubjectsPage({ setShowBackButton }: PageProps) {
 }
 
 export async function getServerSideProps(context: any) {
-  const hasSession = await usersService.getSession(context)
+  const hasSession = await tokenService.getSession(context)
   if (!hasSession) {
     return {
       redirect: {

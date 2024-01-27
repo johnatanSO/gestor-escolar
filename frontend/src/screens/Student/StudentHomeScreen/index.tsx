@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { ButtonComponent } from '../../../components/ButtonComponent'
 import { useRouter } from 'next/router'
 import { ButtonHomeScreen } from '../../../models/ButtonHomeScreen'
+import { UserAvatar } from '../../../components/UserAvatar'
 
 interface Student {
   name: string
@@ -50,16 +51,7 @@ export function StudentHomeScreen() {
 
   return (
     <>
-      <div className={style.avatarContainer}>
-        <div className={style.imageContainer}>
-          <Image
-            src={studentImage}
-            alt="student icon"
-            className={style.image}
-          />
-        </div>
-        <h3>{studentData?.name || '--'}</h3>
-      </div>
+      <UserAvatar occupation="student" />
 
       <div className={style.buttonsContainer}>
         {buttonsList?.map(

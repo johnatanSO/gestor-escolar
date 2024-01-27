@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { usersService } from '../services/usersService'
+import { tokenService } from '../services/tokenService'
 
 const http = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -7,7 +7,7 @@ const http = axios.create({
 
 http.interceptors.request.use(
   (config: any) => {
-    const token = usersService.getToken()
+    const token = tokenService.getToken()
     if (token) {
       config.headers = {
         ...config.headers,

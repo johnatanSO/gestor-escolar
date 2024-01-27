@@ -1,9 +1,9 @@
 import { Grade } from '../../../entities/grade'
-import { IGradesRepository } from './../../../repositories/Grades/IGradesRepository'
+import { IGradesRepository } from '../../../repositories/Grades/IGradesRepository'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
-export class ListGradesService {
+export class ListGradesBySubjectService {
   gradesRepository: IGradesRepository
   constructor(@inject('GradesRepository') gradesRepository: IGradesRepository) {
     this.gradesRepository = gradesRepository

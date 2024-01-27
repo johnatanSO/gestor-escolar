@@ -24,6 +24,8 @@ export interface IGradesRepository {
 
   listBySubject(idSubject: string): Promise<Grade[]>
 
+  listByStudent(idStudent: string): Promise<Grade[]>
+
   listBySubjectAndStudent(idStudent: string, idSubject: string): Promise<Grade>
 
   delete(idGrade: string): Promise<void>

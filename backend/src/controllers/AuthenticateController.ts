@@ -15,7 +15,7 @@ export class AuthenticateUserController {
     return res.status(200).json({
       success: true,
       title: 'Usuário autenticado com sucesso',
-      item: authenticateInfos.user,
+      user: authenticateInfos.user,
       token: authenticateInfos.token,
     })
   }

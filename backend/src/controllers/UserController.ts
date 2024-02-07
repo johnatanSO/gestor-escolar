@@ -3,7 +3,6 @@ import { container } from 'tsyringe'
 import { CreateNewUserService } from '../useCases/User/CreateNewUser/CreateNewUserService.service'
 import { GetUserInfoService } from '../useCases/User/GetUserInfo/GetUserInfoService.service'
 import { UpdateUserAvatarService } from '../useCases/User/UpdateUserAvatar/UpdateUserAvatarService.service'
-import { AppError } from '../shared/errors/AppError'
 import { UpdateUserInfosService } from '../useCases/User/UpdateUserInfos/UpdateUserInfosService.service'
 
 export class UserController {
@@ -26,18 +25,18 @@ export class UserController {
   }
 
   async updateUserAvatar(req: Request, res: Response): Promise<Response> {
-    const avatarFile = req.file
+    const avatarFile = req.file.filename
 
     const updateUserAvatarService = container.resolve(UpdateUserAvatarService)
-    const user = await updateUserAvatarService.execute({ 
-      userId: req.user._id, 
-      avatarFile 
+    const user = await updateUserAvatarService.execute({
+      userId: req.user._id,
+      avatarFile,
     })
 
     return res.status(200).json({
       success: true,
       message: 'Avatar atualizado com sucesso',
-      user
+      user,
     })
   }
 

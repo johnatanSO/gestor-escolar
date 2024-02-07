@@ -1,9 +1,9 @@
 import { container } from 'tsyringe'
 
-import { FirebaseProvider } from './StorageProvider/FirebaseProvider'
+import { S3StorageProvider } from './StorageProvider/S3StorageProvider'
 import { IStorageProvider } from './StorageProvider/IStorageProvider'
 
 container.registerSingleton<IStorageProvider>(
-  'FirebaseProvider',
-  FirebaseProvider,
+  'StorageProvider',
+  S3StorageProvider,
 )

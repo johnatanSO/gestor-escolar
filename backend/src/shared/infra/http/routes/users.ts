@@ -3,8 +3,9 @@ import multer from 'multer'
 
 import { UserController } from '../../../../controllers/UserController'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
+import uploadConfigs from '../../../../config/upload'
 
-const uploadAvatar = multer()
+const uploadAvatar = multer(uploadConfigs)
 const usersRoutes = express.Router()
 const userController = new UserController()
 

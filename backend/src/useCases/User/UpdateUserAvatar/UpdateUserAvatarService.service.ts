@@ -6,15 +6,7 @@ import { User } from '../../../entities/user'
 
 interface IRequest {
   userId: string
-  avatarFile: {
-    filename: string
-    originalname: string
-    buffer: Buffer
-    mimetype: string
-  }
-}
-interface IResponse {
-
+  avatarFile: string
 }
 
 @injectable()
@@ -23,26 +15,26 @@ export class UpdateUserAvatarService {
   storageProvider: IStorageProvider
   constructor(
     @inject('UsersRepository') usersRepository: IUsersRepository,
-    @inject('FirebaseProvider') storageProvider: IStorageProvider,
+    @inject('StorageProvider') storageProvider: IStorageProvider,
   ) {
     this.usersRepository = usersRepository
     this.storageProvider = storageProvider
   }
 
-  async execute({ userId, avatarFile }: IRequest): Promise<Omit<User, 'password'>> {
+  async execute({ userId, avatarFile }: IRequest): Promise<User> {
     if (!avatarFile) throw new AppError('Avatar não informado')
 
     const user = await this.usersRepository.findById(userId)
+    if (!user) throw new AppError('Usuário inválido')
 
     if (user.avatar) {
-      const [, imageName] = user.avatar.split('appspot.com/')
-
-      if (!imageName) throw new AppError('Nome da imagem inválido')
-
-      await this.storageProvider.deleteImage(imageName)
+      await this.storageProvider.deleteImage(user.avatar, 'avatar')
     }
 
-    const { imageURL } = await this.storageProvider.uploadImage(avatarFile)
+    const imageURL = await this.storageProvider.uploadImage(
+      avatarFile,
+      'avatar',
+    )
 
     const filters = {
       _id: userId,
@@ -50,7 +42,8 @@ export class UpdateUserAvatarService {
 
     const updateFields = {
       $set: {
-        avatar: imageURL,
+        avatar: avatarFile,
+        avatarURL: imageURL,
       },
     }
 

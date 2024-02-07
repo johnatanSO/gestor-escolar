@@ -7,7 +7,6 @@ export interface User {
   occupation: string
   password: string
   avatar: string
-  avatarURL: string
 }
 
 const userSchema = new mongoose.Schema({
@@ -16,7 +15,6 @@ const userSchema = new mongoose.Schema({
   password: { type: String, default: null },
   occupation: { type: String, default: null },
   avatar: { type: String, default: null },
-  avatarURL: { type: String, default: null },
   idTeacher: { type: 'ObjectId', ref: 'User' },
 })
 

@@ -1,4 +1,7 @@
 export default {
-  secretToken:
-    '7B6F8AFB55D812D0FA12A061D299819E312969A24B7650D6D4E2D9A243BEC481',
+  secretToken: 'a97adc1b32357d9481f6d73fba9ef2c7',
+  secretRefreshToken: '60de3ce66da5bff63a0c4b245c15b8c8',
+  expiresInToken: '55m',
+  expiresInRefreshToken: '30d',
+  expiresRefreshTokenDays: 30,
 }

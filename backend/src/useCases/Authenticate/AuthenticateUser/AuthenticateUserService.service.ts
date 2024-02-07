@@ -43,7 +43,7 @@ export class AuthenticateUserService {
 
     const token = jwt.sign({}, auth.secretToken, {
       subject: user._id.toString(),
-      expiresIn: '1d',
+      expiresIn: auth.expiresInToken,
     })
 
     return {

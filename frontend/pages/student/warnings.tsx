@@ -1,4 +1,5 @@
 import { Warnings } from '../../src/screens/Student/Warnnings'
+import { tokenService } from '../../src/services/tokenService'
 import { usersService } from '../../src/services/usersService'
 import { PageProps } from './../_app'
 
@@ -12,7 +13,7 @@ export default function WarningsPage({ setShowBackButton }: PageProps) {
 }
 
 export async function getServerSideProps(context: any) {
-  const hasSession = await usersService.getSession(context)
+  const hasSession = await tokenService.getSession(context)
   if (!hasSession) {
     return {
       redirect: {

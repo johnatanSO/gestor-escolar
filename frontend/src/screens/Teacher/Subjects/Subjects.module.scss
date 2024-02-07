@@ -1,0 +1,100 @@
+@import "../../../../styles/colors.scss";
+
+.actionButtonsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  button {
+    background: none;
+    border: none;
+    line-height: 0;
+
+    cursor: pointer;
+    transition: filter 0.2s;
+
+    &:not(:disabled):hover {
+      filter: brightness(0.7);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+    }
+
+    &.insertStudentsButton {
+      color: $blue-color-700;
+    }
+    &.showGradesButton {
+      color: $green-color-500;
+    }
+    &.deleteSubjectButton {
+      color: $red-color-500;
+    }
+
+    .icon {
+      height: 1.2rem;
+    }
+  }
+}
+
+.viewDesktop {
+  display: flex;
+}
+.viewMobile {
+  display: none;
+}
+
+@media (max-width: 620px) {
+  .viewDesktop {
+    display: none;
+  }
+  .viewMobile {
+    display: flex;
+  }
+
+  .actionButtonsContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+
+    width: 100%;
+    margin: 0.5rem 0;
+
+    button {
+      padding: 0.6rem;
+      width: 100%;
+      border-radius: 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+
+      &.insertStudentsButton {
+        background: $blue-color-700;
+        color: $white-color;
+
+        &::after {
+          content: "Inserir alunos";
+        }
+      }
+      &.showGradesButton {
+        background: $green-color-500;
+        color: $white-color;
+
+        &::after {
+          content: "Ver notas";
+        }
+      }
+      &.deleteSubjectButton {
+        background: $red-color-500;
+        color: $white-color;
+
+        &::after {
+          content: "Deletar matéria";
+        }
+      }
+    }
+  }
+}

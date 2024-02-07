@@ -1,7 +1,7 @@
 import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import { inject, injectable } from 'tsyringe'
 import { User } from '../../../entities/user'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 @injectable()
 export class GetUserInfoService {

@@ -1,26 +1,27 @@
-@import '../../../../../../styles/colors.scss';
+@import "../../../../../../styles/colors.scss";
 
 .backButton {
   align-self: self-start;
   display: flex;
   align-items: center;
-  gap: 7px;
-  margin-bottom: 15px;
+  gap: 0.7rem;
 
   line-height: 1;
-  font-size: 1.2rem;
+  font-size: 0.875rem;
 
   padding: 0.5rem 0.6rem;
-  border-radius: 7px;
+  border-radius: 20px;
   border: none;
 
-  background: $gray-color-200;
+  color: $gray-color-300;
+  background: none;
 
   cursor: pointer;
-  transition: filter 0.2s;
+  transition: background-color 0.2s, color 0.2s;
 
   &:hover {
-    filter: brightness(0.8);
+    background: $gray-color-200;
+    color: $gray-color-400;
   }
 
   .icon {
@@ -28,7 +29,7 @@
   }
 }
 
-.inputsContainer{
+.inputsContainer {
   display: flex;
   flex-direction: column;
   gap: 15px;

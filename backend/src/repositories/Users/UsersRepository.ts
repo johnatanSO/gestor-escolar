@@ -9,16 +9,20 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async create({
+    code,
     name,
     password,
     email,
     occupation,
+    idTeacher,
   }: INewUserDTO): Promise<User> {
     const newUser = await this.model.create({
+      code,
       name,
       password,
       email,
       occupation,
+      teacher: idTeacher,
     })
     await newUser.save()
     return newUser
@@ -29,7 +33,7 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findById(_id: string): Promise<User> {
-    return await this.model.findOne({ _id })
+    return await this.model.findOne({ _id }).select('-password')
   }
 
   async update(filters: any, updateFields: any): Promise<void> {
@@ -38,5 +42,17 @@ export class UsersRepository implements IUsersRepository {
 
   async delete(idUser: string): Promise<void> {
     await this.model.deleteOne({ _id: idUser })
+  }
+
+  async listStudents(idTeacher: string): Promise<User[]> {
+    return await this.model.find({ teacher: idTeacher, occupation: 'student' })
+  }
+
+  async getStudentsEntries(idTeacher: string): Promise<number> {
+    return await this.model.count({ teacher: idTeacher, occupation: 'student' })
+  }
+
+  async incrementWarningsAmount(idUser: string): Promise<void> {
+    await this.model.updateOne({ _id: idUser }, { $inc: { warningsAmount: 1 } })
   }
 }

@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
-import { AppError } from '../../../errors/AppError'
+import { AppError } from '../../../shared/errors/AppError'
 
 @injectable()
 export class DeleteUserService {

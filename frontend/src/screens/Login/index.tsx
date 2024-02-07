@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { AlertContext } from '../../../src/contexts/alertContext'
 import { CustomTextField } from '../../components/CustomTextField'
 import { Loading } from '../../components/Loading'
+import { tokenService } from '../../services/tokenService'
 
 export interface LoginUserData {
   email: string
@@ -54,16 +55,19 @@ export function Login() {
           text: 'Usuário autenticado com sucesso',
           open: true,
         })
-        usersService.saveUser(res.data)
+        usersService.saveUser(res.data.user)
+        tokenService.saveToken(res.data.token)
         router.push('/')
       })
       .catch((err) => {
-        console.log('ERRO AO TENTAR REALIZAR LOGIN,', err?.response?.data)
+        console.log('ERRO AO TENTAR REALIZAR LOGIN,', err)
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
-          type: 'error',
-          text: `Erro ao tentar realizar login - ${err?.response?.data?.message}`,
           open: true,
+          text: `Erro ao tentar realizar login - ${
+            err?.response?.data?.message || err?.message
+          }`,
+          type: 'error',
         })
       })
       .finally(() => {
@@ -74,6 +78,7 @@ export function Login() {
   return (
     <div className={style.loginContainer}>
       <h2>Entrar com uma conta existente</h2>
+
       <form onSubmit={onLogin} className={style.formContainer}>
         <CustomTextField
           size="medium"

@@ -1,64 +1,58 @@
 import { ModalLayout } from '../../../../components/ModalLayout'
-import {
-  FormEvent,
-  useState,
-  useContext,
-  useEffect,
-  SyntheticEvent,
-} from 'react'
-import style from './ModalAddStudents.module.scss'
+import { FormEvent, useState, useContext, useEffect } from 'react'
 import { subjectsService } from '../../../../services/subjectsService'
 import { AlertContext } from '../../../../contexts/alertContext'
-import { useRouter } from 'next/router'
 import { Subject } from '..'
 import { studentsService } from '../../../../services/studentsService'
-import { Checkbox, FormControlLabel } from '@mui/material'
+import { MenuSelectList } from './MenuSelectList'
+import { ListStudent } from './ListSudents'
 
 interface Props {
   subjectData: Subject
   open: boolean
   handleClose: () => void
+  getSubjects: () => void
 }
 
 export interface Student {
   _id: string
   name: string
   checked?: boolean
-  user: {
-    name: string
-  }
 }
 
-export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
+export function ModalAddStudents({
+  open,
+  handleClose,
+  subjectData,
+  getSubjects,
+}: Props) {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
-  const [loadingAddStudents, setLoadingAddStudents] = useState<boolean>(false)
-  const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
-  const [students, setStudents] = useState<Student[]>([])
 
-  const router = useRouter()
+  const [loadingForm, setLoadingForm] = useState<boolean>(false)
+  const [loadingGetStudents, setLoadingGetStudents] = useState<boolean>(true)
+  const [registeredStudents, setRegisteredStudents] = useState<Student[]>([])
+  const [otherStudents, setOtherStudents] = useState<Student[]>([])
+  const [menuSelected, setMenuSelected] = useState<string>('included')
 
   function onAddStudents(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setLoadingAddStudents(true)
+    setLoadingForm(true)
 
-    const selectedStudentsIds = students
+    const selectedStudentsIdsToAdd = otherStudents
       .filter((student) => student?.checked)
       .map((student) => student._id)
 
     subjectsService
-      .insertStudents({ selectedStudentsIds, subjectId: subjectData?._id })
+      .insertStudents({ selectedStudentsIdsToAdd, subjectId: subjectData?._id })
       .then(() => {
-        router.push({
-          pathname: router.route,
-          query: router.query,
-        })
-        handleClose()
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           open: true,
           type: 'success',
           text: 'Alunos associados com sucesso',
         })
+        getSubjects()
+        handleClose()
       })
       .catch((err) => {
         setAlertNotifyConfigs({
@@ -67,11 +61,49 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
           type: 'error',
           text:
             'Erro ao tentar associar alunos ' +
-            `(${err.response.data.message})`,
+            `(${err?.response?.data?.message || err?.message})`,
         })
       })
       .finally(() => {
-        setLoadingAddStudents(false)
+        setLoadingForm(false)
+      })
+  }
+
+  function onRemoveStudents(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setLoadingForm(true)
+
+    const selectedStudentsIdsToRemove = registeredStudents
+      .filter((student) => student?.checked)
+      .map((student) => student._id)
+
+    subjectsService
+      .removeStudents({
+        selectedStudentsIdsToRemove,
+        subjectId: subjectData?._id,
+      })
+      .then(() => {
+        setAlertNotifyConfigs({
+          ...alertNotifyConfigs,
+          open: true,
+          type: 'success',
+          text: 'Alunos removidos com sucesso',
+        })
+        getSubjects()
+        handleClose()
+      })
+      .catch((err) => {
+        setAlertNotifyConfigs({
+          ...alertNotifyConfigs,
+          open: true,
+          type: 'error',
+          text:
+            'Erro ao tentar remover alunos ' +
+            `(${err?.response?.data?.message || err?.message})`,
+        })
+      })
+      .finally(() => {
+        setLoadingForm(false)
       })
   }
 
@@ -80,8 +112,7 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
     studentsService
       .getAll()
       .then((res) => {
-        setStudents(res.data.items)
-        getStudentsInserted(res.data.items)
+        separateStudents(res.data.items)
       })
       .catch((err) => {
         console.log('Erro ao buscar alunos, ' + err.response.data.message)
@@ -91,67 +122,101 @@ export function ModalAddStudents({ open, handleClose, subjectData }: Props) {
       })
   }
 
-  function getStudentsInserted(students: Student[]) {
+  function separateStudents(students: Student[]) {
     const newStudents = [...students]
+    const _registeredStudents: Student[] = []
+    const _otherStudents: Student[] = []
+
     newStudents.forEach((student) => {
-      const studentInserted = subjectData?.students?.find(
-        (subjectStudentId) => student?._id === subjectStudentId,
-      )
-      if (studentInserted) student.checked = true
+      const studentInserted = subjectData?.students?.includes(student?._id)
+
+      if (studentInserted) {
+        _registeredStudents.push(student)
+      } else {
+        _otherStudents.push(student)
+      }
     })
-    setStudents(newStudents)
+
+    setRegisteredStudents(_registeredStudents)
+    setOtherStudents(_otherStudents)
+  }
+
+  function handleSelectStudentToAdd(student: Student) {
+    const copyOtherStudent = [...otherStudents]
+
+    copyOtherStudent.forEach((currentStudent) => {
+      if (currentStudent._id === student._id) {
+        currentStudent.checked = !currentStudent.checked
+      }
+    })
+
+    setOtherStudents(copyOtherStudent)
+  }
+
+  function handleSelectStudentToRemove(student: Student) {
+    const copyRegisteredStudents = [...registeredStudents]
+
+    copyRegisteredStudents.forEach((currentStudent) => {
+      if (currentStudent._id === student._id) {
+        currentStudent.checked = !currentStudent.checked
+      }
+    })
+
+    setRegisteredStudents(copyRegisteredStudents)
+  }
+
+  function getSubmitFunction() {
+    if (menuSelected === 'included' && registeredStudents.length > 0) {
+      return onRemoveStudents
+    }
+    if (menuSelected === 'other' && otherStudents.length > 0) {
+      return onAddStudents
+    }
+
+    return undefined
   }
 
   useEffect(() => {
     getStudents()
   }, [])
 
-  function handleSelectStudent(checked: boolean, studentId: string) {
-    const newStudents = [...students]
-    newStudents.forEach((student) => {
-      if (student?._id === studentId) {
-        student.checked = checked
-      }
-    })
-    setStudents(newStudents)
-  }
-
   return (
     <ModalLayout
       open={open}
       handleClose={handleClose}
-      onSubmit={onAddStudents}
-      title="Adicionar alunos"
-      submitButtonText="Confirmar"
-      loading={loadingAddStudents}
+      onSubmit={getSubmitFunction()}
+      title={
+        menuSelected === 'included' ? 'Remover alunos' : 'Adicionar alunos'
+      }
+      submitButtonText={menuSelected === 'included' ? 'Remover' : 'Adicionar'}
+      loading={loadingForm}
+      customStyleButton={
+        menuSelected === 'other' ? { backgroundColor: '#3264ff' } : {}
+      }
     >
-      <ul className={style.fieldsContainer}>
-        {students.length === 0 && loadingGetStudents && 'CARREGANDO...'}
-        {students?.map((student) => {
-          return (
-            <li key={student._id}>
-              <FormControlLabel
-                onChange={(
-                  event: SyntheticEvent<Element>,
-                  checked: boolean,
-                ) => {
-                  handleSelectStudent(checked, student._id)
-                }}
-                sx={{ width: '100%' }}
-                control={
-                  <Checkbox
-                    checked={student?.checked}
-                    sx={{
-                      '&.Mui-checked': { color: '#cd1414' },
-                    }}
-                  />
-                }
-                label={student?.user?.name || '--'}
-              />
-            </li>
-          )
-        })}
-      </ul>
+      <MenuSelectList
+        menuSelected={menuSelected}
+        setMenuSelected={setMenuSelected}
+      />
+
+      {menuSelected === 'included' && (
+        <ListStudent
+          customCheckboxColor="#aa2834"
+          students={registeredStudents}
+          handleSelectItem={handleSelectStudentToRemove}
+          loading={loadingGetStudents}
+          emptyText="Nenhum aluno incluído na disciplina"
+        />
+      )}
+
+      {menuSelected === 'other' && (
+        <ListStudent
+          customCheckboxColor="#3264ff"
+          students={otherStudents}
+          handleSelectItem={handleSelectStudentToAdd}
+          loading={loadingGetStudents}
+        />
+      )}
     </ModalLayout>
   )
 }

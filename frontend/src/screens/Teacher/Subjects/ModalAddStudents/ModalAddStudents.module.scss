@@ -1,17 +1,31 @@
-@import '../../../../../styles/colors.scss';
+@import "../../../../../styles/colors.scss";
 
-.fieldsContainer{
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
+.button {
+  background: none;
+  border: none;
 
-  list-style-type: none;
+  cursor: pointer;
+  transition: 0.2s;
 
-  li{
-    background: $gray-color-100;
-    box-shadow: 1px 3px 5px rgb(0 0 0 / 0.1);
+  &:hover {
+    filter: brightness(0.7);
+  }
+}
 
-    border-radius: 10px;
-    padding: 0px 0px 0px 0.7rem;
+.removeStudentButton {
+  @extend .button;
+
+  .icon {
+    height: 1rem;
+    color: $red-color-500;
+  }
+}
+
+.addStudentButton {
+  @extend .button;
+
+  .icon {
+    height: 1rem;
+    color: $blue-color-500;
   }
 }

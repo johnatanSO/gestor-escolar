@@ -1,55 +1,64 @@
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { ActionButtons } from '../../../../components/ActionButtons'
 import { Student } from '..'
 import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
-import { StudentDataToEdit } from '../ModalCreateNewStudent'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import style from '../Students.module.scss'
 
 interface UseColumnsParams {
   handleDeleteStudent: (student: Student) => void
-  handleEditStudent: (student: StudentDataToEdit) => void
+  handleEditStudent: (student: Student) => void
 }
 
 export function useColumns({
   handleDeleteStudent,
   handleEditStudent,
 }: UseColumnsParams) {
-  const actions = [
-    {
-      icon: faPen,
-      title: 'Editar',
-      color: '#31a2ff',
-      onClickFunction: handleEditStudent,
-    },
-    {
-      icon: faTrash,
-      title: 'Excluir',
-      color: '#ed4252',
-      onClickFunction: handleDeleteStudent,
-    },
-  ]
-
   return [
     {
       headerName: 'Código',
       field: 'code',
-      valueFormatter: (params: CellFunctionParams) => params.value || '--',
+      valueFormatter: (params: CellFunctionParams<Student>) =>
+        params.value || '--',
     },
     {
       headerName: 'Nome do aluno',
-      field: 'user',
-      valueFormatter: (params: CellFunctionParams) => params.value.name || '--',
+      field: 'name',
+      valueFormatter: (params: CellFunctionParams<Student>) =>
+        params.value || '--',
     },
     {
       headerName: 'E-mail',
-      field: 'user',
-      valueFormatter: (params: CellFunctionParams) =>
-        params.value.email || '--',
+      field: 'email',
+      valueFormatter: (params: CellFunctionParams<Student>) =>
+        params.value || '--',
     },
     {
       headerName: '',
       field: 'acoes',
-      cellRenderer: (params: CellFunctionParams) => {
-        return <ActionButtons actions={actions} params={params} />
+      type: 'actions',
+      cellRenderer: (params: CellFunctionParams<Student>) => {
+        return (
+          <div className={style.actionButtonsContainer}>
+            <button
+              onClick={() => {
+                handleEditStudent(params.data)
+              }}
+              className={style.editStudentButton}
+              type="button"
+            >
+              <FontAwesomeIcon icon={faPen} className={style.icon} />
+            </button>
+            <button
+              onClick={() => {
+                handleDeleteStudent(params.data)
+              }}
+              className={style.deleteStudentButton}
+              type="button"
+            >
+              <FontAwesomeIcon icon={faTrash} className={style.icon} />
+            </button>
+          </div>
+        )
       },
     },
   ]

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { usersService } from '../../services/usersService'
 import { useRouter } from 'next/router'
 import style from './HeaderMenu.module.scss'
+import { tokenService } from '../../services/tokenService'
 
 type Props = {
   title: string
@@ -16,7 +17,8 @@ export function HeaderMenu({ title, showBackButton }: Props) {
   const router = useRouter()
 
   function logout() {
-    usersService.deleteToken()
+    usersService.deleteUser()
+    tokenService.deleteToken()
     router.push('/login')
   }
 
@@ -26,9 +28,7 @@ export function HeaderMenu({ title, showBackButton }: Props) {
         <button
           className={style.backButton}
           type="button"
-          onClick={() => {
-            router.back()
-          }}
+          onClick={router.back}
         >
           <FontAwesomeIcon className={style.icon} icon={faAngleLeft} />
           Voltar

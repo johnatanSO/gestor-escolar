@@ -1,44 +1,51 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import { ActionButtons } from '../../../../../src/components/ActionButtons'
 import { Student } from '..'
+import style from '../StudentsWarnings.module.scss'
 import { CellFunctionParams } from '../../../../components/TableComponent/interfaces'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface UseColumnsParams {
   handleOpenWarnings: (student: Student) => void
 }
 
 export function useColumns({ handleOpenWarnings }: UseColumnsParams) {
-  const actions = [
-    {
-      icon: faWarning,
-      title: 'Advertências',
-      color: '#ed4252',
-      onClickFunction: handleOpenWarnings,
-    },
-  ]
-
   return [
     {
       headerName: 'Código',
       field: 'code',
-      valueFormatter: (params: CellFunctionParams) => params.value || '--',
+      valueFormatter: (params: CellFunctionParams<Student>) =>
+        params.value || '--',
     },
     {
-      headerName: 'Nome do aluno',
-      field: 'user',
-      valueFormatter: (params: CellFunctionParams) =>
-        params?.value?.name || '--',
+      headerName: 'Aluno',
+      field: 'name',
+      valueFormatter: (params: CellFunctionParams<Student>) =>
+        params?.value || '--',
     },
     {
-      headerName: 'Quantidade de advertências',
+      headerName: 'Advertências',
       field: 'warningsAmount',
-      valueFormatter: (params: CellFunctionParams) => params?.value || 0,
+      valueFormatter: (params: CellFunctionParams<Student>) =>
+        params?.value || 0,
     },
     {
       headerName: '',
       field: 'acoes',
-      cellRenderer: (params: CellFunctionParams) => {
-        return <ActionButtons actions={actions} params={params} />
+      type: 'actions',
+      cellRenderer: (params: CellFunctionParams<Student>) => {
+        return (
+          <div className={style.actionButtonsContainer}>
+            <button
+              onClick={() => {
+                handleOpenWarnings(params.data)
+              }}
+              className={style.openWarningsButton}
+              type="button"
+            >
+              <FontAwesomeIcon icon={faWarning} className={style.icon} />
+            </button>
+          </div>
+        )
       },
     },
   ]

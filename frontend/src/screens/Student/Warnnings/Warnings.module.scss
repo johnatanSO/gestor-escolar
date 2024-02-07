@@ -1,5 +1,12 @@
 @import "../../../../styles/colors.scss";
 
+.viewDesktop {
+  display: flex;
+}
+.viewMobile {
+  display: none;
+}
+
 .warningDetails {
   background: $primary-color;
   color: $white-color;
@@ -7,23 +14,32 @@
 
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 0.6rem;
 
   font-weight: 500;
   font-size: 0.875rem;
 
   border: none;
-  border-radius: 8px;
-  padding: 0.5rem;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
 
   cursor: pointer;
-  transition: filter .2s;
+  transition: filter 0.2s;
 
-  &:hover{
+  &:hover {
     filter: brightness(0.8);
   }
 
-  .icon{
+  .icon {
     height: 1rem;
+  }
+}
+
+@media (max-width: 850px) {
+  .viewDesktop {
+    display: none;
+  }
+  .viewMobile {
+    display: flex;
   }
 }

@@ -7,17 +7,17 @@ interface CreateParams {
 }
 
 export const warningsService = {
-  async create({ idStudent, newWarningData }: CreateParams) {
+  create({ idStudent, newWarningData }: CreateParams) {
     const body = {
       ...newWarningData,
-      idStudent,
     }
-    return await http.post('/warnings/', {
+
+    return http.post(`/warnings/${idStudent}`, {
       ...body,
     })
   },
 
-  async getAll(idStudent: string) {
-    return await http.get('/warnings/' + idStudent)
+  getAll(idStudent: string) {
+    return http.get('/warnings/' + idStudent)
   },
 }

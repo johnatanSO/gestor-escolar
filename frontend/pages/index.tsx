@@ -1,12 +1,31 @@
+import { useEffect } from 'react'
+import { StudentHomeScreen } from '../src/screens/Student/StudentHomeScreen'
+import { TeacherHomeScreen } from '../src/screens/Teacher/TeacherHomeScreen'
+import { tokenService } from '../src/services/tokenService'
 import { usersService } from '../src/services/usersService'
 
-// Mostrar Homescreens aqui no index ao invés de redirecionar o usuário para outra rota.
-export default function HomePage() {
-  return <></>
+interface PageProps {
+  userInfo: {
+    occupation: string
+  }
+  setShowBackButton: (show: boolean) => void
+}
+
+export default function HomePage({ userInfo, setShowBackButton }: PageProps) {
+  useEffect(() => {
+    setShowBackButton(false)
+  }, [])
+
+  if (userInfo.occupation === 'student') {
+    return <StudentHomeScreen />
+  }
+  if (userInfo.occupation === 'teacher') {
+    return <TeacherHomeScreen />
+  }
 }
 
 export async function getServerSideProps(context: any) {
-  const hasSession = await usersService.getSession(context)
+  const hasSession = await tokenService.getSession(context)
   if (!hasSession) {
     return {
       redirect: {
@@ -17,7 +36,11 @@ export async function getServerSideProps(context: any) {
     }
   }
 
+  const userInfo = usersService.getUserInfoByCookie(context)
+
   return {
-    ...usersService.checkPermission(context),
+    props: {
+      userInfo,
+    },
   }
 }

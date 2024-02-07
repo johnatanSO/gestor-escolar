@@ -12,11 +12,13 @@
   align-items: center;
   text-align: center;
 
-  border-radius: 10px;
-  padding: 30px;
-  gap: 25px;
+  border-radius: 20px;
+  padding: 2rem;
+  gap: 1.5rem;
 
   background: $gray-color-100;
+
+  animation: fadeIn 0.2s;
 }
 
 .title {
@@ -31,12 +33,12 @@
 
 .buttonsContainer {
   display: flex;
-  gap: 15px;
+  gap: 1rem;
 
   width: 100%;
 
   button {
-    border-radius: 10px;
+    border-radius: 20px;
     flex: 1;
     padding: 0.8rem;
 
@@ -45,7 +47,7 @@
     border: none;
 
     color: $white-color;
-    box-shadow: 1px 2px 5px rgb(0 0 0 / 0.4);
+    box-shadow: 1px 2px 3px rgb(0 0 0 / 0.2);
 
     transition: filter 0.2s;
     cursor: pointer;
@@ -70,4 +72,13 @@
 
 .textButton {
   color: $white-color;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

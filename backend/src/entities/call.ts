@@ -4,6 +4,10 @@ export interface ICall {
   _id: ObjectId
   createdAt: Date
   date: Date
+  presences: {
+    student: ObjectId
+    present: boolean
+  }
 }
 
 const callSchema = new mongoose.Schema({

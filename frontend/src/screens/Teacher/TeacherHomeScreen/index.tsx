@@ -31,17 +31,17 @@ export function TeacherHomeScreen() {
       image: warningImage,
       alt: 'Botão de dvertências',
       title: 'Advertências',
-
       onClickCallback: () => {
         router.push('/teacher/studentsWarnings')
       },
     },
     {
       image: timetableImage,
-      alt: 'Botão de faltas',
-      title: 'Faltas',
-      disabled: true,
-      onClickCallback: () => {},
+      alt: 'Botão de presença',
+      title: 'Presença',
+      onClickCallback: () => {
+        router.push('/teacher/studentsPresences')
+      },
     },
   ]
 

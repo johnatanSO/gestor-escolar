@@ -1,13 +1,15 @@
-import { StudentsAbsences } from '../../src/screens/Teacher/StudentsAbsences'
+import { StudentsPresences } from '../../src/screens/Teacher/StudentsPresences'
 import { tokenService } from '../../src/services/tokenService'
 import { usersService } from '../../src/services/usersService'
 import { PageProps } from './../_app'
 
-export default function StudentsAbsencesPage({ setShowBackButton }: PageProps) {
+export default function StudentsPresencesPage({
+  setShowBackButton,
+}: PageProps) {
   setShowBackButton(true)
   return (
     <>
-      <StudentsAbsences />
+      <StudentsPresences />
     </>
   )
 }

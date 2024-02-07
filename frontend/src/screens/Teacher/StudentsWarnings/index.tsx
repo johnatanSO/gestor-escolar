@@ -16,10 +16,8 @@ export interface Student {
 
 export function StudentsWarnings() {
   const [students, setStudents] = useState<Student[]>([])
-  const [selectedStudent, setSelectedStudent] = useState<Student | undefined>(
-    undefined,
-  )
-  const [modalWarningsOpened, setModalWarningsOpened] = useState<boolean>(true)
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
+  const [modalWarningsOpened, setModalWarningsOpened] = useState<boolean>(false)
   const [loadingStudents, setLoadingStudents] = useState<boolean>(true)
   const router = useRouter()
 
@@ -79,7 +77,7 @@ export function StudentsWarnings() {
           getStudents={getStudents}
           handleClose={() => {
             setModalWarningsOpened(false)
-            setSelectedStudent(undefined)
+            setSelectedStudent(null)
           }}
         />
       )}

@@ -1,7 +1,7 @@
 import { IUsersRepository } from '../../../repositories/Users/IUsersRepository'
 import { inject, injectable } from 'tsyringe'
-import { deleteFile } from '../../../utils/file'
 import { AppError } from '../../../errors/AppError'
+import { IStorageProvider } from '../../../shared/containers/providers/StorageProvider/IStorageProvider'
 
 interface IRequest {
   userId: string
@@ -11,31 +11,41 @@ interface IRequest {
 @injectable()
 export class UpdateUserAvatarService {
   usersRepository: IUsersRepository
-  constructor(@inject('UsersRepository') usersRepository: IUsersRepository) {
+  storageProvider: IStorageProvider
+
+  constructor(
+    @inject('UsersRepository') usersRepository: IUsersRepository,
+    @inject('StorageProvider') storageProvider: IStorageProvider,
+  ) {
     this.usersRepository = usersRepository
+    this.storageProvider = storageProvider
   }
 
   async execute({ userId, avatarFile }: IRequest): Promise<void> {
     if (!userId) throw new AppError('_id do usuário não informado')
-    if (!avatarFile) throw new AppError('Avatar não informado')
+    if (!avatarFile) throw new AppError('Avatar não enviado')
 
     const user = await this.usersRepository.findById(userId)
 
     if (!user) throw new AppError('Usuário inválido')
 
     if (user.avatar) {
-      await deleteFile(`./tmp/avatar/${user.avatar}`)
+      await this.storageProvider.deleteImage(user.avatar, 'avatar')
     }
+
+    const avatarURL = await this.storageProvider.uploadImage(
+      avatarFile,
+      'avatar',
+    )
 
     const filters = {
       _id: userId,
     }
 
-    const avatarUrl = `users/avatar/${avatarFile}`
-
     const updateFields = {
       $set: {
-        avatar: avatarUrl,
+        avatar: avatarFile,
+        avatarURL,
       },
     }
 

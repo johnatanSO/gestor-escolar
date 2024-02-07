@@ -1,12 +1,15 @@
-import 'reflect-metadata'
-import express, { Express, Request, Response } from 'express'
-import 'express-async-errors'
-import dbConnection from './src/database/mongoConfigs'
 import cors from 'cors'
-import { routes } from './src/routes'
-import './src/shared/containers'
+import 'reflect-metadata'
+import 'express-async-errors'
+import * as dotenv from 'dotenv'
 import { Mongoose } from 'mongoose'
+import express, { Express, Request, Response } from 'express'
+
+import './src/shared/containers'
+import { routes } from './src/routes'
+import dbConnection from './src/database/mongoConfigs'
 import { handleError } from './src/middlewares/handleError'
+dotenv.config()
 
 interface CustomExpress extends Express {
   mongo?: Mongoose
@@ -14,7 +17,7 @@ interface CustomExpress extends Express {
 
 // Configs:
 const app: CustomExpress = express()
-const PORT = 4444
+const PORT = process.env.SERVER_PORT
 app.mongo = dbConnection
 app.use(express.json())
 app.use(cors())

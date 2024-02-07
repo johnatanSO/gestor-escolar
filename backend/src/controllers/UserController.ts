@@ -36,7 +36,8 @@ export class UserController {
   }
 
   async updateUserAvatar(req: Request, res: Response): Promise<Response> {
-    const avatarFile = req.file?.filename
+    const avatarFile = req.file.filename
+
     if (!avatarFile) throw new AppError('Imagem não enviada')
 
     const updateUserAvatarService = container.resolve(UpdateUserAvatarService)

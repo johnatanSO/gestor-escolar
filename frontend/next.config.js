@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['storage.googleapis.com'],
+    domains: ['api-gestor-escolar.s3.sa-east-1.amazonaws.com'],
   },
 }
 

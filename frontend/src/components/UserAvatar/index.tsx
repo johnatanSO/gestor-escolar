@@ -10,6 +10,7 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons'
 interface UserData {
   name: string
   avatar: string
+  avatarURL: string
 }
 
 type Props = {
@@ -21,7 +22,7 @@ export function UserAvatar({ occupation }: Props) {
   const [avatarImage, setAvatarImage] = useState<any>(null)
 
   function getAvatarImage() {
-    if (userData?.avatar) return userData?.avatar
+    if (userData?.avatarURL) return userData?.avatarURL
     if (occupation === 'teacher') return teacherImage
     if (occupation === 'student') return studentImage
   }
@@ -71,13 +72,11 @@ export function UserAvatar({ occupation }: Props) {
         </div>
 
         <Image
-          loading="lazy"
           src={getAvatarImage() || ''}
           layout="fill"
           alt="user avatar"
-          width={512}
-          height={512}
           className={style.image}
+          priority
         />
       </div>
       <h3>{userData?.name || '--'}</h3>

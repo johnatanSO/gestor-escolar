@@ -96,9 +96,11 @@ export function StudentsPresences() {
 
   function finalizeCall() {
     callsService
-      .finalizeCall(students)
+      .finalizeCall(students, dateNow)
       .then(() => {
         setCallInitiated(false)
+
+        getCallByDate()
       })
       .catch((err) => {
         console.log('ERRO AO FINALIZAR CHAMADA', err)

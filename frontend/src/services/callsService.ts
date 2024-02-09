@@ -15,14 +15,14 @@ export const callsService = {
     return http.get(`/calls/${date}`)
   },
 
-  finalizeCall(students: IStudent[]) {
+  finalizeCall(students: IStudent[], dateNow: string) {
     const studentsFormated = students.map(({ _id, present }) => {
       return {
         _id,
         present,
       }
     })
-    return http.post('/calls', {
+    return http.post(`/calls/${dateNow}`, {
       students: studentsFormated,
     })
   },

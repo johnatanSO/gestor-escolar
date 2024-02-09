@@ -18,10 +18,11 @@ export class CallController {
   }
 
   async finalizeCall(req: Request, res: Response): Promise<Response> {
+    const { date } = req.params
     const { students } = req.body
 
     const finalizeCallService = container.resolve(FinalizeCallService)
-    const call = await finalizeCallService.execute(students)
+    const call = await finalizeCallService.execute(students, date)
 
     return res.status(200).json({
       success: true,

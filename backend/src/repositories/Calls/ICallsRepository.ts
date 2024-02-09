@@ -6,6 +6,6 @@ export interface IStudentsCallDTO {
 }
 
 export interface ICallsRepository {
-  create(students: IStudentsCallDTO[]): Promise<ICall>
+  create(students: IStudentsCallDTO[], date: string): Promise<ICall>
   findByDate(startDate: string, endDate: string): Promise<ICall>
 }

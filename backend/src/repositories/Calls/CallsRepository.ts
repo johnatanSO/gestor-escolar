@@ -8,9 +8,10 @@ export class CallsRepository implements ICallsRepository {
     this.model = CallModel
   }
 
-  async create(students: IStudentsCallDTO[]): Promise<ICall> {
+  async create(students: IStudentsCallDTO[], date: string): Promise<ICall> {
     const newCall = await this.model.create({
       presences: students,
+      date,
     })
 
     await newCall.save()

@@ -8,6 +8,6 @@ const callController = new CallController()
 
 callsRoutes.get('/:date', ensureAuthenticated, callController.getCallByDate)
 
-callsRoutes.post('/', ensureAuthenticated, callController.finalizeCall)
+callsRoutes.post('/:date', ensureAuthenticated, callController.finalizeCall)
 
 export { callsRoutes }

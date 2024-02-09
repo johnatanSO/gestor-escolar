@@ -1,19 +1,16 @@
 import dayjs from 'dayjs'
 import { useContext, useEffect, useState } from 'react'
 
-import { useColumns } from './hooks/useColumns'
 import { ModalPresences } from './ModalPresences'
 import style from './StudentsPresences.module.scss'
-import { useFieldsMobile } from './hooks/useFieldsMobile'
-import { ListMobile } from '../../../components/ListMobile'
 import { studentsService } from '../../../services/studentsService'
-import { TableComponent } from '../../../../src/components/TableComponent'
 import { HeaderPage } from '../../../components/HeaderPage'
 import { CustomTextField } from '../../../components/CustomTextField'
 import { Student } from './interfaces/Student'
 import { callsService } from '../../../services/callsService'
 import { AlertContext } from '../../../contexts/alertContext'
 import { CallDate } from './interfaces/CallDate'
+import { ListStudents } from './partials/ListStudents'
 
 export function StudentsPresences() {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
@@ -26,6 +23,7 @@ export function StudentsPresences() {
   const [modalPresencesOpened, setModalPresencesOpened] =
     useState<boolean>(false)
   const [loadingStudents, setLoadingStudents] = useState<boolean>(true)
+  const [loadingGetCall, setLoadingGetCall] = useState<boolean>(true)
 
   const [dateNow, setDateNow] = useState<string>(dayjs().format('YYYY-MM-DD'))
 
@@ -35,10 +33,8 @@ export function StudentsPresences() {
       .getAll()
       .then((res) => {
         const formatedStudents = res.data.items.map((student: Student) => {
-          return {
-            ...student,
-            present: false,
-          }
+          student.present = false
+          return student
         })
 
         setStudents(formatedStudents)
@@ -51,26 +47,25 @@ export function StudentsPresences() {
       })
   }
 
-  function getAnotherCall() {
+  function getCallByDate() {
+    setLoadingGetCall(true)
     callsService
       .getByDate(dateNow)
       .then((res) => {
-        const presences = res.data.item.presences
+        const call = res.data.item
 
-        const newStudents = students.map((student) => {
-          student.present = presences.find(
-            (presence: any) =>
-              presence.student === student._id && presence.present === true,
-          )
+        if (!call) {
+          setCallDate(null)
+          return
+        }
 
-          return student
-        })
-
-        setStudents(newStudents)
-        setCallDate(res.data.item)
+        setCallDate(call)
       })
       .catch((err) => {
-        console.log('ERRO AO BUSCAR PRESENÇAS', err)
+        console.log('ERRO AO BUSCAR CHAMADA', err)
+      })
+      .finally(() => {
+        setLoadingGetCall(false)
       })
   }
 
@@ -101,7 +96,7 @@ export function StudentsPresences() {
 
   function finalizeCall() {
     callsService
-      .saveCall(students)
+      .finalizeCall(students)
       .then(() => {
         setCallInitiated(false)
       })
@@ -134,20 +129,29 @@ export function StudentsPresences() {
   }, [])
 
   useEffect(() => {
-    getAnotherCall()
+    if (dateNow) {
+      getCallByDate()
+    }
   }, [dateNow])
+
+  useEffect(() => {
+    const newStudents = [...students]
+    newStudents.map((student) => {
+      student.present = !!callDate?.presences.find((presence) => {
+        return presence.idStudent === student._id && presence.present
+      })
+      return student
+    })
+
+    setStudents(newStudents)
+  }, [callDate])
 
   function handleOpenPresences(student: Student) {
     setModalPresencesOpened(true)
     setSelectedStudent(student)
   }
 
-  const columns = useColumns({
-    handleOpenPresences,
-    handleCheckStudent,
-  })
-
-  const fieldsMobile = useFieldsMobile()
+  const disabled = !callInitiated
 
   return (
     <>
@@ -166,41 +170,33 @@ export function StudentsPresences() {
         buttonText={
           callDate
             ? 'Editar chamada'
-            : !callInitiated
-            ? 'Iniciar nova chamada'
-            : 'Salvar chamada'
+            : callInitiated
+            ? 'Finalizar chamada'
+            : 'Iniciar chamada'
         }
         onClickFunction={
           callDate && callInitiated
             ? saveCall
             : callDate
             ? editCall
-            : !callInitiated
-            ? initCall
-            : finalizeCall
+            : callInitiated
+            ? finalizeCall
+            : initCall
         }
+        customButtonStyle={{
+          background: callDate ? '#31a2ff' : callInitiated ? '#00b37e' : '',
+        }}
       />
 
       <div
-        style={!callInitiated ? { opacity: 0.4, cursor: 'not-allowed' } : {}}
-        className={style.viewDesktop}
+        style={disabled ? { pointerEvents: 'none', opacity: 0.4 } : {}}
+        className={style.listContainer}
       >
-        <TableComponent
-          loading={loadingStudents}
-          columns={columns}
-          rows={students}
-        />
-      </div>
-      <div
-        style={!callInitiated ? { opacity: 0.4, cursor: 'not-allowed' } : {}}
-        className={style.viewMobile}
-      >
-        <ListMobile
-          loading={loadingStudents}
-          collapseItems={columns}
-          itemFields={fieldsMobile}
-          emptyText="Nenhum aluno encontrado"
-          items={students}
+        <ListStudents
+          handleOpenPresences={handleOpenPresences}
+          handleCheckStudent={handleCheckStudent}
+          loading={loadingGetCall && loadingStudents}
+          students={students}
         />
       </div>
 

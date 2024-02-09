@@ -1,0 +1,36 @@
+@import "../../../../../../styles/colors.scss";
+
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+
+  .listItem {
+    background: $gray-color-50;
+    color: $gray-color-400;
+    box-shadow: 1px 2px 7px rgb(0 0 0 / 0.1);
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1rem 1.4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    border-radius: 20px;
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    span {
+      max-width: 50%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

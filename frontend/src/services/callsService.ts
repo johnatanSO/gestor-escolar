@@ -15,9 +15,15 @@ export const callsService = {
     return http.get(`/calls/${date}`)
   },
 
-  saveCall(students: IStudent[]) {
+  finalizeCall(students: IStudent[]) {
+    const studentsFormated = students.map(({ _id, present }) => {
+      return {
+        _id,
+        present,
+      }
+    })
     return http.post('/calls', {
-      students,
+      students: studentsFormated,
     })
   },
 

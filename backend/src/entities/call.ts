@@ -5,7 +5,7 @@ export interface ICall {
   createdAt: Date
   date: Date
   presences: {
-    student: ObjectId
+    idStudent: ObjectId
     present: boolean
   }
 }
@@ -15,10 +15,7 @@ const callSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   presences: [
     {
-      student: {
-        type: 'ObjectId',
-        ref: 'User',
-      },
+      idStudent: { type: 'ObjectId', default: null },
       present: { type: Boolean, default: false },
     },
   ],

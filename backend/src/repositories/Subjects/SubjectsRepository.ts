@@ -63,4 +63,13 @@ export class SubjectsRepository implements ISubjectsRepository {
       { $pull: { students: { $in: studentsIds } } },
     )
   }
+
+  async removeStudentFromAllSubjects(idStudent: string) {
+    await this.model.updateMany(
+      { students: idStudent },
+      {
+        $pull: { students: idStudent },
+      },
+    )
+  }
 }

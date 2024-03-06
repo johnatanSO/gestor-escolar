@@ -24,4 +24,5 @@ export interface ISubjectsRepository {
   insertStudents: (idSubject: string, studentsIds: string[]) => Promise<void>
   removeStudents: (idSubject: string, studentsIds: string[]) => Promise<void>
   getEntries: ({ idTeacher }: FiltersGetEntries) => Promise<number>
+  removeStudentFromAllSubjects: (idStudent: string) => Promise<void>
 }

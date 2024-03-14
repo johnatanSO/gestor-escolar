@@ -28,7 +28,7 @@ export function FormEditGrade({
         onChange={(event) => {
           setGradeToEditData({
             ...gradeToEditData,
-            firstGrade: parseFloat(event.target.value),
+            firstGrade: parseFloat(event.target.value) || 0,
           })
         }}
       />
@@ -38,7 +38,7 @@ export function FormEditGrade({
         onChange={(event) => {
           setGradeToEditData({
             ...gradeToEditData,
-            secondGrade: parseFloat(event.target.value),
+            secondGrade: parseFloat(event.target.value) || 0,
           })
         }}
       />

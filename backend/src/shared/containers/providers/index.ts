@@ -5,6 +5,6 @@ import { IStorageProvider } from './StorageProvider/IStorageProvider'
 import { FirebaseProvider } from './StorageProvider/FirebaseProvider'
 
 container.registerSingleton<IStorageProvider>(
-  'FirebaseProvider',
+  'StorageProvider',
   FirebaseProvider,
 )

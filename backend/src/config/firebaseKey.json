@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "gestor-escolar-d0be4",
+  "private_key_id": "384630359407fa2300d4767fa112d3205ddb6857",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDPdmtKQiQOiMor\nco4GlEP97yglzrZiNRBtUnRoMngHWCErWFr1bPYsQOjREL2uUm+MN20uZpQ46EKf\npVZK7CVSlG2Yt8uiaPS3tdRuWqG1LSZEcK5sUSLBQexKa5C3ZpB7Pv20nosy91uZ\nmNLf6sytqVmUgFySYBkhOUPZUVhyw5NZIHTHygjflyYihJ8L8xb1FzoiBMGpPlEQ\neeDf2bDtPvqhOWHhLk8tQadrBsi2t9bAldt/jCiqFyqCxyiFsYt0thD6UnS9wFUO\nk9IWibVuAo28P8PM9zXCVYX5YJQZjsxrvQY60tVXtKGNuxNin4z1745XxxDqDPhj\nDbDOPI3dAgMBAAECggEAE42GiCQN41BkgxrG8WGY7n5s6yWwp9BDgS79XKXhDSQm\nICbLXKIAqf2sht1Y9NLwXQ4LD42VPuKZB0d21Ht6lKFiAO8I1YCmpW5ENen7bEJA\nmI1PZLly5c733UqGnac55JVa8pWv6qviHLeI35fw4xWScheoLrC5VzNfLMS10HI1\n5StrF/FnA02QBB2fcDpfizUkzdIJHn04ayspPFjykPiXhU6wg+7YHSlsQaPAF1HS\nJj+hAqiprccmP7F7aUtu8rovOY3sxU2k2uCZzYiNhKVzAqyTIsEOaztdHWu6u6lm\nYTu4a5TH+0JPzc9ZRSsuCknaxeDUuHphfsT/05RZqwKBgQDsTRnNZzEWR3gUHPkD\nkokin0oszu9ylRrL4JP7DIi67aCdT0rKeo/PvKpGWHzUMI7pF10vN4dKtX3ob9s7\nZxiuI/yQK0vbVnbms7pPx6WSSmFzVfdnzrsCOM+m6K3D7hTYtAgPD0Y4za9l6rWs\nm9OwoVrGFc6NN/qo/UiyrlnXwwKBgQDgwd/O1NqXfcqsRs4Cjo4XqiLP0e50qTO7\n0ED2gMTPeT5t/EzBhpWCptFeqnvspXrtM8W6ZftDLGNYC/6ig23v4XLm2Oq5x6xZ\nF5fAYWtdind32vdm/d/6A8Glp55Py4xNeMu/BvXqQuUlnZf30x29vYf6HbBOn56i\nn5IH3pFJ3wKBgQCfkQTudlNoZwSIGHRy3B3smkH9dhOtfVBmAhYLfhBKojJGaAfq\nKM86CX22GQTaSJwIfLV5L/cVFO+b6QTS3TCGT1i6hfIof/+0lAMo4nlFCyM5PgDe\nQXR48KIQZKkKWJgNKa0Tdk4GB6b8nHznvSY67QqeHpWnOPjz6m2P8zpJ/wKBgEWm\nLsn0kizB8Y2Df5GxRX013wXRw3hperun5Im/C75TjzIcLlkGcMyFD3qrkC2cdkSN\nd6e0tLFzTvHY/ba0zdu5XJcG/25E3zbYpdEbH19kanM86tACumbKxTalg9yscjUL\nyu/Oo2ROCJ6ogJBu3teOpVWv35PtyQYSNvmzUgi3AoGBAL0eTa6fDG7oZhgki2co\n7Dk1kDxDK21tLUY+p7+P9Wxrxg1g2GHydK8Ez5m6QtdRD4N9EdNbPnCWp+wwblAg\nE7oJBkB8BzWQ2T/g2TUa+y0Gb7Bz0AUg58A2tG510d6E9dCGD1oLVKC74s+lBPB4\n1MUMPKokAQs6JE0wEqS30nlE\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-bezl9@gestor-escolar-d0be4.iam.gserviceaccount.com",
+  "client_id": "110468563715800997473",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-bezl9%40gestor-escolar-d0be4.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

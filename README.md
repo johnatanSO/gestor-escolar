@@ -3,10 +3,11 @@
 <h3> 💻 Sobre o projeto</h3>
 
 <p>Esse é um sistema construído para auxiliar a administração de alunos de uma escola, feito com as seguintes tecnologias </p>
-<h4>Frontend</h4>
+<h4>Front-end</h4>
 <ul>
  
     - NextJS 13;
+    - React;
     - HTML;
     - SASS/CSS (Modules);
     - Typescript/Javascript;
@@ -14,7 +15,7 @@
     - Axios;
 </ul>
 
-<h4>Backend</h4>
+<h4>Back-end</h4>
 <ul>
  
     - Node;
@@ -44,7 +45,7 @@
 <br>
 <h2>👷 Como testar? </h2>
 <h3>Entre com o seguinte link: </h3>
-<a href="gestor-escolar.vercel.app">gestor-escolar.vercel.app</a>
+<a href="https://gestor-escolar.vercel.app">gestor-escolar.vercel.app</a>
 <h3>Ou</h3>
 <li> Clone o repositório com: git clone https://github.com/johnatanso/gestor-escolar";
 <li> Entre em uma IDE de sua preferência ;
